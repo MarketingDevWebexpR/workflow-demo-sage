@@ -1,0 +1,74 @@
+// @import '../../../style/mixins/loading-animation';
+
+
+.categoryTabs {
+    box-shadow: 0 -2px 0 0 var(--border-color-standard) inset;
+    width: 100%;
+}
+
+
+// Partie trigger
+.categoryTabTrigger {
+    padding-inline: var(--spacing-4);
+    padding-block: var(--spacing-2);
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+    font-weight: 500;
+    border-bottom-width: 2px;
+    transition: border-color 0.3s ease;
+    background-color: transparent;
+    box-shadow: unset;
+    position: relative;
+    border-radius: 0;
+
+    &[data-state="active"] {
+        background-color: transparent;
+        box-shadow: unset;
+    }
+
+    &[data-is-loading="true"] {
+        // @include loading-animation(0.33);
+        
+        &::before {
+            height: 2px;
+            inset-inline: var(--spacing-5);
+            align-self: center;
+        }
+    }
+}
+
+.categoryTabTriggerActive {
+    border-color: var(--border-primary);
+    color: var(--text-primary);
+}
+
+.categoryTabTriggerInactive {
+    border-color: transparent;
+    color: var(--text-3);
+
+    &:hover {
+        color: var(--text-2);
+        border-color: var(--border-color-offset-3);
+    }
+}
+
+.categoryTabTriggerLoading {
+    pointer-events: none;
+}
+
+
+// Partie liste
+.categoryTabsScrollArea,
+.tabs {
+    width: 100%;
+}
+
+.tabsList {
+    display: flex;
+    width: 100%;
+    background-color: transparent;
+    padding: 0;
+    height: auto;
+    justify-content: flex-start;
+    gap: 0;
+}

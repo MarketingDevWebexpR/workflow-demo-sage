@@ -1,0 +1,708 @@
+.header {
+
+    --header-padding-block: var(--spacing-5);
+    --header-padding-inline: var(--spacing-5);
+
+    // padding-block: var(--header-padding-block);
+    // padding-inline: var(--header-padding-inline);
+    min-height: var(--header-height);
+    max-height: var(--header-height);
+    display: flex;
+    justify-content: space-between;
+    z-index: 101;
+    background-color: var(--surface);
+    // box-shadow: var(--shadow-header);
+    gap: var(--spacing-5);
+    // margin-top: calc(-1 * var(--header-height));
+    // --admin-menu-height: 0px;
+    max-height: calc(var(--header-height) + var(--current-admin-menu-height));
+    flex-direction: row;
+    gap: 0;
+    transition: max-height 0.175s ease-in-out;
+    background-color: rgba(21, 25, 29, 0.7882352941);
+    background-color: transparent;
+    backdrop-filter: unset;
+
+    &Container {
+
+        // @include container;
+        --container-max-width: 100vw;
+
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: var(--container-max-width);
+
+    @media (min-width: 640px) { --container-max-width: 640px; }
+    @media (min-width: 768px) { --container-max-width: 768px; }
+    @media (min-width: 1024px) { --container-max-width: 1024px; }
+    @media (min-width: 1280px) { --container-max-width: 1280px; }
+    @media (min-width: 1536px) { --container-max-width: 1536px; }
+    
+        width: 100%;
+        display: flex;
+        margin-inline: auto;
+        max-width: unset;
+        // transform: translateY(calc(100% + var(--header-height) / 4));
+        padding-inline: var(--spacing-8);
+        background: var(--header-bg);
+        flex-direction: column;
+        background: transparent;
+
+
+        // padding-inline: calc(100vw - 100%);
+        // max-width: unset;
+
+    }
+
+    &Content {
+
+        max-width: unset;
+        margin-inline: auto;
+        width: 100%;
+        gap: var(--spacing-5);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &Start {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-5);
+    }
+
+    &End {
+
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-5);
+    }
+
+    &AdminSidebarButton {
+
+        cursor: pointer;
+        height: var(--header-height);
+        display: flex;
+        align-items: center;
+
+        &Title {
+            font-family: var(--font-brand) !important;
+            font-weight: 500;
+        }
+
+        &Content {
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-1);
+            border-right: 1px solid var(--border-color-standard);
+            font-size: 0.775rem;
+            line-height: 1rem;
+            padding-right: var(--spacing-4);
+            height: 20px;
+        }
+
+        &Icon {
+
+            stroke: var(--text-primary);
+            transform: rotate(0deg);
+            transition: transform 500ms;
+
+            &Opened {
+
+                fill: var(--surface-primary-soft);
+                stroke: var(--text-primary-2);
+                transform: rotate(180deg);
+            }
+        }
+
+        &:hover {
+
+            .headerAdminSidebarButtonTitle {
+
+                text-decoration: underline;
+            }
+
+            .headerAdminSidebarButtonIcon {
+
+                stroke: var(--text-primary-1);
+
+                &Opened {
+
+                    transform: rotate(180deg);
+                    stroke: var(--text-primary-3);
+                }
+            }
+        }
+    }
+
+    &LogoImg {
+
+        // max-height: 34px;
+        cursor: pointer;
+        min-width: fit-content;
+        // min-width: 100px;
+        // max-width: 100px;
+        max-height: 35px;
+        user-select: none;
+    }
+
+    &LogoFocusFix {
+        position: absolute;
+        top: -1000vh;
+    }
+
+    &SiteTitle {
+
+        // padding-left: var(--spacing-5);
+        display: none;
+
+        @media (min-width: 1024px) {
+            display: block;
+        }
+    }
+}
+
+.header[data-admin="true"] {
+
+    --current-admin-menu-height: 41px;
+}
+
+.headerSiteTitleImg {
+
+    // max-height: 44px;
+    // margin-top: var(--spacing-2);
+    max-height: 26px;
+    margin-top: var(--spacing-1-5);
+}
+
+.displayNone {
+    display: none;
+}
+
+.polygonHeaderContainer {
+    min-width: var(--polygon-sidebar-width);
+    max-width: var(--polygon-sidebar-width);
+    display: flex;
+    background: var(--polygon-sidebar-top-left-corner-bg);
+    cursor: pointer;
+}
+
+.polygonLogoVersion {
+    position: absolute;
+    margin-left: calc(124px + var(--spacing-6) * 1);
+    background: var(--surface-primary-soft-small-area);
+    padding: 4px 10px;
+    border-radius: 100vw;
+    color: var(--text-primary-2);
+    font-family: monospace !important;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    margin-top: 2px;
+}
+
+
+
+
+
+
+
+
+.polygonLogoContainer {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-6);
+    width: 296px;
+    margin-left: var(--spacing-8);
+}
+
+.polygonLogo {
+    width: 232px;
+    height: 26px;
+    position: relative;
+    background-color: transparent;
+    --p-color: var(--text-primary-1); //#03787C;//rgb(18 169 132);
+    translate: 0 3px;
+    scale: 0.69;
+    transform-origin: left;
+}
+
+.polygonLogoImage {
+    //     width: 100px;
+    //     height: 100px;
+    //    translate: 100px;
+    position: relative;
+}
+
+.polygonLogoP {
+    width: 24px;
+    height: 58px;
+    background-color: transparent;
+
+    position: absolute;
+}
+
+.polygonLogoO1,
+.polygonLogoO2 {
+    background-color: transparent;
+
+    width: calc(24px);
+    height: 58px;
+    background-color: transparent;
+    position: relative;
+    left: calc(24px + 4px);
+    position: absolute;
+}
+
+.polygonLogoL {
+    background-color: transparent;
+
+    width: calc(24px/2);
+    height: 58px;
+    background-color: transparent;
+    position: relative;
+    left: calc((24px + 4px) * 2);
+    position: absolute;
+}
+
+.polygonLogoY {
+    background-color: transparent;
+
+    width: calc(24px);
+    height: 58px;
+    background-color: transparent;
+    position: relative;
+    left: calc(((24px / 2) + 4px) + (24px + 4px) * 2);
+    position: absolute;
+}
+
+.polygonLogoG {
+    background-color: transparent;
+
+    width: calc(24px);
+    height: 58px;
+    background-color: transparent;
+    position: relative;
+    left: calc(((24px / 2) + 4px) + (24px + 4px) * 3);
+    position: absolute;
+}
+
+.polygonLogoO2 {
+    left: calc((24px/2 + 4px) + (24px + 4px) * 4);
+}
+
+.polygonLogoN {
+    background-color: transparent;
+
+    width: calc(24px);
+    height: 58px;
+    background-color: transparent;
+    position: relative;
+    left: calc(((24px / 2) + 4px) + (24px + 4px) * 5);
+    position: absolute;
+}
+
+.polygonLeftBar {
+    width: 4px;
+    height: 16px;
+    background: var(--p-color);
+    top: 10px;
+    position: absolute;
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+
+    width: 3px;
+    height: 12px;
+    top: 4px;
+}
+
+.polygonRightBar {
+    width: 4px;
+    height: 16px;
+    background: var(--p-color);
+    top: 10px;
+    left: 27px;
+    position: absolute;
+    border-top-left-radius: 100px;
+
+    width: 3px;
+    height: 14px;
+    top: 4px;
+    left: 21px;
+    position: absolute;
+    border-top-left-radius: 100px;
+    border-bottom-right-radius: 75px;
+}
+
+.polygonTopRightBar {
+    width: 4px;
+    height: 16px;
+    background: var(--p-color);
+    top: -2px;
+    left: 20px;
+    position: absolute;
+    border-top-right-radius: 100px;
+    transform: rotate(118deg);
+
+    transform: rotate(119deg);
+    width: 3px;
+    height: 12px;
+    top: -5px;
+    left: 15px;
+}
+
+.polygonTopLeftBar {
+    width: 4px;
+    height: 16px;
+    background: var(--p-color);
+    top: -2px;
+    left: 7px;
+    position: absolute;
+    border-bottom-right-radius: 100px;
+    transform: rotate(62deg);
+
+    transform: rotate(61deg);
+    width: 3px;
+    height: 12px;
+    top: -5px;
+    left: 6px;
+}
+
+.polygonBottomLeftBar {
+    width: 4px;
+    height: 16px;
+    background: var(--p-color);
+    top: 22px;
+    left: 7px;
+    position: absolute;
+    border-top-left-radius: 100px;
+    border-bottom-left-radius: 100px;
+    transform: rotate(118deg);
+
+    transform: rotate(119deg);
+    width: 3px;
+    height: 12px;
+    top: 13px;
+    left: 5px;
+}
+
+.polygonBottomRightBar {
+    width: 4px;
+    height: 16px;
+    background: var(--p-color);
+    top: 22px;
+    left: 21px;
+    position: absolute;
+    transform: rotate(62deg);
+    border-bottom-left-radius: 100px !important;
+
+    transform: rotate(61deg);
+    border-bottom-left-radius: 100px !important;
+    width: 3px;
+    height: 12px;
+    top: 13px;
+    left: 16px;
+}
+
+.polygonLeftBarLowerHalf {
+    background: var(--p-color);
+    width: 4px;
+    height: 16px;
+    top: 30Px;
+    position: absolute;
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+
+    top: 19px;
+    width: 3px;
+    height: 12px;
+}
+
+.polygonLeftBarUpperHalf {
+    background: var(--p-color);
+    width: 4px;
+    height: 16px;
+    top: -16px;
+    position: absolute;
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+}
+
+.polygonFullDiagonalBar {
+    background: var(--p-color);
+    width: 4px;
+    height: 16px;
+    width: 4px;
+    height: 43px;
+    top: -4px;
+    left: 13px;
+    position: absolute;
+    -webkit-transform: rotate(118deg);
+    transform: rotate(138deg);
+    border-bottom-right-radius: 100px;
+    border-bottom-left-radius: 100px;
+
+    background: var(--p-color);
+    width: 4px;
+    height: 16px;
+    width: 4px;
+    height: 30px;
+    top: 4px;
+    left: 14px;
+    transform: translateX(0.5px);
+    position: absolute;
+    -webkit-transform: rotate(118deg);
+    transform: rotate(138deg) translateX(-0.1px) translateY(0.9px);
+    border-bottom-right-radius: 100px;
+    border-bottom-left-radius: 100px;
+    border-radius: 100px;
+
+    border-top-right-radius: 0;
+    border-top-left-radius: 100px;
+    border-bottom-left-radius: 0;
+
+    width: 3px;
+    height: 24px;
+    top: -1px;
+    left: 11px;
+}
+
+.polygonLLeftBar {
+    width: 4px;
+    background: var(--p-color);
+    position: absolute;
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+
+    top: -3px;
+    height: 19px;
+    width: 3px;
+}
+
+.polygonYTopLeftBar {
+    width: 3px;
+    height: 12px;
+    background: var(--p-color);
+    top: -6px;
+    left: 7px;
+    position: absolute;
+    border-bottom-right-radius: 100px;
+    transform: rotate(62deg);
+
+    right: 6px;
+    left: unset;
+    border-top-left-radius: 111px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 100px;
+
+    right: 5px;
+}
+
+.polygonYTopRightBar {
+    width: 3px;
+    height: 12px;
+    background: var(--p-color);
+    top: -2px;
+    left: 6px;
+    position: absolute;
+    border-bottom-left-radius: 100px;
+    border-top-left-radius: 100px;
+    transform: rotate(118deg);
+
+    width: 3px;
+    height: 12px;
+    top: -6Px;
+    left: 5px;
+    // top: -1px;
+    // left: 11px;
+}
+
+.polygonYCenterBar {
+    width: 4px;
+    height: 24px;
+    background: var(--p-color);
+    top: 12px;
+    left: 13px;
+    position: absolute;
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+    border-radius: 100px;
+    transform: translateX(0.62px);
+
+    width: 3px;
+    height: 18px;
+    top: 4px;
+    left: 10px;
+    transform: translateX(0.62px) translateY(0.9px);
+}
+
+.polygonNRightBar {
+    width: 4px;
+    height: 36px;
+    background: var(--p-color);
+    top: 0px;
+    border-top-left-radius: 100px;
+    border-bottom-left-radius: 100px;
+    right: 0px;
+    position: absolute;
+
+    height: 29px;
+    background: var(--p-color);
+    top: 4px;
+    position: absolute;
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+    border-radius: 100px;
+
+    width: 3px;
+    height: 22px;
+    top: -1px;
+}
+
+.polygonNLeftBar {
+    width: 4px;
+    height: 36px;
+    background: var(--p-color);
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+
+    height: 29px;
+    background: var(--p-color);
+    top: 4px;
+    left: 0px;
+    position: absolute;
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+    border-radius: 100px;
+
+    width: 3px;
+    height: 22px;
+    top: -1px;
+}
+
+.polygonGRightBar {
+    width: 4px;
+    background: var(--p-color);
+    left: 27px;
+    position: absolute;
+    border-top-left-radius: 100px;
+    top: 18px;
+    height: 8px;
+
+    left: 21px;
+    width: 3px;
+    top: 9px;
+    height: 9px;
+    border-bottom-right-radius: 75px;
+}
+
+.adminMenu {
+    background: #1d1d1dc4;
+    color: white;
+    position: relative;
+    align-items: center;
+    // display: grid;
+    // grid-template-columns: repeat(6, 1fr);
+    text-align: center;
+    // border-bottom-left-radius: var(--radius-lg);
+    // border-bottom-right-radius: var(--radius-lg);
+    font-weight: 500;
+
+    background: var(--surface-minus-1);
+    border-top: 1px solid var(--border-color-offset-minus-1);
+    position: relative;
+    -ms-flex-align: center;
+    align-items: center;
+    text-align: center;
+    font-weight: 500;
+    color: var(--text);
+    height: 41px;
+    opacity: var(--admin-menu-opacity, 0);
+
+    >div {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0;
+        height: 100%;
+
+        &[data-webexpr="true"] {
+            grid-template-columns: repeat(5, 1fr);
+        }
+    }
+
+    transform: translateY(-100%);
+    z-index: -1;
+    transition: transform 0.175s ease-in-out,
+    opacity 0.175s ease-in-out;
+}
+
+.adminMenuOpened {
+    position: relative;
+    transform: translateY(0);
+
+    --admin-menu-opacity: 1;
+}
+
+button.adminMenuItem {
+    background-color: transparent;
+    height: 100%;
+    cursor: pointer;
+    place-content: center;
+    padding-inline: var(--spacing-2);
+    font-size: calc(var(--text-sm) - 0.09rem);
+    position: relative;
+    text-transform: uppercase;
+    color: var(--text);
+    font-weight: 500;
+
+    &:hover {
+        background-color: var(--surface-minus-1-hover);
+    }
+}
+
+.menuItemFancyBar {
+    position: absolute;
+    height: 2px;
+    width: 20px;
+    background: var(--primary-color-500);
+    bottom: calc(var(--header-height) / 5);
+    margin: auto;
+    display: block;
+    border-radius: var(--radius-full);
+    opacity: 0;
+    transform: scale(0.7) translateY(2px);
+    transition: opacity 0.150s ease-in-out, transform 0.150s ease-in-out, width 0.150s ease-in-out;
+    inset: 0;
+    bottom: 6px;
+    top: unset;
+}
+
+button.adminMenuItemActive {
+
+    background: var(--surface-minus-1-hover);
+
+    .menuItemFancyBar {
+        opacity: 1;
+        transform: scale(1);
+        width: 40px;
+    }
+}
+
+span.siteName {
+    font-weight: 500;
+    font-family: var(--font-brand) !important;
+    font-size: var(--text-base);
+    color: var(--text-minus-1);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.150s ease-in-out;
+}
+
+.filterInvert {
+    filter: invert(1) hue-rotate(183deg) brightness(100);
+}

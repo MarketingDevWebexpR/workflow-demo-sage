@@ -1,0 +1,23 @@
+.badge {
+
+    display: flex;
+    gap: var(--spacing-2);
+    align-items: center;
+    padding: var(--spacing-1) var(--spacing-2);
+    border: 1px solid var(--border-color-standard);
+    border-radius: var(--radius-full);
+    width: fit-content;
+    font-size: var(--text-xs);
+    line-height: var(--text-xs--line-height);
+
+    &[data-fallback="true"] {
+        color: var(--text-3);
+        > svg {
+            stroke: currentColor;
+        }
+
+        > span {
+            color: currentColor;
+        }
+    }
+}

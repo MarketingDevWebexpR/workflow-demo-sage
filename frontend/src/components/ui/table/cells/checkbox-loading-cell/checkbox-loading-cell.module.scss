@@ -1,0 +1,19 @@
+// @import '../../../../../style/mixins/spin';
+
+.checkboxLoadingCell {
+    position: relative;
+}
+
+.checkboxLoadingCellCheckbox {
+    position: relative;
+}
+
+.checkboxLoadingCellLoader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    top: -1px;
+    left: 1px;
+    cursor: not-allowed;
+    // @include spin;
+}

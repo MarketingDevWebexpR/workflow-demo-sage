@@ -1,0 +1,348 @@
+/* Styles pour le Sheet */
+.sheetOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.5);
+
+    &[data-state="open"] {
+        animation: fadeIn 0.2s ease-in-out;
+    }
+
+    &[data-state="closed"] {
+        animation: fadeOut 0.2s ease-in-out;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+/* Styles de base pour le contenu du Sheet */
+.sheetContent {
+    position: fixed;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6);
+    background-color: var(--surface);
+    padding: var(--spacing-6);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    padding: 0;
+
+    &[data-state="open"] {
+        animation-name: animateIn;
+        animation-duration: 0.3s;
+        animation-timing-function: ease-in-out;
+        animation-fill-mode: forwards;
+    }
+
+    &[data-state="closed"] {
+        animation-name: animateOut;
+        animation-duration: 0.3s;
+        animation-timing-function: ease-in-out;
+        animation-fill-mode: forwards;
+    }
+
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    > div {
+        max-height: 100%;
+    }
+}
+
+.sheetContentLarge {
+    @extend .sheetContent;
+    min-width: min(calc(100% - 2 * var(--spacing-6)), 800px);
+}
+
+.sheetContentXL {
+    @extend .sheetContent;
+    min-width: min(calc(100% - 2 * var(--spacing-6)), 1000px);
+}
+
+/* Variations selon le côté */
+.top {
+    inset-inline: 0;
+    top: 0;
+    border-bottom: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
+
+    &[data-state="closed"] {
+        animation-name: slideOutToTop;
+    }
+
+    &[data-state="open"] {
+        animation-name: slideInFromTop;
+    }
+}
+
+.bottom {
+    inset-inline: 0;
+    bottom: 0;
+    border-top: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
+
+    &[data-state="closed"] {
+        animation-name: slideOutToBottom;
+    }
+
+    &[data-state="open"] {
+        animation-name: slideInFromBottom;
+    }
+}
+
+.left {
+    inset-block: 0;
+    left: 0;
+    height: 100%;
+    width: 75%;
+    border-right: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
+
+    @media (min-width: 640px) {
+        max-width: 24rem;
+    }
+
+    &[data-state="closed"] {
+        animation-name: slideOutToLeft;
+    }
+
+    &[data-state="open"] {
+        animation-name: slideInFromLeft;
+    }
+}
+
+.right {
+    inset-block: var(--spacing-6);
+    right: var(--spacing-6);
+    border-radius: 0.5rem;
+    height: calc(100% - var(--spacing-xl));
+    width: 75%;
+    // border-left: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
+
+    @media (min-width: 640px) {
+        max-width: 28rem;
+    }
+
+    &[data-state="closed"] {
+        animation-name: slideOutToRight;
+    }
+
+    &[data-state="open"] {
+        animation-name: slideInFromRight;
+    }
+}
+
+/* Animations */
+@keyframes slideInFromTop {
+    from {
+        transform: translateY(-100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideOutToTop {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-100%);
+    }
+}
+
+@keyframes slideInFromBottom {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideOutToBottom {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(100%);
+    }
+}
+
+@keyframes slideInFromLeft {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOutToLeft {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOutToRight {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(100%);
+    }
+}
+
+/* Bouton de fermeture */
+.closeButton {
+    position: absolute;
+    right: var(--spacing-4);
+    top: var(--spacing-4);
+    border-radius: 0.125rem;
+    opacity: 0.7;
+    transition: opacity 0.2s ease-in-out;
+    background-color: transparent;
+    cursor: pointer;
+    height: 2rem;
+    width: 2rem;
+    padding: 0;
+    border-radius: var(--radius-full);
+
+    &:hover {
+        background-color: var(--surface-1);
+    }
+
+    &:hover {
+        opacity: 1;
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--border-primary);
+        outline-offset: 2px;
+    }
+
+    &:disabled {
+        pointer-events: none;
+    }
+}
+
+.closeIcon {
+    height: 1rem;
+    width: 1rem;
+    stroke: var(--text-2);
+}
+
+.srOnly {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* Header du Sheet */
+.sheetHeader {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-1);
+    text-align: center;
+
+    @media (min-width: 640px) {
+        text-align: left;
+    }
+
+    padding-top: var(--spacing-6);
+    padding-left: var(--spacing-6);
+    padding-right: var(--spacing-6);
+}
+
+/* Footer du Sheet */
+.sheetFooter {
+    display: flex;
+    flex-direction: column-reverse;
+
+    @media (min-width: 640px) {
+        flex-direction: row;
+        justify-content: flex-end;
+        gap: var(--spacing-1);
+    }
+}
+
+/* Titre du Sheet */
+.sheetTitle {
+    font-size: var(--text-lg);
+    line-height: var(--text-lg--line-height);
+    font-weight: 600;
+}
+
+/* Description du Sheet */
+.sheetDescription {
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+    color: var(--text-2);
+}
+
+.icon {
+    margin-right: var(--spacing-1);
+    stroke: var(--text-primary-foreground);
+}
+
+.iconStandalone {
+    stroke: var(--text-primary-foreground);
+}
+
+.sheetContent {
+
+    @media (max-width: 640px) {
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+    }
+}
+
+.iconPrimary {
+    stroke: var(--text-primary);
+}

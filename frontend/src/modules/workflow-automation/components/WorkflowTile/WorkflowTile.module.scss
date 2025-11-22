@@ -1,0 +1,186 @@
+.workflowTile {
+
+    position: absolute;
+    top: calc(
+        1px * var(--y-coefficient) * var(--y)
+        + var(--y) * 1px * var(--x-axis-thickness)
+    );
+    // derniere ligne => x axis thickness
+    left: calc(
+        1px * var(--x-coefficient) * var(--x)
+        + var(--x) * 1px * var(--y-axis-thickness)
+    );
+    max-width: var(--x-coefficient);
+    font-weight: 500;
+    min-height: calc(
+        1px * var(--y-coefficient)
+        + 1px * var(--x-axis-thickness)
+    );
+    // derniere ligne => x axis thickness
+    min-width: calc(
+        1px * var(--x-coefficient)
+        + 1px * var(--y-axis-thickness)
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+    transition: background-color 200ms;
+
+    &[data-type="UpToRight"],
+    &[data-type="UpToLeft"],
+    &[data-type="VerticalLineUp"],
+    &[data-type="BottomToLeft"] {
+
+        overflow: hidden;
+    }
+
+    &[data-type="WorkflowYes"],
+    &[data-type="WorkflowNo"] {
+
+        &::after {
+
+            position: absolute;
+            z-index: 3;
+        }
+    }
+
+    &[data-type="WorkflowStatus"] {
+        --item-width: 5;
+        --item-height: 5;
+
+        .commonItem {
+
+            background-color: #009da0;
+        }
+    }
+
+    // &[data-type="WorkflowSwitch"] {
+    //     --item-width: 15;
+    // }
+
+    // &[data-type="WorkflowYes"]::after {
+
+    //     content: 'oui';
+    // }
+
+    // &[data-type="WorkflowNo"]::after {
+
+    //     content: 'non';
+    // }
+
+    // &[data-type="WorkflowYes"]::after,
+    // &[data-type="WorkflowNo"]::after {
+
+    //     font-size: 12px;
+    //     background-color:  transparent;//var(--surface-minus-1);
+    //     height: fit-content;
+    //     max-height: 100%;
+    //     display: flex;
+    //     align-items: center;
+    // }
+
+    &[data-type="WorkflowYes"][data-included-in-folder-path="true"]::after {
+
+        background-color: var(--gray-300);
+    }
+
+    &[data-type="WorkflowNo"][data-included-in-folder-path="true"]::after {
+
+        background-color: var(--gray-300);
+    }
+
+    &[data-included-in-folder-path="true"] {
+
+        background-color: var(--gray-300);
+    }
+}
+
+@mixin pointer {
+
+    background-color: transparent!important;
+    position: absolute;
+    border-width: 0 calc( 1px * var(--connector-thickness) ) calc( 1px * var(--connector-thickness)) 0;
+    border-style: solid;
+    border-color: var(--gray-500);
+    padding: 0!important;
+    z-index: 2;
+    transform-origin: center;
+    min-width: calc( 1px * var(--arrow-pointer-thickness) );
+    min-height: calc( 1px * var(--arrow-pointer-thickness) );
+}
+
+.isPointedAtTop {
+
+    bottom: calc(
+        1px * (
+            var(--y-coefficient)
+            - ( ( var(--y-coefficient) - var(--item-height) ) / 2 )
+        )
+        + 1px * var(--arrow-pointer-offset)
+        + 1px * var(--x-axis-thickness) / 2
+    );
+    // derniere ligne => x axis thickness
+    transform: rotate(45deg) translateX( calc( 0.5px ) );
+
+    @include pointer();
+}
+
+.isPointedAtRight {
+
+    left: calc(
+        1px * (
+        var(--x-coefficient)
+        - ( ( var(--x-coefficient) - var(--item-width) ) / 2 )
+        )
+        + 1px * var(--arrow-pointer-offset)
+        + 1px * var(--y-axis-thickness) / 2
+    );
+    transform: rotate(135deg) translateX( calc( 0.5px ) );
+
+    @include pointer();
+}
+
+.isPointedAtLeft {
+
+    right: calc(
+        1px * (
+            var(--x-coefficient)
+            - ( ( var(--x-coefficient) - var(--item-width) ) / 2 )
+        )
+      + 1px * var(--arrow-pointer-offset)
+      + 1px * var(--y-axis-thickness) / 2
+    );
+    transform: rotate(-45deg) translateX( calc( 0.5px ) );
+
+    @include pointer();
+}
+
+.commonItem {
+
+    display: flex;
+    max-width: calc( 1px * var(--item-width) );
+    max-height:  calc( 1px * var(--item-height) );
+    width: calc( 1px * var(--item-width) );
+    height: calc( 1px * var(--item-height) );
+    color: var(--item-color);
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: var(--spacing-1-5);
+
+    > div {
+
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: var(--item-webkit-line-clamp);
+        line-clamp: var(--item-webkit-line-clamp);
+        text-align: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        box-sizing: border-box;
+        margin: auto;
+        line-height: calc( 1px * var(--item-line-height));
+        font-size: calc( 1px * var(--item-font-size));
+        background-color: transparent;
+    }
+}

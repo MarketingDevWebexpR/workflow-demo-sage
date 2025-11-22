@@ -1,0 +1,62 @@
+.empty {
+    --padding-block: var(--spacing-8);
+    --gap-icon-content: var(--spacing-6);
+    --title-size: var(--text-lg);
+    --title-line-height: var(--text-lg--line-height);
+    --description-size: var(--text-sm);
+    --description-line-height: var(--text-sm--line-height);
+    --gap-title-description: var(--spacing-2);
+
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gap-icon-content);
+    padding-block: var(--padding-block);
+    grid-column: span 12;
+    margin-block: auto;
+}
+
+.emptySmall {
+    --padding-block: var(--spacing-4);
+    --gap-icon-content: var(--spacing-3);
+    --title-size: var(--text-base);
+    --title-line-height: var(--text-base--line-height);
+    --description-size: var(--text-sm);
+    --description-line-height: var(--text-sm--line-height);
+    --gap-title-description: var(--spacing-1);
+}
+
+.emptyIcon {
+    stroke: var(--text-primary);
+    fill: var(--surface-primary-soft);
+}
+
+.emptyContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--gap-title-description);
+}
+
+.emptyTitle {
+    font-weight: 500;
+    font-size: var(--title-size);
+    line-height: var(--title-line-height);
+    color: var(--text-minus-1);
+}
+
+.emptyDescription {
+    color: var(--text-2);
+    font-size: var(--description-size);
+    line-height: var(--description-line-height);
+}
+
+.emptyActions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-2);
+}

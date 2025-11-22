@@ -1,0 +1,61 @@
+// @import '../../../../../style/mixins/loading-animation';
+
+
+.userCell {
+
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+
+    &Text {
+        font-weight: 500;
+    }
+
+    &Avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+
+    &Image {
+        object-fit: cover;
+
+        &Fallback {
+            background-color: var(--surface-2);
+            color: var(--text-3);
+        }
+    }
+
+    &[data-fallback="true"] {
+
+        .userCellText {
+            color: var(--text-3);
+            font-weight: 400;
+        }
+    }
+}
+
+
+// Loading state
+[data-table][data-is-loading="true"] {
+
+    .userCellText {
+        // @include loading-animation;
+
+        &::before {
+            height: 2px;
+            margin-block: auto;
+        }
+    }
+
+    .userCellAvatar {
+        // @include loading-animation(0.5);
+        pointer-events: none;
+    }
+
+    .userCellImage {
+        opacity: 0;
+    }
+}

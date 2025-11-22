@@ -1,0 +1,28 @@
+
+.datePicker {
+    position: relative;
+}
+
+
+.calendarIconWrapper {
+    position: absolute;
+    right: var(--spacing-4);
+    min-width: var(--spacing-4);
+    min-height: var(--spacing-4);
+    left: unset;
+    background: var(--surface);
+    top: 0;
+    bottom: 0;
+    display: none;
+}
+
+.calendarIcon {
+    position: unset!important;
+    left: unset!important;
+    top: unset!important;
+    -webkit-transform: unset!important;
+    transform: unset!important;
+    stroke: var(--text-2);
+    pointer-events: none!important;
+    background: unset!important;
+}

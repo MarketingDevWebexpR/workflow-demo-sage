@@ -1,0 +1,150 @@
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    line-height: var(--text-sm--line-height);
+    transition: background 0.2s, color 0.2s, border 0.2s, box-shadow 0.2s;
+    outline: none;
+    border: none;
+    user-select: none;
+    cursor: pointer;
+    box-shadow: none;
+    text-decoration: none;
+
+    &:disabled,
+    &[aria-disabled="true"] {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--border-primary);
+        outline-offset: 2px;
+    }
+}
+
+.default {
+    background: var(--surface-primary);
+    color: var(--text-primary-foreground);
+    box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05);
+
+    &:hover {
+        background: var(--surface-primary-1);
+    }
+}
+
+.destructive {
+    background: var(--surface-danger);
+    color: var(--text-destructive-foreground);
+    box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05);
+
+    &:hover {
+        background: var(--surface-danger-1);
+    }
+}
+
+.outline {
+    border: 1px solid var(--border-color-standard);
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05);
+
+    &:hover {
+        background: var(--surface-1);
+        color: var(--text-minus-1);
+    }
+}
+
+.primaryOutline {
+    border: 1px solid var(--border-primary-1);
+    background-color: transparent;
+    color: var(--text-primary-foreground);
+    box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05);
+
+    &:hover {
+        border-color: var(--border-primary-2);
+    }
+}
+
+.secondary {
+    background: var(--secondary, #f3f4f6);
+    color: var(--secondary-foreground, #111827);
+    box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05);
+
+    &:hover {
+        background: rgba(243, 244, 246, 0.8);
+    }
+}
+
+.ghost {
+    border: 0px solid var(--border-color-standard);
+    background: transparent;
+    color: var(--text);
+
+    &:hover {
+        background: var(--surface-2);
+        color: var(--text-minus-1);
+    }
+}
+
+.link {
+    background: transparent;
+    color: var(--text);
+    text-decoration: none;
+    text-underline-offset: 4px;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.defaultSize {
+    height: 2.5rem;
+    padding: 0.5rem 1.5rem;
+}
+
+.sm {
+    height: 2.25rem;
+    padding: 0 1rem;
+}
+
+.lg {
+    height: 2.75rem;
+    padding: 0 2rem;
+}
+
+.icon {
+    height: 2.5rem;
+    width: 2.55rem;
+    padding: 0;
+}
+
+.iconSm {
+    height: 1.75rem;
+    width: 1.80rem;
+    padding: 0;
+}
+
+// Rounded variants
+.roundedRegular {
+    border-radius: 0.375rem;
+}
+
+.roundedFull {
+    border-radius: 100vw;
+}
+
+.roundedNone {
+    border-radius: 0;
+}
+
+.roundedAbstract {
+    --r: 16px 42%;
+    border-top-left-radius: var(--r);
+    border-bottom-left-radius: var(--r);
+    border-bottom-right-radius: var(--r);
+    border-top-right-radius: var(--r);
+}

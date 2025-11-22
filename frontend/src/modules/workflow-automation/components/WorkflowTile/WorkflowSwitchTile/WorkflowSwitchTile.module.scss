@@ -1,0 +1,33 @@
+.workflowSwitchTile {
+
+    border-radius: 8px;
+    border: 2px solid var(--surface-2);
+    background-color: var(--surface-2);
+    // border: 2px solid var(--tile-border-color);
+    // background-color: var(--tile-bg-color);
+    z-index: 3;
+
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-1);
+    cursor: pointer;
+    transition: border-color 200ms;
+
+    &:hover {
+        border-color: var(--workflow-category-border-color, var(--primary-color-500));
+    }
+}
+
+.switchIcon {
+    color: var(--workflow-category-color, var(--primary-color-500));
+    flex-shrink: 0;
+    margin-left: var(--spacing-2);
+}
+
+// [data-included-in-folder-path="true"] .workflowSwitchTile {
+
+//     background-color: #f9e3e0;
+// }

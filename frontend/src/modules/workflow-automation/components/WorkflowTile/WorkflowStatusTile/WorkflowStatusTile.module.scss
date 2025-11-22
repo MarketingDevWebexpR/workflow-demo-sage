@@ -1,0 +1,19 @@
+.workflowStatusTile {
+
+    max-width: calc( 1px * var(--item-width) );
+    max-height:  calc( 1px * var(--item-height) );
+    width: calc( 1px * var(--item-width) );
+    height: calc( 1px * var(--item-height) );
+    color: var(--item-color);
+    transition: color 1s;
+
+    border: 1px solid royalblue;
+    border-radius: 100vw;
+    background-color: white;
+    z-index: 3;
+}
+
+// [data-included-in-folder-path="true"] .workflowStatusTile {
+
+//     background-color: var(--primary-color-100);
+// }

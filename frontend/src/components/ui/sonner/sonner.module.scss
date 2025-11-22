@@ -1,0 +1,80 @@
+// @import '../../../style/mixins/spin';
+
+
+.toast {
+    background-color: var(--surface-minus-1);
+    padding: var(--spacing-5);
+    box-shadow: var(--box-shadow-medium);
+    color: var(--text);
+    border: 1px solid var(--border-color-standard);
+    align-items: baseline;
+}
+
+.success {
+    [data-icon] {
+        color: var(--text-success);
+    }
+}
+
+.error {
+    [data-icon] {
+        color: var(--text-destructive);
+    }
+}
+
+.loading {
+    [data-icon] > div {
+        max-height: 16px;
+    }
+
+    [data-icon] > div > svg {
+        // @include spin();
+        pointer-events: auto;
+    }
+}
+
+.closeButton {
+    pointer-events: auto;
+    position: absolute;
+    top: var(--spacing-2);
+    right: var(--spacing-2);
+    left: unset;
+    transform: unset;
+    background-color: var(--surface-1)!important;
+    color: var(--text)!important;
+
+    &:hover,
+    &:focus {
+        background-color: var(--surface-2)!important;
+    }
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-1);
+    width: 100%;
+}
+
+.icon {
+    translate: 0 2px;
+}
+
+.title {
+    font-weight: 600;
+    font-family: 'Roboto';
+    color: var(--text-minus-1);
+    font-size: calc( var(--text-base) - var(--text-base) * 0.05);
+    line-height: var(--text-base--line-height);
+    -webkit-font-smoothing: subpixel-antialiased !important;
+}
+
+.description {
+    -webkit-font-smoothing: subpixel-antialiased !important;
+    font-weight: 400;
+    font-family: 'Roboto';
+    color: var(--text-2) !important;
+    font-size: var(--text-xs);
+    line-height: var(--text-xs--line-height);
+    white-space: pre-line;
+}

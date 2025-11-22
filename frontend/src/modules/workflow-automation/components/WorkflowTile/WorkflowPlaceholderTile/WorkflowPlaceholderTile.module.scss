@@ -1,0 +1,119 @@
+.workflowPlaceholderTile {
+
+    max-width: calc( 1px * var(--item-width) );
+    max-height:  calc( 1px * var(--item-height) );
+    width: calc( 1px * var(--item-width) );
+    height: calc( 1px * var(--item-height) );
+    color: var(--text-3);
+
+    border-radius: 8px;
+    border: 2px dashed var(--border-color-offset-1);
+    background-color: transparent;
+    z-index: 3;
+    background: var(--surface-2);
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+
+    &:hover {
+        border-color: var(--primary-color-500);
+        color: var(--primary-color-500);
+        background-color: var(--surface-1);
+    }
+
+    .text {
+        font-size: var(--item-font-size);
+        font-weight: 500;
+        text-align: center;
+
+    }
+}
+
+.dropdownContent {
+    min-width: 260px;
+    max-width: 400px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding: var(--spacing-2);
+
+    // Override ciblé pour les icônes des dropdowns workflow uniquement
+    .dropdownMenuItemIcon {
+        stroke: var(--workflow-category-color, var(--primary-color-500));
+        opacity: 0.9;
+    }
+}
+
+.dropdownLabel {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text-1);
+    padding: var(--spacing-2) var(--spacing-3);
+}
+
+.categoryLabel {
+    font-weight: 500;
+    font-size: 13.5px;
+    color: var(--text-2);
+    padding: var(--spacing-2) var(--spacing-3);
+    text-transform: none;
+    letter-spacing: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+
+    svg {
+        flex-shrink: 0;
+        opacity: 0.9;
+
+        &:first-child {
+            stroke: var(--workflow-category-color, var(--text-primary));
+        }
+    }
+}
+
+.dropdownOption {
+    padding: var(--spacing-2);
+    cursor: pointer;
+
+    &:hover {
+        background-color: var(--surface-1);
+    }
+}
+
+.optionContent {
+    display: flex;
+    gap: var(--spacing-3);
+    align-items: flex-start;
+}
+
+.optionIcon {
+    flex-shrink: 0;
+    margin-top: 2px;
+    stroke: var(--workflow-category-color, var(--primary-color-500));
+    opacity: 0.9;
+}
+
+.optionText {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-1);
+    flex: 1;
+}
+
+.optionTitle {
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--text-1);
+    line-height: 1.3;
+}
+
+.optionDescription {
+    font-size: 11px;
+    color: var(--text-3);
+    line-height: 1.4;
+}
+

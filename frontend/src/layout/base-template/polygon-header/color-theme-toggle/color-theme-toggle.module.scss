@@ -1,0 +1,47 @@
+.triggerIcon {
+    position: absolute;
+    height: 1rem;
+    width: 1rem;
+    transition: all 0.3s ease;
+}
+
+.dropdownMenuItemContent {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2-5);
+    padding: var(--spacing-2) var(--spacing-3);
+
+    >svg {
+        color: var(--text-primary);
+        flex-shrink: 0;
+    }
+
+    >span {
+        flex: 1;
+        font-weight: 500;
+    }
+}
+
+.dropdownMenuItemIcon {
+    stroke: var(--text-primary);
+}
+
+.dropdownMenuItem {
+    padding: 0;
+
+    &:hover {
+        .dropdownMenuItemIcon {
+            stroke: var(--text-primary-2);
+            fill: var(--surface-primary-soft);
+        }
+    }
+}
+
+.screenReaderOnly {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}

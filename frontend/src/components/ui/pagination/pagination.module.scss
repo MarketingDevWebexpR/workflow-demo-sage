@@ -1,0 +1,45 @@
+.pagination {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-inline: auto;
+}
+
+.paginationContent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-1);
+}
+
+.paginationItem {
+    list-style: none;
+}
+
+.paginationPrevious {
+    gap: var(--spacing-1);
+    padding-left: var(--spacing-2-5);
+}
+
+.paginationNext {
+    gap: var(--spacing-1);
+    padding-right: var(--spacing-2-5);
+}
+
+.paginationEllipsis {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--spacing-9);
+    height: var(--spacing-9);
+}
+
+.paginationEllipsisText {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}

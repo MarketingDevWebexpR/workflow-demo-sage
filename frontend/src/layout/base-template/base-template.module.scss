@@ -1,0 +1,44 @@
+.app {
+    display: flex;
+    height: inherit;
+    inset: 0;
+    z-index: 100;
+    --current-admin-menu-height: 0px;
+    flex: 1;
+    display: flex;
+        flex: 1;
+        flex-direction: column;
+        overflow: hidden;
+        background-color: var(--surface);
+
+    &FullScreen {
+        position: fixed;
+    }
+
+    &NotFullScreen {
+        position: relative;
+    }
+
+    &Content {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        // overflow: hidden;
+        background-color: var(--surface);
+    }
+}
+
+.appAdminSidebarOpened {
+    --current-admin-menu-height: var(--admin-menu-height);
+}
+
+.polygonAppContent {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.polygonAppContentMain > div {
+    margin-left: var(--polygon-sidebar-width);
+    width: calc(100% - var(--polygon-sidebar-width));
+}

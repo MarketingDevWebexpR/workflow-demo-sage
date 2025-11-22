@@ -1,0 +1,19 @@
+.adminToggleIcon {
+    position: absolute;
+    height: 1rem;
+    width: 1rem;
+    transition: all 0.3s ease;
+}
+
+.adminToggleIconOpened {
+    transform: rotate(180deg);
+}
+
+.screenReaderOnly {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}

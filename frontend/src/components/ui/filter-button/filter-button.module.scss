@@ -1,0 +1,44 @@
+.filterButton {
+    position: relative;
+}
+
+// .filterButtonActiveFilterCount {
+//     position: absolute;
+//     top: 0;
+//     right: 0;
+//     transform: translateX(50%) translateY(-50%);
+//     background-color: var(--surface-primary);
+//     color: var(--text-primary-foreground);
+//     border-radius: var(--radius-full);
+//     font-size: var(--text-xs);
+//     line-height: var(--text-xs--line-height);
+//     height: var(--spacing-6);
+//     width: var(--spacing-6);
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     font-weight: var(--font-weight-medium);
+// }
+
+.filterButtonActiveFilterCount {
+    height: 20px;
+    background-color: var(--surface-primary);
+    min-width: 20px;
+    margin-block: 0;
+    padding-block: 0;
+    transform: unset;
+    margin-left: var(--spacing-2);
+    font-weight: var(--font-weight-medium);
+    border-radius: var(--radius-full);
+    display: flex;
+    justify-content: center;
+    font-size: var(--text-xs);
+    line-height: var(--text-xs--line-height);
+    align-items: center;
+    color: var(--text-primary-foreground);
+    text-align: center;
+}
+
+.filterButtonIcon {
+    margin-right: var(--spacing-1);
+}

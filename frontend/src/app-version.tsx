@@ -1,0 +1,1 @@
+export const APP_VERSION: Readonly<`${number}.${number}.${number}`> = "0.0.1";

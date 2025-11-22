@@ -1,0 +1,12 @@
+.checkboxCell {
+    &::before {
+        position: absolute;
+        content: '';
+        inset: 0;
+        z-index: -1;
+    }
+
+    &:hover::before {
+        background-color: var(--surface-2);
+    }
+}

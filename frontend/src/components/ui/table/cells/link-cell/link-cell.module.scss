@@ -1,0 +1,45 @@
+.linkCell {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+
+    >svg {
+        flex-shrink: 0;
+        stroke: var(--text-primary);
+    }
+
+    >a {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        color: var(--text-primary);
+        overflow: hidden;
+
+        &:hover {
+            color: var(--text-primary-1);
+        }
+
+        &::before {
+            position: absolute;
+            content: '';
+            background-color: blue;
+            inset: 0;
+            background-color: transparent;
+            z-index: 0;
+        }
+
+        &:focus-within {
+            outline: 2px solid var(--border-primary);
+            outline-offset: 2px;
+        }
+    }
+
+    &[data-fallback="true"] {
+        >svg {
+            display: none;
+        }
+
+        >a {
+            color: var(--text-3);
+        }
+    }
+}

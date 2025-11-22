@@ -1,0 +1,147 @@
+@keyframes dialogIn {
+    from {
+        opacity: 0;
+        transform: translate(0%, -2%) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translate(0%, 0%) scale(1);
+    }
+}
+
+@keyframes dialogOut {
+    from {
+        opacity: 1;
+        transform: translate(0%, 0%) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translate(0%, -2%) scale(0.95);
+    }
+}
+
+.workflowDesignerPageWrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background-color: var(--surface);
+}
+
+.workflowDesignerPageContent {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.workflowDesignerPageSidebarPolygon {
+    display: none;
+}
+
+.workflowDesignerPageContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+}
+
+.workflowDesignerPageHeader {
+    padding: 0;
+    background: var(--surface);
+    padding-inline: var(--spacing-8);
+    padding-top: var(--spacing-8);
+    padding-bottom: var(--spacing-3);
+    gap: var(--spacing-4);
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color-standard);
+
+    &[data-state="open"] {
+        animation: dialogIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    &[data-state="closed"] {
+        animation: dialogOut 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        pointer-events: none;
+    }
+}
+
+.workflowDesignerPageHeaderInner {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+}
+
+.workflowDesignerPageBackButton {
+    color: var(--text-2);
+    height: fit-content;
+    padding: 0;
+}
+
+.workflowDesignerPageTitleRow {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+
+    h3 {
+        margin: 0;
+        font-size: var(--text-lg);
+        font-weight: 600;
+        color: var(--text);
+    }
+}
+
+.workflowDesignerPage {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    overflow-y: auto;
+    padding: 0;
+    position: relative;
+    isolation: isolate;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(var(--border-color-standard) 1px, transparent 1px);
+        background-size: 24px 24px;
+        opacity: 1;
+        z-index: -1;
+    }
+
+    &[data-state="open"] {
+        animation: dialogIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    &[data-state="closed"] {
+        animation: dialogOut 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        pointer-events: none;
+    }
+}
+
+.workflowDesignerPageViewer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background: transparent;
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-8);
+}
+
+.workflowDesignerPageError,
+.workflowDesignerPageEmpty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-4);
+    height: 100%;
+    color: var(--text-2);
+
+    p {
+        font-size: var(--text-base);
+        margin: 0;
+    }
+}

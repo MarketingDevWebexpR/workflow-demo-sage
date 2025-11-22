@@ -1,0 +1,266 @@
+@keyframes dialogIn {
+    from {
+        opacity: 0;
+        transform: translate(0%, -2%) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(0%, 0%) scale(1);
+    }
+}
+
+@keyframes dialogOut {
+    from {
+        opacity: 1;
+        transform: translate(0%, 0%) scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: translate(0%, -2%) scale(0.95);
+    }
+}
+
+.automationPage {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background-color: var(--surface);
+    min-height: 100%;
+    flex: 1;
+}
+
+.automationPageContent {
+    display: flex;
+    flex: 1;
+    // overflow: hidden;
+}
+
+.automationPageSidebarPolygon {
+    display: none;
+}
+
+.automationPageMain {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    // overflow: hidden;
+    position: relative;
+}
+
+.automationPageHeader {
+    padding: 0;
+    background: var(--surface);
+    padding-inline: var(--spacing-8);
+    padding-top: var(--spacing-8);
+    padding-bottom: var(--spacing-3);
+    gap: var(--spacing-4);
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color-standard);
+
+    // background: var(--surface-1);
+    // position: absolute;
+    // top: 24px;
+    // right: var(--spacing-8);
+    // z-index: 1;
+    // left: var(--spacing-8);
+    // border-radius: var(--radius-md);
+    // padding-block: 0;
+    // padding-inline: var(--spacing-4);
+    // height: 59px;
+    // background: #15191dba;
+    // backdrop-filter: blur(10px);
+
+    background-color: var(--polygon-sidebar-bg);
+    padding-top: var(--spacing-8);
+    padding-bottom: var(--spacing-3);
+    min-height: 85px;
+
+    &[data-state="open"] {
+        animation: dialogIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    &[data-state="closed"] {
+        animation: dialogOut 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        pointer-events: none;
+    }
+}
+
+.automationPageHeaderInner {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    width: 100%;
+}
+
+.automationPageBackButton {
+    color: var(--text-2);
+    height: fit-content;
+    padding: 0;
+}
+
+.automationPageTitleRow {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    flex: 1;
+
+    h3 {
+        margin: 0;
+        font-size: var(--text-lg);
+        font-weight: 600;
+        color: var(--text);
+    }
+}
+
+.automationPageStatusBadge {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+    flex-shrink: 0;
+    margin-block: auto;
+    margin-bottom: 5px;
+
+    &[data-enabled="true"] {
+        background-color: var(--text-success);
+    }
+
+    &[data-enabled="false"] {
+        background-color: var(--text-3);
+        opacity: 0.5;
+    }
+}
+
+.automationPageHeaderActions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    margin-left: auto;
+}
+
+.actionsDropdown {
+    width: 240px;
+}
+
+.dropdownMenuItem {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    padding: var(--spacing-2) var(--spacing-3);
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+    color: var(--text-1);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    transition: background 0.15s, color 0.15s;
+    width: 100%;
+    text-align: left;
+
+    &:hover {
+        background: var(--surface-2);
+        color: var(--text);
+    }
+
+    &:active {
+        background: var(--surface-3);
+    }
+
+    & svg {
+        flex-shrink: 0;
+        color: var(--text-primary);
+    }
+}
+
+.dropdownMenuItemDestructive {
+    @extend .dropdownMenuItem;
+    color: var(--text-destructive);
+
+    &:hover {
+        background: var(--surface-danger-soft);
+        color: var(--text-destructive);
+    }
+
+    & svg {
+        color: var(--text-destructive);
+    }
+}
+
+.preferencesDropdown {
+    width: 350px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.workflowConfigItem {
+    padding: var(--spacing-2);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+    gap: var(--spacing-4);
+    display: grid;
+    grid-template-columns: max-content 1fr;
+}
+
+.workflowConfigItemLabel {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--text-1);
+}
+
+.automationPageWorkflow {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    overflow-y: auto;
+    padding: 0;
+    position: relative;
+    isolation: isolate;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-size: 24px 24px;
+        opacity: 1;
+        z-index: -1;
+    }
+
+    &[data-state="open"] {
+        animation: dialogIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    &[data-state="closed"] {
+        animation: dialogOut 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        pointer-events: none;
+    }
+}
+
+.automationPageWorkflowViewer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background: transparent;
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-8);
+}
+
+.automationPageError {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-4);
+    height: 100%;
+    color: var(--text-2);
+
+    p {
+        font-size: var(--text-base);
+        margin: 0;
+    }
+}

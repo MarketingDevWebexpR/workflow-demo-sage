@@ -1,0 +1,82 @@
+.adminDataTable {
+    background-color: var(--surface);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    flex: 1;
+    // border: 1px solid var(--border-color-standard);
+    // box-shadow: var(--box-shadow-medium);
+
+    // pour voir les rings au focus en dépit du overflow: hidden
+    margin: -4px;
+    padding: 4px;
+}
+
+.adminDataTableHeader {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: var(--spacing-4);
+    gap: var(--spacing-4);
+
+    &Start, &End {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-2);
+    }
+
+    &Middle {
+        display: flex;
+        align-items: center;
+        position: relative;
+        flex: 1;
+        gap: var(--spacing-2);
+        max-width: 420px;
+        margin-left: auto;
+        border-right: 1px solid var(--border-color-standard);
+        padding-right: var(--spacing-4);
+
+        > div {
+            width: 100%;
+        }
+    }
+
+    &FocusFix {
+        position: absolute;
+        top: -1000vh;
+    }
+
+    &Selection {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-2);
+    }
+}
+
+.adminDataTableHeaderSelectionCount {
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+    color: var(--text-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.adminDataTableMain {
+    overflow: hidden;
+    display: flex;
+    flex: 1;
+    border-radius: 0.5rem;
+    overflow: auto;
+}
+
+.dragCell {
+    padding: 0;
+
+    &:hover {
+        background-color: var(--surface-2);
+    }
+}
+

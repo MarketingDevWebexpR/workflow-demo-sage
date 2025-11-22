@@ -1,0 +1,88 @@
+.dataTableRoot {
+    position: relative;
+    min-height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.dataTable {
+
+    table-layout: fixed;
+    max-height: 400px;
+
+    &Header {
+        position: sticky;
+        top: 0;
+        background-color: var(--surface);
+        z-index: 1;
+    }
+
+    &Cell {
+        min-height: 55px;
+        height: 55px;
+        position: relative;
+
+        &NoResults {
+            text-align: center;
+        }
+    }
+}
+
+.selectCell {
+    position: relative;
+    z-index: 0;
+}
+
+.dragCell {
+    padding: 0;
+
+    &:hover {
+        background-color: var(--surface-2);
+    }
+}
+
+.pointerEventsNone {
+    pointer-events: none;
+}
+
+.cursorPointer {
+    cursor: pointer;
+}
+
+.cursorDefault {
+    cursor: default;
+}
+
+.tableRowEmpty:hover {
+    background-color: initial;
+}
+
+.tableEmpty {
+    min-height: 100%;
+}
+
+.notAdminDataTable {
+    height: 100%;
+    max-height: 100%;
+
+    // Le table-wrapper
+    > div:first-child  {
+        box-shadow: var(--shadow-lg__block-surface__bg-surface-2);
+        border-radius: var(--radius-lg);
+        background-color: var(--surface);
+        border: 1px solid var(--border-color-standard);
+    }
+}
+
+.adminDataTable {
+    > div {
+        overflow: unset !important;
+    }
+}
+
+.beingDeleted {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+}

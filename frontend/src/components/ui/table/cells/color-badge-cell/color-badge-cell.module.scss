@@ -1,0 +1,14 @@
+// @import '../../../../../style/mixins/loading-animation';
+
+
+// Loading state
+[data-table][data-is-loading="true"] .colorBadgeCell {
+    position: relative;
+    // @include loading-animation(0.5);
+
+    &::before {
+        height: 1px;
+        margin-block: auto;
+        margin-inline: var(--spacing-2);
+    }
+}

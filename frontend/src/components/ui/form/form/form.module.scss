@@ -1,0 +1,322 @@
+// @import '../../../../style/mixins/spin';
+
+
+[data-form-container] {
+
+    container-type: inline-size;
+}
+
+[data-form-row] {
+    display: grid;
+    gap: var(--spacing-6);
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+// @container (min-width: 560px) {
+
+//     [data-form-row] {
+//         display: grid;
+//         grid-template-columns: repeat(2, minmax(0, 1fr));
+//     }
+// }
+
+.panelForm {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    justify-content: space-between;
+    flex: 1;
+    gap: var(--spacing-4);
+
+    &Body {
+        display: flex;
+        flex-direction: column;
+        overflow: auto;
+        padding-inline: var(--spacing-6);
+        gap: var(--spacing-4);
+        flex: 1;
+    }
+
+    &Footer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-inline: var(--spacing-6);
+        padding-block-end: var(--spacing-6);
+        gap: var(--spacing-4);
+
+        @media (min-width: 640px) {
+            justify-content: flex-end;
+        }
+    }
+
+    &Tabs {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &Col {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-6);
+    }
+
+    &SubRow {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-4);
+    }
+
+    &SubCol {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-3);
+    }
+
+
+}
+
+.formItem {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+
+    &Description {
+        font-size: var(--text-sm);
+        line-height: var(--text-sm--line-height);
+        color: var(--text-2);
+        width: 100%;
+    }
+
+    &Error {
+        color: var(--text-destructive);
+    }
+
+    &Message {
+        font-size: var(--text-sm);
+        line-height: var(--text-sm--line-height);
+        font-weight: 500;
+        color: var(--text-destructive);
+    }
+}
+
+.formItemHorizontal {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+.buttonIcon {
+
+    &Left {
+        margin-right: var(--spacing-1);
+
+        &.lucide-arrow-left {
+            transition: transform 0.150s ease-in-out;
+        }
+    }
+
+    &Right {
+        margin-left: var(--spacing-1);
+    }
+
+    &Loading {
+
+        animation: spin 1s linear infinite;
+    }
+}
+
+button:hover .buttonIconLeft.lucide-arrow-left {
+    transform: translateX(-4px);
+}
+
+.relative {
+    position: relative;
+}
+
+.inputDate {
+
+    position: relative;
+    // padding-right: var(--spacing-10);
+
+    &::-webkit-calendar-picker-indicator {
+
+        // &:focus-visible,
+        // &:focus,
+        // &:hover {
+        //     outline: 2px solid var(--border-primary);
+        //     outline-offset: 2px;
+        // }
+        position: absolute;
+        right: var(--spacing-3);
+    width: var(--spacing-4);
+    height: var(--spacing-4);
+    left: unset;
+    }
+}
+
+.inputWithIcon {
+    padding-inline-start: var(--spacing-10) !important;
+}
+
+.inputIcon {
+    position: absolute;
+    left: var(--spacing-3);
+    top: 50%;
+    transform: translateY(-50%);
+    stroke: var(--text-2);
+    pointer-events: none;
+}
+
+[class*="formItemError"] ~ .inputIcon,
+[aria-invalid="true"] ~ .inputIcon {
+    stroke: var(--text-destructive);
+}
+
+.screenReaderOnly {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+}
+
+.checkboxRow,
+.radioRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-3);
+    position: relative;
+    flex-wrap: wrap;
+}
+
+.checkboxWithLargeHitArea,
+.radioWithLargeHitArea {
+
+    cursor: pointer;
+
+    &::before {
+        position: absolute;
+        content: '';
+        background-color: transparent;
+        inset: calc(-1 * var(--spacing-1));
+        inset-inline: 0;
+    }
+
+    &:hover {
+        background-color: var(--surface-4);
+    }
+}
+
+.propsForm {
+    @extend .panelForm;
+    position: relative;
+}
+
+.propsFormContent {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    padding-inline: var(--spacing-8);
+    padding-block-end: var(--spacing-4);
+    flex: 1;
+    transition-property: opacity;
+    transition-duration: 300ms;
+    gap: var(--spacing-8);
+    opacity: 1;
+
+    &Loading {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+}
+
+.propsFormLoader {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding-inline: var(--spacing-8);
+    padding-block-end: var(--spacing-4);
+    flex: 1;
+    transition-property: opacity;
+    transition-duration: 300ms;
+    opacity: 0;
+    pointer-events: none;
+
+    &Loading {
+        opacity: 1;
+        pointer-events: auto;
+    }
+}
+
+.propsFormLoaderIcon {
+    // @include spin;
+    pointer-events: auto;
+}
+
+button.selectHighHeight {
+    height: 60px;
+}
+
+.panelFormSeparator {
+    border-top: 1px solid var(--border-color-standard);
+    margin-block: var(--spacing-4);
+}
+
+.alignItemsCenter {
+    align-items: center;
+}
+
+.layoutFieldSelectableThumbnail {
+    gap: var(--spacing-8);
+    display: grid;
+    grid-template-columns: max-content 1fr;
+}
+
+
+.layoutFieldThumbnail {
+    display: flex;
+    gap: var(--spacing-6);
+    border: 1px solid var(--border-color-standard);
+    padding: var(--spacing-1);
+
+    >div {
+        border: 1px solid var(--border-color-offset-1);
+        background-color: var(--surface-2);
+        padding: var(--spacing-2-5);
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        border-radius: var(--radius-md);
+    }
+
+    &:not(:nth-child(2)) {
+        border-top: none;
+    }
+
+    &:nth-child(2) {
+        border-top-left-radius: var(--radius-md);
+        border-top-right-radius: var(--radius-md);
+    }
+
+    &:last-child {
+        border-bottom-right-radius: var(--radius-md);
+        border-bottom-left-radius: var(--radius-md);
+    }
+}
+
+.layoutField {
+    display: grid !important;
+    grid-template-columns: max-content minmax(0, 200px);
+    gap:0!important;
+    column-gap: var(--spacing-8) !important;
+}

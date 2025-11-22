@@ -1,0 +1,30 @@
+.workflowActionTile {
+    border-radius: 8px;
+    border: 2px solid var(--surface-2);
+    background: var(--surface-2);
+    z-index: 3;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+
+    &:hover {
+        border-color: var(--workflow-category-border-color, var(--primary-color-500));
+    }
+
+    > svg {
+        display: inline-flex;
+        vertical-align: bottom;
+        margin-right: var(--spacing-2);
+        place-self: center;
+    }
+}
+
+.actionIcon {
+    color: var(--workflow-category-color, var(--primary-color-500));
+    flex-shrink: 0;
+    margin-left: var(--spacing-2);
+}
+
+// [data-included-in-folder-path="true"] .workflowActionTile {
+//     background-color: #d5dfff;
+// }

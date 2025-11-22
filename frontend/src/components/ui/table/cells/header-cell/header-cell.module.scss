@@ -1,0 +1,35 @@
+.headerCell {
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text);
+    font-size: var(--text-xs);
+    line-height: var(--text-xs--line-height);
+    isolation: isolate;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-1);
+}
+
+.headerCellClickable {
+
+    cursor: pointer;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+
+    &::before {
+        z-index: -1;
+        content: '';
+        position: absolute;
+        inset: 0;
+    }
+
+    &:hover::before {
+        background-color: var(--surface-2);
+    }
+}
+
+.headerCellSortIcon {
+    color: var(--text-primary);
+}

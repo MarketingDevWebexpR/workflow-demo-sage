@@ -1,0 +1,12 @@
+.label {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+[disabled] ~ .label {
+    cursor: not-allowed;
+    opacity: 0.7;
+}

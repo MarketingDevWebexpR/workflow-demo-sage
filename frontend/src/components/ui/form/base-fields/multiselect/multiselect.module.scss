@@ -1,0 +1,315 @@
+.multiSelectTrigger {
+    box-shadow: var(--box-shadow-light);
+    display: flex;
+    height: auto;
+    min-height: var(--spacing-10);
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color-standard);
+    background-color: var(--surface-minus-2);
+    padding-inline: var(--spacing-3);
+    padding-block: var(--spacing-2);
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+    color: var(--text);
+    gap: var(--spacing-2);
+    overflow: hidden;
+    white-space: nowrap;
+
+    &:hover {
+        border-color: var(--border-color-offset-1);
+        background-color: var(--surface-minus-2);
+        color: var(--text);
+    }
+
+    &:focus-visible, &:focus-within {
+        outline: 2px solid var(--border-primary);
+        outline-offset: 2px;
+    }
+
+    &:disabled,
+    &[disabled] {
+        cursor: not-allowed;
+        background-color: var(--surface-2);
+        opacity: unset;
+        pointer-events: auto;
+
+        > * {
+            opacity: 0.55;
+        }
+
+        &:hover {
+            border-color: var(--border-color-standard);
+        }
+    }
+
+    &:hover {
+        border-color: var(--border-color-offset-1);
+    }
+
+    &[aria-invalid="true"] {
+        background-color: var(--surface-danger-soft);
+        border-color: var(--border-destructive);
+        color: var(--text-destructive);
+
+        &::placeholder {
+            color: var(--text-destructive);
+        }
+
+        &:hover {
+            border-color: var(--border-destructive-hover);
+        }
+    }
+
+    &[aria-invalid="true"]:focus-visible, &[aria-invalid="true"]:focus-within {
+        outline: 2px solid var(--border-destructive);
+        outline-offset: 2px;
+    }
+}
+
+.multiSelectTriggerIcon {
+    width: var(--spacing-4);
+    height: var(--spacing-4);
+    flex-shrink: 0;
+    opacity: 0.5;
+}
+
+.multiSelectPlaceholder {
+    min-width: 0;
+    overflow: hidden;
+    font-weight: 400;
+    color: var(--text-3);
+}
+
+.multiSelectValueContainer {
+    display: flex;
+    width: fit-content;
+    gap: var(--spacing-1-5, 0.375rem);
+    overflow: hidden;
+}
+
+.multiSelectValueContainerWrap {
+    height: 100%;
+    flex-wrap: wrap;
+}
+
+.multiSelectValueItem {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-1);
+    cursor: pointer;
+    user-select: none;
+    transition: opacity 0.15s ease;
+
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+.multiSelectBadge {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-1);
+}
+
+.multiSelectRemoveIcon {
+    width: 0.5rem;
+    height: 0.5rem;
+    color: var(--text-3);
+    transition: color 0.15s ease;
+
+    .multiSelectValueItem:hover & {
+        color: var(--text-destructive);
+    }
+}
+
+.multiSelectContent {
+    --radix-popover-trigger-width: 200px;
+    min-width: var(--radix-popover-trigger-width);
+    padding: 0;
+    transition: transform 0.2s, opacity 0.2s;
+
+    // Annuler toutes les animations du popover et les remplacer par celles du select
+    &[data-state="open"] {
+        animation: fadeIn 0.2s, zoomIn 0.2s !important;
+
+        &[data-side="bottom"] {
+            animation-name: fadeIn, zoomIn, slideInFromTop !important;
+            animation-duration: 0.2s, 0.2s, 0.2s !important;
+        }
+
+        &[data-side="top"] {
+            animation-name: fadeIn, zoomIn, slideInFromBottom !important;
+            animation-duration: 0.2s, 0.2s, 0.2s !important;
+        }
+
+        &[data-side="right"] {
+            animation-name: fadeIn, zoomIn, slideInFromLeft !important;
+            animation-duration: 0.2s, 0.2s, 0.2s !important;
+        }
+
+        &[data-side="left"] {
+            animation-name: fadeIn, zoomIn, slideInFromRight !important;
+            animation-duration: 0.2s, 0.2s, 0.2s !important;
+        }
+    }
+
+    &[data-state="closed"] {
+        animation: fadeOut 0.2s, zoomOut 0.2s !important;
+
+        &[data-side="bottom"],
+        &[data-side="top"],
+        &[data-side="left"],
+        &[data-side="right"] {
+            animation: fadeOut 0.2s, zoomOut 0.2s !important;
+        }
+    }
+}
+
+.srOnly {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.multiSelectCheckIcon {
+    margin-right: var(--spacing-2);
+    width: 1rem;
+    height: 1rem;
+    transition: opacity 0.15s ease;
+}
+
+.multiSelectCheckIconSelected {
+    opacity: 1;
+}
+
+.multiSelectCheckIconUnselected {
+    opacity: 0;
+}
+
+.multiSelectItemSelected {
+    background-color: var(--surface-2) !important;
+}
+
+.multiSelectItemFocused {
+    outline: 2px solid var(--border-primary)!important;
+    outline-offset: 2px;
+    z-index: 2;
+}
+
+// === KEYFRAMES D'ANIMATION (identique au select) ===
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.95);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+@keyframes zoomOut {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(0.95);
+    }
+}
+
+@keyframes slideInFromTop {
+    from {
+        transform: translateY(-0.5rem) scale(0.95);
+    }
+
+    to {
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes slideInFromBottom {
+    from {
+        transform: translateY(0.5rem) scale(0.95);
+    }
+
+    to {
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes slideInFromLeft {
+    from {
+        transform: translateX(-0.5rem) scale(0.95);
+    }
+
+    to {
+        transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(0.5rem) scale(0.95);
+    }
+
+    to {
+        transform: translateX(0) scale(1);
+    }
+}
+
+.multiSelectFooter {
+    padding: var(--spacing-2) var(--spacing-3);
+    border-top: 1px solid var(--border-color-standard);
+    display: flex;
+    justify-content: flex-end;
+    background-color: var(--surface-minus-1);
+}
+
+.multiSelectCloseButton {
+    width: 100%;
+}
+
+.highlightedText {
+    color: var(--text-primary-1);
+    font-weight: 500;
+    position: relative;
+    isolation: isolate;
+
+    &::before {
+        content: '';
+        position: absolute;
+        background: var(--surface-success-soft);
+        inset: 0;
+        z-index: -1;
+        border-radius: var(--radius-xs);
+    }
+}

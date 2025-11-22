@@ -1,0 +1,119 @@
+.tooltipContent {
+    z-index: 150;
+    overflow: hidden;
+    border-radius: var(--spacing-3);
+    background: var(--gray-900);
+    color: var(--gray-200);
+    border: 0;
+    padding: var(--spacing-1-5) var(--spacing-3);
+    font-size: var(--text-xs);
+    line-height: var(--text-xs--line-height);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    opacity: 1;
+    transition: opacity 0.150s, transform 0.150s;
+    max-width: 300px;
+
+    &[data-animate="true"] {
+        animation: fadeIn 0.150s, zoomIn 0.150s;
+
+        &[data-side="bottom"] {
+            animation: fadeIn 0.150s, zoomIn 0.150s, slideInFromTop 0.150s;
+        }
+
+        &[data-side="top"] {
+            animation: fadeIn 0.150s, zoomIn 0.150s, slideInFromBottom 0.150s;
+        }
+
+        &[data-side="right"] {
+            animation: fadeIn 0.150s, zoomIn 0.150s, slideInFromLeft 0.150s;
+        }
+
+        &[data-side="left"] {
+            animation: fadeIn 0.150s, zoomIn 0.150s, slideInFromRight 0.150s;
+        }
+
+        &[data-state="closed"] {
+            animation: fadeOut 0.150s, zoomOut 0.150s;
+        }
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.95);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+@keyframes zoomOut {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(0.95);
+    }
+}
+
+@keyframes slideInFromTop {
+    from {
+        transform: translateY(-0.5rem) scale(0.95);
+    }
+
+    to {
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes slideInFromBottom {
+    from {
+        transform: translateY(0.5rem) scale(0.95);
+    }
+
+    to {
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes slideInFromLeft {
+    from {
+        transform: translateX(-0.5rem) scale(0.95);
+    }
+
+    to {
+        transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(0.5rem) scale(0.95);
+    }
+
+    to {
+        transform: translateX(0) scale(1);
+    }
+}

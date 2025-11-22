@@ -1,0 +1,20 @@
+.upToRight {
+
+    top: 0;
+    right: 0;
+    border: calc( 1px * var(--connector-thickness)) solid var(--gray-500);
+    border-top: 0;
+    border-right: 0;
+    width: calc(
+        1px * var(--x-coefficient) / 2
+        + 1px * var(--connector-thickness) / 2
+        + 1px * var(--y-axis-thickness) / 2    
+    );
+    height: calc(
+        1px * ( var(--y-coefficient) ) / 2
+        + 1px * var(--connector-thickness) / 2
+        + 1px * var(--x-axis-thickness) / 2    
+    );
+    // derniere ligne => x axis thickness
+    border-bottom-left-radius: calc( 1px * var(--connector-radius) );
+}

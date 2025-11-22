@@ -1,0 +1,33 @@
+.triggerIcon {
+    height: 18px;
+    width: 18px;
+}
+
+.screenReaderOnly {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.dropdownMenuItem {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    
+    &Active {
+        font-weight: 500;
+    }
+}
+
+.dropdownMenuItemFlag {
+    font-size: 18px;
+    line-height: 1;
+}
+

@@ -1,0 +1,79 @@
+// @import '../../../../../style/mixins/loading-animation';
+
+
+.documentCell {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    max-width: 100%;
+}
+
+.documentInfos {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-1);
+    overflow: hidden;
+    flex: 1;
+}
+
+.documentName {
+    font-weight: 600;
+}
+
+.documentPath {
+    font-size: var(--text-xs);
+    line-height: var(--text-xs--line-height);
+    color: var(--text-3);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-0-5);
+
+    > span {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    > span:last-child {
+        flex-shrink: 0;
+    }
+}
+
+
+// Loading state
+[data-table][data-is-loading="true"] .documentCell,
+.documentCell[data-is-loading="true"] {
+
+    pointer-events: none;
+
+    .documentName {
+        // @include loading-animation(1);
+        pointer-events: auto;
+    }
+
+    .documentInfos {
+        gap: 0;
+    }
+
+    .documentName {
+        position: relative;
+        // @include loading-animation(1);
+        width: fit-content;
+
+        &::before {
+            height: 2px;
+            margin: auto;
+        } 
+    }
+
+    .documentPath {
+        position: relative;
+        // @include loading-animation(0.5);
+        width: fit-content;
+
+        &::before {
+            height: 1px;
+            margin: auto;
+        } 
+    }
+}

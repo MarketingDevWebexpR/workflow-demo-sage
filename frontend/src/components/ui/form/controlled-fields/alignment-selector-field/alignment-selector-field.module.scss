@@ -1,0 +1,43 @@
+.alignmentSelectorField {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    column-gap: var(--spacing-8);
+    row-gap: 0;
+}
+
+.alignmentSelectorFieldThumbnail {
+    width: 100%;
+    height: 100%;
+    border: 1px solid var(--border-color-standard);
+    display: flex;
+    padding: var(--spacing-1);
+    gap: var(--spacing-6);
+
+    >div {
+        border: 1px solid var(--border-color-offset-1);
+        background-color: var(--surface-2);
+        padding: var(--spacing-1) var(--spacing-2-5);
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        border-radius: var(--radius-md);
+
+        &:first-child {
+            padding: var(--spacing-2-5);
+        }
+    }
+
+    &:not(:nth-child(2)) {
+        border-top: none;
+    }
+
+    &:nth-child(2) {
+        border-top-left-radius: var(--radius-md);
+        border-top-right-radius: var(--radius-md);
+    }
+
+    &:last-child {
+        border-bottom-right-radius: var(--radius-md);
+        border-bottom-left-radius: var(--radius-md);
+    }
+}

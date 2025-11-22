@@ -1,0 +1,27 @@
+.workflowNoTile {
+
+    max-width: calc( 1px * var(--item-width) );
+    max-height:  calc( 1px * var(--item-height) );
+    width: calc( 1px * var(--item-width) );
+    height: calc( 1px * var(--item-height) );
+    color: var(--item-color);
+    transition: color 1s;
+
+    border-radius: 100vmax;
+    z-index: 3;
+    background-color: var(--surface);
+    color: var(--workflow-no-tile-text-color) !important;
+    max-width: 66px;
+    max-height: 33px;
+}
+
+
+.workflowNoTileNoIcon {
+    width: 16px;
+    height: 16px;
+    padding: var(--spacing-0-5);
+    vertical-align: bottom;
+    background: var(--workflow-no-tile-icon-bg-color);
+    margin-right: var(--spacing-1);
+    border-radius: var(--radius-full);
+}

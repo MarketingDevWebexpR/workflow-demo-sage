@@ -1,0 +1,108 @@
+.carousel {
+    position: relative;
+}
+
+.carouselContent {
+    overflow: hidden;
+    padding: var(--spacing-4);
+    margin: calc(var(--spacing-4) * -1);
+}
+
+.carouselContentInner {
+    display: flex;
+
+    &Horizontal {
+        margin-left: calc(var(--spacing-4) * -1);
+    }
+
+    &Vertical {
+        flex-direction: column;
+        gap: var(--spacing-4);
+    }
+}
+
+.carouselItem {
+    min-width: 0;
+    flex-shrink: 0;
+    flex-grow: 0;
+    flex-basis: 100%;
+
+    &Horizontal {
+        padding-left: var(--spacing-4);
+    }
+
+    &Vertical {
+        padding-top: var(--spacing-4);
+    }
+}
+
+.carouselNavigationButton {
+    width: var(--spacing-8);
+    height: var(--spacing-8);
+    border-radius: var(--radius-full);
+}
+
+.carouselPreviousButtonVertical {
+    top: calc(var(--spacing-12) * -1);
+    left: 50%;
+    transform: translateX(-50%) rotate(90deg);
+}
+
+.carouselNextButtonVertical {
+    bottom: calc(var(--spacing-12) * -1);
+    left: 50%;
+    transform: translateX(-50%) rotate(90deg);
+}
+
+.carouselNavigationButtonLabel,
+.carouselNavigationHiddenText {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+.carouselDots {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-1);
+    margin-top: var(--spacing-4);
+}
+
+.carouselDot {
+    width: var(--spacing-2);
+    height: var(--spacing-2);
+    border-radius: var(--radius-full);
+    transition: background-color 0.3s ease;
+
+    &Active {
+        background-color: var(--text-primary);
+    }
+
+    &Inactive {
+        background-color: var(--surface-3);
+
+        &:hover {
+            background-color: var(--surface-4);
+        }
+    }
+}
+
+.carouselNavigation {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: var(--spacing-4);
+    margin-top: var(--spacing-4);
+}
+
+.carouselControls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--spacing-4);
+}

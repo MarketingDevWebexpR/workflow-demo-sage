@@ -1,0 +1,32 @@
+.colorSchemeSelector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-2);
+
+    .colorSchemeSelectorItem {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+}
+
+.colorSchemeSelectorItem {
+    width: var(--spacing-8);
+    height: var(--spacing-8);
+    border-radius: var(--radius-md);
+    border-width: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &:hover {
+        outline: 2px solid var(--border-primary-2);
+        outline-offset: 2px;
+    }
+}
+
+.colorSchemeSelectorItemSelected {
+    outline: 2px solid var(--border-primary-2);
+    outline-offset: 2px;
+}

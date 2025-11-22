@@ -1,0 +1,733 @@
+@import './fonts/bnpp-sans.font-face.module.scss';
+@import './fonts/inter.font-face.module.scss';
+@import './fonts/moderustic.font-face.module.scss';
+@import './fonts/open-sans.font-face.module.scss';
+@import './fonts/ubuntu.font-face.module.scss';
+@import './fonts/roboto.font-face.module.scss';
+@import './fonts/merriweather-sans.font-face.module.scss';
+@import './fonts/bnpp-type.font-face.module.scss';
+
+@mixin general-theme {
+
+    /* Police */
+    --font-brand: var(--font-brand, 'Ubuntu');//var(--font-brand, sans-serif);
+    --font-standard: 'Roboto';// var(--font-standard, sans-serif);
+
+
+    /* Structure */
+    --header-height: 70px;//56px;//65px;
+    --admin-menu-height: 41px;
+
+
+    /* Spacings à privilégier */
+    --spacing-0: 0rem; // 0px
+    --spacing-px: 0.0625rem; // 1px
+    --spacing-0-5: 0.125rem; // 2px
+    --spacing-1: 0.25rem; // 4px
+    --spacing-1-5: 0.375rem; // 6px
+    --spacing-2: 0.5rem; // 8px
+    --spacing-2-5: 0.625rem; // 10px
+    --spacing-3: 0.75rem; // 12px
+    --spacing-3-5: 0.875rem; // 14px
+    --spacing-4: 1rem; // 16px
+    --spacing-5: 1.25rem; // 20px
+    --spacing-6: 1.5rem; // 24px
+    --spacing-7: 1.75rem; // 28px
+    --spacing-8: 2rem; // 32px
+    --spacing-9: 2.25rem; // 36px
+    --spacing-10: 2.5rem; // 40px
+    --spacing-11: 2.75rem; // 44px
+    --spacing-12: 3rem; // 48px
+    --spacing-14: 3.5rem; // 56px
+    --spacing-16: 4rem; // 64px
+    --spacing-20: 5rem; // 80px
+    --spacing-24: 6rem; // 96px
+    --spacing-32: 8rem; // 128px
+
+
+    /* Tailles de texte */
+    --text-xs: 0.75rem; // 12px
+    --text-xs--line-height: calc(1 / 0.75);
+    --text-sm: 0.875rem; // 14px
+    --text-sm--line-height: calc(1.25 / 0.875);
+    --text-base: 1rem; // 16px
+    --text-base--line-height: calc(1.75 / 1);
+    --text-lg: 1.125rem; // 18px
+    --text-lg--line-height: calc(1.75 / 1.125);
+    --text-xl: 1.25rem; // 20px
+    --text-xl--line-height: calc(1.75 / 1.25);
+    --text-2xl: 1.5rem; // 24px
+    --text-2xl--line-height: calc(2 / 1.5);
+    --text-3xl: 1.875rem; // 30px
+    --text-3xl--line-height: calc(2.25 / 1.875);
+    --text-4xl: 2.25rem; // 36px
+    --text-4xl--line-height: calc(2.5 / 2.25);
+
+
+    /* Radius */
+    --radius-xs: 0.125rem;
+    --radius-sm: 0.25rem;
+    --radius-md: 0.375rem;
+    --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
+    --radius-2xl: 1rem;
+    --radius-3xl: 1.5rem;
+    --radius-4xl: 2rem;
+    --radius-5xl: 2.5rem;
+    --radius-6xl: 3rem;
+    --radius-7xl: 3.5rem;
+    --radius-8xl: 4rem;
+    --radius-full: 9999px;
+
+
+    /* Niveaux de gris avec une note de couleur primaire */
+    --gray-25: #fcfcfd;
+    --gray-50: #f3f6fa;
+    --gray-75: #f2f2f2;
+    --gray-100: #e5ecf1;
+    --gray-200: #d6dee6;
+    --gray-300: #bcc7d2;
+    --gray-400: #a3afbd;
+    --gray-500: #8a96a3;
+    --gray-600: #5f6670;
+    --gray-700: #3e444c;
+    --gray-750: #2e3239;
+    // --gray-750: #2a3038;
+    --gray-775: #272b31;
+    // --gray-775:#232a31;
+    --gray-785: #27303a;
+    --gray-800: #20252b;
+    --gray-900: #15191d;
+    --gray-950: #0a0d10;
+    --black: #000000;
+
+
+    /* Couleurs primaires - Bleu violacé */
+    --primary-color-25: #f7f8fe;    /* Très pâle, presque blanc avec une pointe de bleu-violet */
+    --primary-color-50: #e6eafd;    /* Bleu-violet très clair */
+    --primary-color-100: #d0d6fa;   /* Bleu-violet pastel */
+    --primary-color-200: #b1baf5;   /* Bleu-violet doux */
+    --primary-color-300: #8d9ae9;   /* Bleu-violet moyen clair */
+    --primary-color-400: #6a7ad8;   /* Bleu-violet moyen */
+    --primary-color-500: #4969c6;   /* Bleu violacé principal */
+    --primary-color-600: #3a53a3;   /* Bleu-violet soutenu */
+    --primary-color-700: #2e417f;   /* Bleu-violet foncé */
+    --primary-color-800: #232f5c;   /* Bleu-violet très foncé */
+    --primary-color-900:#0f1326;   /* Presque noir, nuance de bleu-violet */
+    --primary-color-950: #0c0e16;   /* Presque noir, nuance de bleu-violet */
+
+
+    /* Couleurs de fichiers */
+    --folder-color-bg: hsl(39, 98%, 56%, 0.1);
+    --folder-color-icon: #F79009;
+    --sheet-color-bg: hsl(149, 77%, 39%, 0.1);
+    --sheet-color-icon: #17B261;
+    --pdf-color-bg: hsl(4, 86%, 58%, 0.1);
+    --pdf-color-icon: #F04438;
+    --link-color-bg: hsl(252, 92%, 66%, 0.1);
+    --link-color-icon: #7A5AF8;
+    --video-color-bg: hsl(318, 83%, 60%, 0.1);
+    --video-color-icon: #EE46BC;
+    --slide-color-bg: hsl(15, 100%, 51%, 0.1);
+    --slide-color-icon: #FF4405;
+    --doc-color-bg: hsl(211, 95%, 58%, 0.1);
+    --doc-color-icon: #2E90FA;
+    --image-color-bg: hsl(171, 79%, 40%, 0.1);
+    --image-color-icon: hsl(171, 79%, 40%);
+    --default-file-color-bg: hsl(0, 0%, 61%, 0.1);
+
+
+    /* Couleurs de texte de statut */
+    --orange-color-25: #FFFCF5;
+    --orange-color-50: #FFFAEB;
+    --orange-color-100: #FEF0C7;
+    --orange-color-200: #FEDF89;
+    --orange-color-300: #FEC84B;
+    --orange-color-400: #FDB022;
+    --orange-color-500: #F79009;
+    --orange-color-600: #DC6803;
+    --orange-color-700: #B54708;
+    --orange-color-800: #93370D;
+    --orange-color-900: #7A2E0E;
+
+    --red-color-25: #FFFBFA;
+    --red-color-50: #FEF3F2;
+    --red-color-100: #FEE4E2;
+    --red-color-200: #FECDCA;
+    --red-color-300: #FDA29B;
+    --red-color-400: #F97066;
+    --red-color-500: #D52727;
+    --red-color-600: #B42318;
+    --red-color-700: #a21d14;
+    --red-color-800: #912018;
+    --red-color-900: #7A271A;
+
+    --green-color-25: #F6FEF9;
+    --green-color-50: #ECFDF3;
+    --green-color-100: #D1FADF;
+    --green-color-200: #A6F4C5;
+    --green-color-300: #6CE9A6;
+    --green-color-400: #32D583;
+    --green-color-500: #12B76A;
+    --green-color-600: #039855;
+    --green-color-700: #027A48;
+    --green-color-800: #05603A;
+    --green-color-900: #054F31;
+
+    --blue-color-25: #F5FAFF;
+    --blue-color-50: #EFF8FF;
+    --blue-color-100: #D1E9FF;
+    --blue-color-200: #B2DDFF;
+    --blue-color-300: #84ADFF;
+    --blue-color-400: #53B1FD;
+    --blue-color-500: #2E90FA;
+    --blue-color-600: #1570EF;
+    --blue-color-700: #175CD3;
+    --blue-color-800: #1849A9;
+    --blue-color-900: #1941B5;
+
+
+    --warning-bg-color-standard: var(--orange-color-25);
+    --warning-border-color-standard: var(--orange-color-200);
+    --warning-color-standard: var(--orange-color-600);
+
+    --success-color-standard: var(--green-color-600);
+
+    --text-color-secondary-standard: #1C708D;
+
+    --text-color-tertiary-standard: #B83076;
+    --text-color-tertiary-offset-1: #93265D;
+
+    --icon-color: var(--text);
+    --bg-dot: #c5c5c57a;
+
+    --polygon-sidebar-width: 280px;
+
+    /* Automation */
+    --automation-content-bg: rgb(255 255 255 / 68%);
+    --automation-content-shadow: 0px 0px 50px 50px rgb(255 255 255 / 68%);
+    --automation-title-highlight: #cc8703;
+}
+
+
+@mixin light-theme {
+    /* Couleurs de surface */
+    // --- Général ---
+    --surface-minus-2: #ffffff;
+    --surface-minus-1: #ffffff;
+    --surface-minus-1-hover: #f8fafb;
+    --surface: #ffffff;
+
+    --surface-0-5: var(--gray-25);
+    --surface-1: var(--gray-25);
+    --surface-1-5: #fafbfd;//#f9f9f9;
+    --surface-2: var(--gray-50);
+    --surface-3: var(--gray-100);
+    --surface-4: var(--gray-200);
+    --surface-invert: var(--gray-800);
+    --surface-invert-1: var(--gray-950);
+
+    // --- Primaires ---
+    --surface-primary-soft-2: var(--primary-color-25);
+    --surface-primary-soft-1: var(--primary-color-50);
+    --surface-primary-soft: var(--primary-color-100);
+    --surface-primary-soft-small-area: var(--primary-color-100);
+    --surface-primary-minus-1: var(--primary-color-400);
+    --surface-primary: #4969c6;//var(--primary-color-500);
+    --surface-primary-1: var(--primary-color-600);
+    --surface-primary-2: var(--primary-color-700);
+    --surface-footer: var(--primary-color-400);
+
+    // --- Destructives ---
+    --surface-danger-soft: #ffd6dc;
+    --surface-danger: #d85768;
+    --surface-danger-1: #c23c4e;
+    --surface-danger-2: #b32d3f;
+
+    // --- Warning ---
+    --surface-warning-soft: #fff7e6;
+    --surface-warning: #ffe6c4;
+    --surface-warning-1: #ffd9ad;
+    --surface-warning-2: #ffcc96;
+
+    // --- Succès ---
+    --surface-success-soft: #effff9;
+
+    // --- Workflow triggers ---
+    --workflow-trigger-create-bg: #84dfc8;
+    --workflow-trigger-create-text: #158a55;
+    --workflow-trigger-update-bg: #85c4ff;
+    --workflow-trigger-update-text: #0c5ac7;
+    --workflow-trigger-delete-bg: #ff9aad;
+    --workflow-trigger-delete-text: #c23c4e;
+
+
+    /* Couleurs de texte */
+    // --- Général ---
+    --text-minus-2: var(--black);
+    --text-minus-1: var(--gray-950);
+    --text: var(--gray-750);
+    --text-1: var(--gray-700);
+    --text-2: var(--gray-600);
+    --text-3: var(--gray-500);
+    --text-color-invert-standard: var(--gray-50);
+    --text-color-invert-offset-1: white;
+    --text-color-always-dark: var(--gray-950);
+
+
+    // --- Primaires ---
+    --text-primary: var(--primary-color-500);
+    --text-primary-1: var(--primary-color-600);
+    --text-primary-2: var(--primary-color-700);
+    --text-primary-3: var(--primary-color-800);
+
+    --text-primary-foreground: white;
+    --text-primary-foreground-1: var(--primary-color-100);
+    --text-primary-foreground-2: var(--primary-color-200);
+    --text-primary-foreground-3: var(--primary-color-300);
+    --text-primary-foreground-4: var(--primary-color-400);
+
+    // --- Destructives ---
+    --text-destructive-foreground: white;
+    --text-destructive: #c23c4e;
+    --text-destructive-2: #a12435;
+
+    // --- Succès ---
+    --text-success-foreground: white;
+    --text-success: #0c9472;
+    --text-success-foreground-soft: var(--text-success);
+
+    // --- Warning ---
+    --text-warning-foreground: #554022;
+    --text-warning: #cc7400;
+
+
+    /* Couleurs de bordures */
+    // Général
+    --border-color-offset-minus-1: var(--gray-75);
+    --border-color-standard: var(--gray-100);
+    --border-color-offset-1: var(--gray-300);
+    --border-color-offset-2: var(--gray-400);
+    --border-color-offset-2-black: var(--gray-400);
+    --border-color-offset-3: var(--gray-500);
+    --border-color-invert-standard: var(--gray-800);
+    --border-color-invert-offset-1: var(--gray-950);
+
+    // Primaires
+    --border-primary-soft: var(--primary-color-200);
+    --border-primary-soft-small-area: var(--primary-color-200);
+    --border-primary: var(--primary-color-500);
+    --border-primary-1: var(--primary-color-600);
+    --border-primary-2: var(--primary-color-700);
+
+    // Destructives
+    --border-destructive: #d2565d;
+    --border-destructive-hover: #881a1a;
+
+    // Warning
+    --border-warning: #e9b589;
+
+    // Succès
+    --border-success: #a9d8cb;
+
+
+    /* Ombres */
+    --box-shadow-wide-1: 0 2px 20px -5px #00000015;
+    --box-shadow-wide-1: 0 2px 20px -5px #00000015;
+
+    --shadow-header: 0 2px 20px -5px #46464669;
+    --box-shadow-page-editor: 0 15px 38px -5px #81818166;
+    --box-shadow-light: 0 2px 5px -3px #00000025;
+    --box-shadow-light-hover: 0 2px 12px 0 #00000015; // On se rapproche du medium
+    --box-shadow-medium: 0 2px 15px 0 #00000015;
+    --box-shadow-medium-hover: 0 4px 14px 7px #00000010;//0 2px 20px -1px #00000035;
+    --box-shadow-large: 0 2px 20px -5px #c7c7c7ed;
+    --box-shadow-large-hover: 0 2px 25px -5px #000000ed;
+    --box-shadow-2xl: 0 22px 50px -15px rgba(0, 0, 0, 0.20);
+    --box-shadow-2xl-hover: 0 28px 55px -15px rgba(0, 0, 0, 0.35);
+    --shadow-2xl__block-surface__bg-surface-2: var(--box-shadow-2xl);
+    --shadow-2xl__block-surface__bg-surface-2-hover: var(--box-shadow-2xl-hover);
+    --box-shadow-automation: 0 10px 41px -7px rgba(0, 0, 0, 0.12);
+
+    --shadow-sm__block-surface-minus-1__bg-surface: 0 6px 16px -4px #d9d9d9;
+    --shadow-sm__block-surface-minus-1__bg-surface-hover: 0 7px 25px -2px #d7d7d7;
+
+    --shadow-lg__block-surface__bg-surface: 0 15px 35px -10px #c0d5eb78;
+    --shadow-lg__block-surface__bg-surface-2: 0 15px 35px -10px #adb4bd6b;
+    --shadow-lg__block-surface__bg-surface-2-hover: 0 21px 52px 0px #acb3bf6b;
+    --shadow-footer: inset 0px 60px 80px -70px #121d36;
+
+
+    /* Animation de chargement */
+    --loading-animation-start-color: hsla(0, 0%, 0%, .5);
+    --loading-animation-end-color: hsla(0, 0%, 0%, .15);
+
+
+    /* Gradients */
+    --gradient-1: linear-gradient(94deg, #54B6AE 0%, #3B98DA 11.99%, #254A9A 83.65%, #F7496E 100%);
+    --gradient-2: linear-gradient(90deg, #54B6AE -0.12%, #54B6AE 9.92%, #3B98DA 30%, #254A9A 42.05%, #ED1443 55.1%, #F25C19 84.21%, #F25C19 100.28%);
+    --gradient-3: linear-gradient(270deg, #54B6AE 0%, #3B98DA 27%, #254A9A 100%);
+    --gradient-4: linear-gradient(94deg, #254A9A 0%, #524995 37.42%, #FFCE00 100%);
+    --gradient-text: linear-gradient(to left, #035e6c, #123b58, #304a88, #970c34);
+
+    --menu-1-shadow-color: #288994;
+    --menu-1-gradient: linear-gradient(to bottom, #45969f, #3599ad 40%, #146f6d, #0b6d6d);
+    --menu-1-gradient-bar: linear-gradient(to left, #45969f, #3599ad 40%, #146f6d, #0b6d6d);
+
+    --menu-2-shadow-color: #5a85b5;
+    --menu-2-gradient: linear-gradient(to bottom, #1e4a75, #269cdb 40%, #166e9d, #106a9a);
+    --menu-2-gradient-bar: linear-gradient(to left, #83acd5, #269cdb 40%, #166e9d, #106a9a);
+
+    --menu-3-shadow-color: #4a6b95;
+    --menu-3-gradient: linear-gradient(to bottom, #b5ccea, #6284ee 40%, #3959a6, #204290);
+    --menu-3-gradient-bar: linear-gradient(to left, #b5ccea, #6284ee 40%, #3959a6, #204290);
+
+    --menu-4-shadow-color: #7a65b5;
+    --menu-4-gradient: linear-gradient(to bottom, #b8ace3, #8362b0 40%, #53317e, #32226d);
+    --menu-4-gradient-bar: linear-gradient(to left, #b8ace3, #8362b0 40%, #53317e, #32226d);
+
+    --menu-5-shadow-color: #b55a85;
+    --menu-5-gradient: linear-gradient(to bottom, #ebadcf, #c66da0 40%, #8f245e, #8d1a58);
+    --menu-5-gradient-bar: linear-gradient(to left, #ebadcf, #c66da0 40%, #8f245e, #8d1a58);
+
+    --module-card-bg: rgb(255 255 255 / 23%);
+    --header-bg: var(--surface-minus-1);
+    --header-bg-backdrop-filter: blur(24px);
+
+    --polygon-sidebar-top-left-corner-bg: rgb(236 240 255);
+    --polygon-sidebar-bg: rgb(230 237 255 / 52%);
+    --polygon-sidebar-bg-hover: var(--primary-color-50);
+    --polygon-sidebar-bg-active: var(--primary-color-100);
+
+    /* Workflow Categories Colors */
+    --workflow-category-control-flow: #7c3aed;    /* Purple - Logique de contrôle */
+    --workflow-category-permissions: #ef4444;     /* Red - Permissions & sécurité */
+    --workflow-category-groups: #3b82f6;          /* Blue - Groupes */
+    --workflow-category-notifications: #ec4899;   /* Pink - Notifications */
+    --workflow-category-documents: #10b981;       /* Emerald - Documents */
+    --workflow-category-data-export: #06b6d4;     /* Cyan - Export de données */
+    --workflow-category-item-operations: #6366f1; /* Indigo - Opérations d'items */
+    --workflow-category-status: #8b5cf6;          /* Violet - Statut */
+    --workflow-category-assignment: #14b8a6;      /* Teal - Assignment */
+    --workflow-category-planning: #0ea5e9;        /* Sky - Planification */
+    --workflow-category-approval: #22c55e;        /* Green - Approbation */
+    --workflow-category-validation: #84cc16;      /* Lime - Validation */
+    --workflow-category-compliance: #a855f7;      /* Purple - Conformité */
+    --workflow-category-logging: #64748b;         /* Slate - Logs */
+    --workflow-category-integration: #f97316;     /* Orange - Intégration */
+
+    /* Workflow Categories Border Colors (Light Mode - Punchy) */
+    --workflow-category-control-flow-border-color: #7c3aed;
+    --workflow-category-permissions-border-color: #ef4444;
+    --workflow-category-groups-border-color: #3b82f6;
+    --workflow-category-notifications-border-color: #ec4899;
+    --workflow-category-documents-border-color: #10b981;
+    --workflow-category-data-export-border-color: #06b6d4;
+    --workflow-category-item-operations-border-color: #6366f1;
+    --workflow-category-status-border-color: #8b5cf6;
+    --workflow-category-assignment-border-color: #14b8a6;
+    --workflow-category-planning-border-color: #0ea5e9;
+    --workflow-category-approval-border-color: #22c55e;
+    --workflow-category-validation-border-color: #84cc16;
+    --workflow-category-compliance-border-color: #a855f7;
+    --workflow-category-logging-border-color: #64748b;
+    --workflow-category-integration-border-color: #f97316;
+
+    /* Workflow Triggers (Boundaries) */
+    --trigger-color: #d28200;
+    --trigger-border-color: #d28200;
+
+    /* Automation */
+    --automation-content-bg: rgb(255 255 255 / 68%);
+    --automation-content-shadow: 0px 0px 50px 50px rgb(255 255 255 / 68%);
+
+    /* Workflow Tiles */
+    --tile-border-color: var(--border-color-standard);
+    --tile-bg-color: var(--surface-2);
+
+    /* Workflow Yes/No Tiles */
+    --workflow-yes-tile-text-color: #0c9472;
+    --workflow-yes-tile-icon-bg-color: #d1fadf;
+    --workflow-no-tile-text-color: #c23c4e;
+    --workflow-no-tile-icon-bg-color: #fee4e2;
+}
+
+
+@mixin dark-theme {
+
+    /* Couleurs de surface */
+    // Général
+    --surface-minus-2: var(--gray-950);
+    --surface-minus-1-hover: #0f1215;
+    --surface-minus-1: var(--gray-900);
+    --surface: var(--gray-800);
+    --surface-0-5: var(--gray-800);
+    --surface-1: var(--gray-775);
+    --surface-1-5: #2a3038;
+    --surface-2: var(--gray-750);
+    --surface-3: var(--gray-700);
+    --surface-4: var(--gray-600);
+    --surface-invert: var(--gray-200);
+    --surface-invert-1: var(--gray-100);
+
+    // Primaires
+    --surface-primary-soft-2: var(--primary-color-950);
+    --surface-primary-soft-1: var(--primary-color-900);
+    --surface-primary-soft: var(--primary-color-800);
+    --surface-primary-soft-small-area: var(--primary-color-500);
+    --surface-primary: var(--primary-color-500);
+    --surface-primary-1: var(--primary-color-400);
+    --surface-primary-2: var(--primary-color-200);
+    --surface-footer: #0d1d3b;
+
+    // Warning
+    --surface-warning-soft: #453106;
+    --surface-warning: #6b4e1a;
+    --surface-warning-1: #8a6322;
+    --surface-warning-2: #a67828;
+
+    // Succès
+    --surface-success-soft: #031a14;
+
+    // --- Workflow triggers ---
+    --workflow-trigger-create-bg: #1a4d3e;
+    --workflow-trigger-create-text: #84dfc8;
+    --workflow-trigger-update-bg: #1a3d5f;
+    --workflow-trigger-update-text: #85c4ff;
+    --workflow-trigger-delete-bg: #4d1a24;
+    --workflow-trigger-delete-text: #ff9aad;
+
+    /* Couleurs de bordures */
+    // Général
+    --border-color-offset-minus-1: var(--gray-785); // #27303a
+    --border-color-standard: var(--gray-700);
+    --border-color-offset-1: var(--gray-600);
+    --border-color-offset-2: var(--gray-500);
+    --border-color-offset-2-black: black;
+    --border-color-offset-3: var(--gray-400);
+    --border-color-invert-standard: var(--gray-500);
+    --border-color-invert-offset-1: var(--gray-400);
+
+    // Primaires
+    --border-primary-soft: var(--primary-color-800);
+    --border-primary-soft-small-area: var(--primary-color-400);
+    --border-primary: var(--primary-color-500);
+    --border-primary-1: var(--primary-color-400);
+    --border-primary-2: var(--primary-color-300);
+
+    // Destructives
+    --border-destructive: #be486c;
+    --border-destructive-hover: #d35580;
+
+    // Warning
+    --border-warning: #8a6929;
+
+    // Succès
+    --border-success: #315a52;
+
+
+    /* Couleurs de texte */
+    // Général
+    --text-minus-2: var(--gray-100);
+    --text-minus-1: var(--gray-200);
+    --text: var(--gray-300);
+    --text-1: var(--gray-400);
+    --text-2: var(--gray-500);
+    --text-3: var(--gray-600);
+    --text-color-invert-standard: var(--gray-800);
+    --text-color-invert-offset-1: var(--gray-950);
+    --text-color-always-dark: var(--gray-950);
+
+    // Primaires
+    --text-primary: var(--primary-color-300);
+    --text-primary-1: var(--primary-color-200);
+    --text-primary-2: var(--primary-color-100);
+    --text-primary-3: var(--primary-color-50);
+
+    // Destructives
+    --text-destructive-foreground: white;
+    --text-destructive: #ac7283; // plus pétant => #e26f90;
+    --text-destructive-2: #c88c9e;
+
+    // Succès
+    --text-success-foreground: white;
+    --text-success: #5eab84;
+    --text-success-foreground-soft: var(--text-success);
+
+    // Warning
+    --text-warning-foreground: #ffecd1;
+    --text-warning: #d0ae83;
+
+    --text-color-secondary-standard: #5ca3ba;
+
+    --text-color-tertiary-standard: #c3618c;
+    --text-color-tertiary-offset-1: #c77196;
+
+
+    /*
+
+
+    /*
+        Animation de chargement
+    */
+    --loading-animation-start-color: hsla(0, 0%, 100%, .55);
+    --loading-animation-end-color: hsla(0, 0%, 100%, .15);
+
+    /*
+        Couleurs de statut
+    */
+    --surface-danger-soft: #2e0410;
+    --surface-danger: #923954;
+    --surface-danger-1: #9c425d;
+    --surface-danger-2: #7a1e39;
+    --surface-danger-3: #68172e;
+
+    --warning-bg-color-standard: #2f2521;
+    --warning-border-color-standard: #713d20;
+    --warning-color-standard: var(--orange-color-500);
+
+    --success-color-standard: var(--green-color-400);
+
+    /*
+        Ombres
+    */
+    --shadow-header: 0 2px 40px -10px rgb(213 213 213 / 10%);
+    --box-shadow-page-editor: 0 15px 38px -5px #00000082;
+    --box-shadow-light: 0 2px 5px -3px #8b97a135;
+    --box-shadow-light-hover: 0 2px 15px -2px #a4a4a429;
+    --box-shadow-medium: 0 3px 12px -2px #a4a4a426;//0 2px 10px 8px #00000038, 0 2px 17px -7px #a4a4a429;//0 2px 16px -7px #000000, 0 2px 16px 0px #ffffff0d;//0 2px 15px 0 #e1e1e121;//0 2px 22px -10px #000000; //0 2px 20px -5px #1e1e1eed;
+    --box-shadow-medium-hover: 0 2px 14px 14px #7a7a7a0a, 0 3px 25px -6px #8b8b8b29;// 0 2px 14px 14px #6464641c, 0 3px 25px -6px #8b8b8b29;// 0 2px 14px 14px #6666663d, 0 3px 25px -6px #8b8b8b29;//0 2px 15px 11px #00000047, 0 2px 24px -6px #e2e2e229;//0 2px 10px -2px #14141429, 0 2px 18px -2px #6968683b;// 0 2px 10px -2px #00000029, 0 2px 18px -2px #b2b2b23b;// 0 5px 20px -4px #c7c7c742;//0 5px 20px -4px #000000c4;//0 10px 30px -5px #000000c4; //0 2px 21px -1px #101010ba;
+    --box-shadow-large: 0 2px 20px -5px #000000ed;
+    --box-shadow-large-hover: 0 2px 25px -5px #000000ed;
+    --box-shadow-2xl: 0 45px 42px -11px #00000047, 0 6px 11px -11px #a4a4a475;//0 36px 50px -20px rgb(0 0 0 / 60%);
+    --box-shadow-2xl-hover: 0 44px 38px -8px #00000047, 0 6px 40px -5px #a4a4a475;//0 40px 55px -13px rgb(0 0 0 / 70%);
+    --box-shadow-automation: 0 10px 41px -7px #3c3b3494;
+
+    --shadow-lg__block-surface__bg-surface-2: 0 15px 35px -10px #454b54b3;
+    --shadow-lg__block-surface__bg-surface-2-hover: 0 22px 45px -15px #535e6fb3;
+
+    --shadow-2xl__block-surface__bg-surface-2: 0 22px 50px -15px rgb(169 171 196 / 17%);
+    --shadow-2xl__block-surface__bg-surface-2-hover: 0 28px 55px -2px rgb(179 185 245 / 17%);
+
+    --shadow-lg__block-surface__bg-surface: 0 15px 35px -10px #363f4978;
+
+    --shadow-sm__block-surface-minus-1__bg-surface: 0 6px 16px -4px #293039;
+    --shadow-sm__block-surface-minus-1__bg-surface-hover: 0 6px 22px 6px #303944;
+    --shadow-footer: inset 0px 60px 80px -70px #000000;
+
+
+    --gradient-1: linear-gradient(94deg, #5aaba7 0%, #4a89b3 12%, #2f466f 84%, #b26b78 100%);
+    --gradient-2: linear-gradient(90deg, #5aaba7 -0.12%, #5aaba7 9.92%, #4a89b3 30%, #2f466f 42.05%, #8a4a4a 55.1%, #a5763d 84.21%, #a5763d 100.28%);
+    --gradient-3: linear-gradient(270deg, #5aaba7 0%, #4a89b3 27%, #2f466f 100%);
+    --gradient-4: linear-gradient(94deg, #4462a2 0%, #58537e 37.42%, #ae9d53 100%);
+
+    --gradient-text: linear-gradient(50deg, #91d5e0, #9ac7e9, #aab8dc, #e8bcc9);
+
+    --bg-dot: #5050507d;
+
+    /* Menu gradients et shadows pour dark mode - plus subtils */
+    --menu-1-shadow-color: #547b70;
+    --menu-1-gradient: linear-gradient(to bottom, #206051, #719a8e, #68ab93 40%, #a4c8b8);
+    --menu-1-gradient-bar: linear-gradient(to left, #206051, #719a8e, #68ab93 40%, #a4c8b8);
+
+    --menu-2-shadow-color: #5286a0;
+    --menu-2-gradient: linear-gradient(to bottom, #4a6b7a, #3a5b6a, #65a9cb 40%, #9fc1ce);
+    --menu-2-gradient-bar: linear-gradient(to left, #4a6b7a, #3a5b6a, #65a9cb 40%, #9fc1ce);
+
+    --menu-3-shadow-color: #7c96ca;
+    --menu-3-gradient: linear-gradient(to bottom, #30456d, #3b5fa2, #6b95ea 40%, #98b3f7);
+    --menu-3-gradient-bar: linear-gradient(to left, #30456d, #3b5fa2, #6b95ea 40%, #98b3f7);
+
+    --menu-4-shadow-color: #2a1a4a;
+    --menu-4-gradient: linear-gradient(to bottom, #5a4b7a, #513789, #9d81d4 40%, #c29df6);
+    --menu-4-gradient-bar: linear-gradient(to left, #5a4b7a, #513789, #9d81d4 40%, #c29df6);
+
+    --menu-5-shadow-color: #8f5c6d;
+    --menu-5-gradient: linear-gradient(to bottom, #7a4b5a, #6a3b4a, #d3829d 40%, #faa1c6);
+    --menu-5-gradient-bar: linear-gradient(to left, #7a4b5a, #6a3b4a, #d3829d 40%, #faa1c6);
+
+
+    --module-card-bg: rgb(0 0 0 / 23%);
+    --header-bg: var(--surface-minus-1);
+    --header-bg-backdrop-filter: blur(24px) brightness(0.42);
+
+    --polygon-sidebar-top-left-corner-bg: #13181c;
+    --polygon-sidebar-bg:  #15191dc9;
+    --polygon-sidebar-bg-hover: #0e1215;
+    --polygon-sidebar-bg-active: #04090d;
+
+    /* Workflow Categories Colors - Dark Mode */
+    --workflow-category-control-flow: #a78bfa;    /* Purple - Logique de contrôle */
+    --workflow-category-permissions: #f87171;     /* Red - Permissions & sécurité */
+    --workflow-category-groups: #60a5fa;          /* Blue - Groupes */
+    --workflow-category-notifications: #f472b6;   /* Pink - Notifications */
+    --workflow-category-documents: #34d399;       /* Emerald - Documents */
+    --workflow-category-data-export: #22d3ee;     /* Cyan - Export de données */
+    --workflow-category-item-operations: #818cf8; /* Indigo - Opérations d'items */
+    --workflow-category-status: #a78bfa;          /* Violet - Statut */
+    --workflow-category-assignment: #2dd4bf;      /* Teal - Assignment */
+    --workflow-category-planning: #38bdf8;        /* Sky - Planification */
+    --workflow-category-approval: #4ade80;        /* Green - Approbation */
+    --workflow-category-validation: #a3e635;      /* Lime - Validation */
+    --workflow-category-compliance: #c084fc;      /* Purple - Conformité */
+    --workflow-category-logging: #94a3b8;         /* Slate - Logs */
+    --workflow-category-integration: #fb923c;     /* Orange - Intégration */
+
+    /* Workflow Categories Border Colors (Dark Mode - Soft) */
+    --workflow-category-control-flow-border-color: #6b5a8f;
+    --workflow-category-permissions-border-color: #9a5a5a;
+    --workflow-category-groups-border-color: #5a7a9f;
+    --workflow-category-notifications-border-color: #9a6a85;
+    --workflow-category-documents-border-color: #5a8a6f;
+    --workflow-category-data-export-border-color: #5a8a95;
+    --workflow-category-item-operations-border-color: #6a6f95;
+    --workflow-category-status-border-color: #6b5a8f;
+    --workflow-category-assignment-border-color: #5a8580;
+    --workflow-category-planning-border-color: #5a7a8f;
+    --workflow-category-approval-border-color: #5a8a65;
+    --workflow-category-validation-border-color: #7a8a5a;
+    --workflow-category-compliance-border-color: #7a6090;
+    --workflow-category-logging-border-color: #6a7580;
+    --workflow-category-integration-border-color: #9a7a5a;
+
+    /* Workflow Triggers (Boundaries) */
+    --trigger-color: #d28200;
+    --trigger-border-color: #9a8a5a;
+
+    /* Automation */
+    --automation-content-bg: #20252cad;
+    --automation-content-shadow: 0px 0px 50px 50px #20252cad;
+    --automation-title-highlight: #c5bd74;
+
+    /* Workflow Tiles */
+    --tile-border-color: var(--surface-2);
+    --tile-bg-color: var(--surface-2);
+
+    /* Workflow Yes/No Tiles */
+    --workflow-yes-tile-text-color: #dffcf4;
+    --workflow-yes-tile-icon-bg-color: #1e5a4a;
+    --workflow-no-tile-text-color: #fcdfe2;
+    --workflow-no-tile-icon-bg-color: var(--surface-danger-1);
+
+    /*Fix Microsoft - Applied foregroundColor */
+    // .root-150 {
+    //     color: hsl(0 0% 98%) !important;
+    //     font-family: 'Inter', sans-serif;
+    // }
+}
+
+
+:root {
+    @include general-theme;
+    @include light-theme;
+}
+
+html:is([class*="dark"]) {
+    @include dark-theme;
+}
+
+@media (prefers-color-scheme: dark) {
+    html:not([class*="light"]) {
+        @include dark-theme;
+    }
+}

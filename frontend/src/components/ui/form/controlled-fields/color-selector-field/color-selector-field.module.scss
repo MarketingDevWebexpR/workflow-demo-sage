@@ -1,0 +1,35 @@
+.colorSelectorField {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-4);
+}
+
+.colorSelectorFieldItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: var(--spacing-10);
+    height: var(--spacing-10);
+    border-radius: var(--radius-md);
+    border-width: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 1px solid var(--border-color-offset-1);
+
+    &:hover {
+        outline: 2px solid var(--border-primary-2);
+        outline-offset: 2px;
+    }
+}
+
+.colorSelectorFieldItemSelected {
+    outline: 2px solid var(--border-primary-2);
+    outline-offset: 2px;
+}
+
+.colorSelectorFieldItemIconCheck {
+    width: var(--spacing-6);
+    color: var(--text);
+}

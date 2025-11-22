@@ -1,0 +1,39 @@
+.searchInputManualWrapper {
+
+    --button-width: 34px;
+    --button-offset: var(--spacing-1);
+
+    position: relative;
+    width: clamp(120px, 100%, 300px);
+}
+
+.searchInputManualButton {
+    width: var(--button-width);
+    position: absolute;
+    right: var(--button-offset);
+    inset-block: var(--button-offset);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-primary);
+    background-color: transparent;
+
+    &:hover {
+        background-color: var(--surface-2);
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--border-primary);
+        outline-offset: 2px;
+    }
+}
+
+.searchInputManual {
+    padding-right: calc(var(--button-width) + var(--button-offset));
+}
+
+.searchInputManualWrapper:has(.searchInputManualButton:hover) > .searchInputManual {
+    border-color: var(--border-color-offset-1);
+}

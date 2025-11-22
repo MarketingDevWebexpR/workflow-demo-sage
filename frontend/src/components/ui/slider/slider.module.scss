@@ -1,0 +1,105 @@
+.slider {
+    display: flex;
+    position: relative;
+    width: 100%;
+    touch-action: none;
+    user-select: none;
+    align-items: center;
+
+    &[data-disabled] {
+        opacity: 0.5;
+    }
+
+    &[data-orientation="vertical"] {
+        height: 100%;
+        min-height: 10rem;
+        width: auto;
+        flex-direction: column;
+    }
+}
+
+.sliderTrack {
+    flex-grow: 1;
+    display: flex;
+    height: var(--spacing-2);
+    width: 100%;
+    overflow: hidden;
+    border-radius: var(--radius-full);
+    background-color: var(--surface-4);
+    position: relative;
+
+    &[data-orientation="horizontal"] {
+        height: var(--spacing-0-5);
+        width: 100%;
+    }
+
+    &[data-orientation="vertical"] {
+        height: 100%;
+        width: var(--spacing-0-5);
+    }
+}
+
+.sliderRange {
+    position: absolute;
+    background-color: var(--surface-primary);
+
+    &[data-orientation="horizontal"] {
+        height: 100%;
+    }
+
+    &[data-orientation="vertical"] {
+        width: 100%;
+    }
+}
+
+.sliderThumb {
+    display: block;
+    width: var(--spacing-3);
+    height: var(--spacing-3);
+    border-radius: var(--radius-full);
+    border: 1px solid var(--surface-primary);
+    background-color: var(--surface-primary);
+    flex-shrink: 0;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    box-shadow: var(--box-shadow-large);
+
+    &:hover,
+    &:focus-visible {
+        box-shadow: var(--box-shadow-large-hover);
+    }
+
+    &:disabled {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--surface-primary);
+        outline-offset: 2px;
+    }
+
+    &::before {
+
+        content: '';
+        position: absolute;
+        inset: -20px;
+    }
+
+    &::after {
+        content: attr(data-label);
+        width: fit-content;
+        position: absolute;
+        padding-inline: var(--spacing-2);
+        transform: translateX(calc(-50% + var(--spacing-3) / 2)) translateY(-125%);
+        left: 0;
+        right: 0;
+        border-radius: var(--radius-full);
+        font-size: 0.6rem;
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+        text-transform: uppercase;
+        transform-origin: center;
+    }
+}

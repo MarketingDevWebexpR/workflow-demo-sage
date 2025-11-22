@@ -1,0 +1,42 @@
+.multipleResourcesField {
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+}
+
+.resourcesList {
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+}
+
+.resourceRow {
+
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    border-radius: var(--radius-lg);
+}
+
+.resourceRowItem {
+
+    flex: 1;
+}
+
+.removeResourceRowButton {
+
+    align-self: center;
+}
+
+.addResourceRow {
+
+    display: flex;
+    justify-content: flex-end;
+}
+
+.buttonIconLeft {
+
+    margin-right: var(--spacing-2);
+}

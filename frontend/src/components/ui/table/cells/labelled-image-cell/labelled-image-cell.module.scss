@@ -1,0 +1,89 @@
+// @import '../../../../../style/mixins/loading-animation';
+
+
+.labelledImageCell {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    max-width: 100%;
+
+    &Text {
+        font-weight: 500;
+        width: fit-content;
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    &Avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+
+    &Image {
+        object-fit: cover;
+        border-radius: 10px;
+
+        &Fallback {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color-standard);
+            background-color: var(--surface-2);
+
+            &Icon {
+                stroke: var(--text-3);
+            }
+        }
+    }
+
+    &[data-fallback="true"] {
+
+        .labelledImageCellText {
+            color: var(--text-3);
+            font-weight: 400;
+        }
+    }
+}
+
+
+// Loading state
+[data-table][data-is-loading="true"] {
+    
+    .labelledImageCellText {
+        // @include loading-animation;
+        width: fit-content;
+        max-width: 100%;
+
+        &::before {
+            height: 1px;
+            margin-block: auto;
+        }
+    }
+
+    .labelledImageCellAvatar {
+        // @include loading-animation;
+        width: fit-content;
+        max-width: 100%;
+
+        &::before {
+            height: 1px;
+            margin-block: auto;
+        }
+    }
+
+    .labelledImageCellImageFallback {
+        // @include loading-animation(0.5);
+        border-color: transparent;
+
+        &::before {
+            border-radius: inherit;
+        }
+    }
+}

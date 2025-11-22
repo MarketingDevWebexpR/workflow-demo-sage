@@ -1,0 +1,245 @@
+/**
+ * Workflow Item Services - Version API REST pour automation-poc
+ * 
+ * Remplace l'ancien système SharePoint/PnP par des appels à notre API backend Hono
+ */
+
+import Service from '../../../models/service.model';
+import { type TWorkflowItem, type TCreateWorkflowItemProps, type TUpdateWorkflowItemProps } from '../models/workflow-item.model';
+import { type IServiceFns, type TServices } from '../../../utils/context.utils';
+
+// URL de base de l'API (via le proxy Vite)
+const API_BASE_URL = '/api/workflows';
+
+/**
+ * Convertit les données de l'API backend vers le format frontend
+ */
+function mapBackendToFrontend(backendData: any): TWorkflowItem {
+    // Le backend utilise: _id, title, description, workflowXML, preferences, isEnabled, fragmentId, createdAt, updatedAt
+    // Le frontend attend: Id, Title, Description, WorkflowText, Preferences, IsEnabled, FragmentId, Created, Modified
+    
+    return {
+        Id: backendData._id ? parseInt(backendData._id.substring(backendData._id.length - 8), 16) : backendData.Id,
+        // Convertir _id MongoDB en nombre pour la compatibilité avec le frontend
+        Title: backendData.title || backendData.Title,
+        Description: backendData.description || backendData.Description || null,
+        WorkflowText: backendData.workflowXML || backendData.WorkflowText || null,
+        Preferences: typeof backendData.preferences === 'string' 
+            ? backendData.preferences 
+            : JSON.stringify(backendData.preferences || {}),
+        IsEnabled: backendData.isEnabled !== undefined 
+            ? (backendData.isEnabled ? 1 : 0)
+            : (backendData.IsEnabled || 0),
+        FragmentId: backendData.fragmentId || backendData.FragmentId || '',
+        Created: backendData.createdAt || backendData.Created || new Date().toISOString(),
+        Modified: backendData.updatedAt || backendData.Modified || new Date().toISOString(),
+    };
+}
+
+/**
+ * Convertit les données du frontend vers le format API backend
+ */
+function mapFrontendToBackend(frontendData: TCreateWorkflowItemProps | TUpdateWorkflowItemProps) {
+    return {
+        title: frontendData.Title,
+        description: frontendData.Description || undefined,
+        workflowXML: frontendData.WorkflowText,
+        preferences: frontendData.Preferences ? JSON.parse(frontendData.Preferences) : undefined,
+        isEnabled: frontendData.IsEnabled === 1,
+        fragmentId: frontendData.FragmentId || undefined,
+    };
+}
+
+/**
+ * Fonctions de service CRUD pour les workflow items
+ */
+const serviceFns: IServiceFns<TWorkflowItem, TCreateWorkflowItemProps, TUpdateWorkflowItemProps> = {
+
+    /**
+     * Récupère un nombre limité de workflows avec filtres optionnels
+     */
+    async fetchLimited({
+        filterQuery,
+        orderBy,
+        top,
+    }) {
+        const params = new URLSearchParams();
+        if (top) params.append('limit', top.toString());
+        if (orderBy) params.append('sortBy', orderBy[0]);
+        if (orderBy) params.append('sortOrder', orderBy[1] ? 'desc' : 'asc');
+        if (filterQuery) params.append('filter', filterQuery);
+
+        const url = `${API_BASE_URL}?${params.toString()}`;
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error(`Failed to fetch workflows: ${response.statusText}`);
+        }
+
+        const result = await response.json();
+        
+        if (!result.success) {
+            throw new Error(result.message || 'Failed to fetch workflows');
+        }
+
+        return (result.data || []).map(mapBackendToFrontend);
+    },
+
+    /**
+     * Récupère tous les workflows
+     */
+    async fetchAll({
+        filterQuery,
+        orderBy,
+        top,
+    }) {
+        // Pour l'instant, identique à fetchLimited
+        // À améliorer plus tard avec pagination côté backend si nécessaire
+        return await serviceFns.fetchLimited({ sp: null, filterQuery, orderBy, top });
+    },
+
+    /**
+     * Récupère un workflow par son ID
+     */
+    async fetchById({ id }) {
+        const response = await fetch(`${API_BASE_URL}/${id}`);
+
+        if (!response.ok) {
+            if (response.status === 404) {
+                throw new Error(`Workflow with ID ${id} not found`);
+            }
+            throw new Error(`Failed to fetch workflow: ${response.statusText}`);
+        }
+
+        const result = await response.json();
+
+        if (!result.success) {
+            throw new Error(result.message || 'Failed to fetch workflow');
+        }
+
+        return mapBackendToFrontend(result.data);
+    },
+
+    /**
+     * Crée un nouveau workflow
+     */
+    async create({ props }) {
+        const backendData = mapFrontendToBackend(props);
+
+        const response = await fetch(API_BASE_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(backendData),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to create workflow: ${response.statusText}`);
+        }
+
+        const result = await response.json();
+
+        if (!result.success) {
+            throw new Error(result.message || 'Failed to create workflow');
+        }
+
+        return mapBackendToFrontend(result.data);
+    },
+
+    /**
+     * Met à jour un workflow existant
+     */
+    async update({ id, props }) {
+        const backendData = mapFrontendToBackend(props);
+
+        const response = await fetch(`${API_BASE_URL}/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(backendData),
+        });
+
+        if (!response.ok) {
+            if (response.status === 404) {
+                throw new Error(`Workflow with ID ${id} not found`);
+            }
+            throw new Error(`Failed to update workflow: ${response.statusText}`);
+        }
+
+        const result = await response.json();
+
+        if (!result.success) {
+            throw new Error(result.message || 'Failed to update workflow');
+        }
+
+        return mapBackendToFrontend(result.data);
+    },
+
+    /**
+     * Supprime un workflow
+     */
+    async delete({ id }) {
+        const response = await fetch(`${API_BASE_URL}/${id}`, {
+            method: 'DELETE',
+        });
+
+        if (!response.ok) {
+            if (response.status === 404) {
+                throw new Error(`Workflow with ID ${id} not found`);
+            }
+            throw new Error(`Failed to delete workflow: ${response.statusText}`);
+        }
+
+        const result = await response.json();
+
+        if (!result.success) {
+            throw new Error(result.message || 'Failed to delete workflow');
+        }
+
+        return id;
+    },
+
+    /**
+     * Supprime plusieurs workflows en bulk
+     */
+    async deleteBulk({ ids }) {
+        const results = await Promise.allSettled(
+            ids.map(id => serviceFns.delete({ sp: null, id }))
+        );
+
+        const successes: number[] = [];
+        const failures: { id: number; error: Error }[] = [];
+
+        results.forEach((result, index) => {
+            const id = ids[index];
+            if (result.status === 'fulfilled') {
+                successes.push(id);
+            } else {
+                failures.push({
+                    id,
+                    error: result.reason instanceof Error ? result.reason : new Error(String(result.reason)),
+                });
+            }
+        });
+
+        return { successes, failures };
+    },
+};
+
+/**
+ * Services wrappés avec la classe Service pour le typage et les événements
+ */
+const WorkflowItemServices: TServices<TWorkflowItem, TCreateWorkflowItemProps, TUpdateWorkflowItemProps> = {
+    fetchLimited: new Service(serviceFns.fetchLimited),
+    fetchAll: new Service(serviceFns.fetchAll),
+    fetchById: new Service(serviceFns.fetchById),
+    create: new Service(serviceFns.create),
+    update: new Service(serviceFns.update),
+    delete: new Service(serviceFns.delete),
+    deleteBulk: new Service(serviceFns.deleteBulk),
+};
+
+export default WorkflowItemServices;
+

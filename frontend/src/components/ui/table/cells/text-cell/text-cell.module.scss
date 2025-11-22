@@ -1,0 +1,49 @@
+// @import '../../../../../style/mixins/loading-animation';
+
+
+.textCell {
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+
+    &[data-fallback="true"] {
+        color: var(--text-3);
+    }
+
+    &Important {
+        font-weight: 500;
+    }
+
+    &Secondary {
+        color: var(--text-2);
+    }
+}
+
+
+// Loading state
+[data-table][data-is-loading="true"] .textCell,
+.textCell[data-is-loading="true"] {
+    // @include loading-animation;
+    width: fit-content;
+    max-width: 100%;
+
+    &::before {
+        height: 1px;
+        margin-block: auto;
+    }
+
+    .textCellImportant {
+        // @include loading-animation;
+        width: fit-content;
+        max-width: 100%;
+
+        &::before {
+            height: 2px;
+            margin-block: auto;
+        }
+    }
+}
