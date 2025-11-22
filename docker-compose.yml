@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:8.0
+    container_name: automation-poc-mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: automation_poc
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:

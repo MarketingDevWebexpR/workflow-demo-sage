@@ -1,0 +1,90 @@
+# ===========================
+# Dependencies
+# ===========================
+node_modules/
+bun.lockb
+
+# ===========================
+# Environment variables
+# ===========================
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# ===========================
+# Build outputs
+# ===========================
+dist/
+build/
+out/
+*.tgz
+lib/
+*.sppkg
+
+# ===========================
+# Logs
+# ===========================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+bun-debug.log*
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# ===========================
+# Code coverage
+# ===========================
+coverage/
+*.lcov
+.nyc_output/
+
+# ===========================
+# Caches
+# ===========================
+.cache/
+.eslintcache
+*.tsbuildinfo
+.next/
+.nuxt/
+.vite/
+
+# ===========================
+# IDEs
+# ===========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ===========================
+# OS
+# ===========================
+.DS_Store
+Thumbs.db
+*.pid
+*.seed
+*.pid.lock
+
+# ===========================
+# MongoDB data (Docker volumes)
+# ===========================
+mongo_data/
+
+# ===========================
+# Temporary files
+# ===========================
+temp/
+tmp/
+*.tmp
+
+# ===========================
+# Test
+# ===========================
+.nyc_output/
+coverage/
+
