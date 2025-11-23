@@ -20,7 +20,8 @@
     transition: all 0.15s ease-in-out;
     font-size: var(--text-sm, 14px);
     font-weight: 500;
-    color: var(--text-secondary, #6b7280);
+    color: var(--text-3, #6b7280);
+    
     
     &:hover {
         background-color: var(--polygon-sidebar-bg-hover, rgba(0, 0, 0, 0.05));
@@ -38,10 +39,14 @@
     }
 }
 
+// Breadcrumb supprimé - déplacé dans le header
+
 .polygonSidebarLandingViewDivider {
     height: 1px;
     background-color: var(--border-color-standard, rgba(0, 0, 0, 0.1));
     margin: var(--spacing-4);
+    margin-top: 0;
+    background-color: var(--surface-1);
 }
 
 .polygonSidebarLandingViewContent {
@@ -49,6 +54,7 @@
     flex-direction: column;
     flex: 1;
     overflow: hidden;
+    padding-top: calc( 46px + var(--spacing-4 ));
 }
 
 .polygonSidebarLandingViewHeader {

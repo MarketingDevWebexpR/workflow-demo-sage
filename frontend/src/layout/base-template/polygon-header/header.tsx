@@ -1,10 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Menu } from "./menu";
 import styles from "./header.module.scss";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import webexprLogo from "../../../assets/img/webexpr-logo.png";
 import { usePrefersColorThemeStore } from "../../../providers/prefers-color-theme/store";
 import { HeaderMenuDropdown } from "./header-menu-dropdown/header-menu-dropdown";
+import { Home, ChevronRight } from "lucide-react";
+import { cn } from "../../../lib/utils";
+import { useWorkflowAutomationStore } from "../../../modules/workflow-automation/store/workflow-automation.store";
 
 
 const PolygonHeader = (): React.ReactElement => {
@@ -16,6 +19,19 @@ const PolygonHeader = (): React.ReactElement => {
     const headerEndRef = useRef<HTMLDivElement>(null);
 
     const navigate = useNavigate();
+    const location = useLocation();
+
+    // State management pour l'arborescence
+    const selectedWorkflow = useWorkflowAutomationStore(s => s.workflowItem.selected.item);
+    
+    // Extraire workflowId depuis le pathname (car useParams ne fonctionne pas dans le Header)
+    const workflowIdMatch = location.pathname.match(/\/workflow\/([^/]+)/);
+    const workflowId = workflowIdMatch ? workflowIdMatch[1] : null;
+    
+    const isHomePage = location.pathname === '/' || location.pathname === '';
+    const isIhm = location.pathname.includes('/ihm');
+    const isViewingWorkflow = workflowId && workflowId !== 'new';
+    const currentWorkflowTitle = selectedWorkflow?.Title || `Workflow ${workflowId}`;
 
     const theme = usePrefersColorThemeStore((state) => state.value);
     const colorSchemeInSystemSettingsIsDark = usePrefersColorThemeStore((state) => state.colorSchemeInSystemSettingsIsDark);
@@ -85,6 +101,52 @@ const PolygonHeader = (): React.ReactElement => {
                 />
                 </div>
                 <HeaderMenuDropdown />
+            </div>
+
+            {/* Arborescence de navigation (Breadcrumb) - Toujours affichée */}
+            <div className={styles.headerBreadcrumb}>
+                {/* Home */}
+                <div
+                    className={cn(
+                        styles.headerBreadcrumbItem,
+                        isHomePage && styles.headerBreadcrumbItemActive
+                    )}
+                    onClick={() => navigate('/')}
+                >
+                    <Home size={16} />
+                    <span>Home</span>
+                </div>
+
+                {/* Workflow - affiché si on est sur un workflow (designer ou IHM) */}
+                {isViewingWorkflow && (
+                    <>
+                        <ChevronRight size={14} className={styles.headerBreadcrumbSeparator} />
+                        <div
+                            className={cn(
+                                styles.headerBreadcrumbItem,
+                                !isIhm && styles.headerBreadcrumbItemActive
+                            )}
+                            onClick={() => navigate(`/workflow/${workflowId}`)}
+                        >
+                            <span>{currentWorkflowTitle}</span>
+                        </div>
+                    </>
+                )}
+
+                {/* IHM - affiché seulement si on est en mode IHM */}
+                {isViewingWorkflow && isIhm && (
+                    <>
+                        <ChevronRight size={14} className={styles.headerBreadcrumbSeparator} />
+                        <div
+                            className={cn(
+                                styles.headerBreadcrumbItem,
+                                styles.headerBreadcrumbItemActive
+                            )}
+                        >
+                            <span>IHM</span>
+                        </div>
+                    </>
+                )}
             </div>
         </div>
         <div className={styles.headerContainer}>

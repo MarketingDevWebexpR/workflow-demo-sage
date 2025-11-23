@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { MoreVertical, Edit3, Power, Download, Upload, Trash2, Copy, History, Share2, SlidersHorizontal } from "lucide-react";
+import { MoreVertical, Edit3, Power, Download, Upload, Trash2, Copy, History, Share2, SlidersHorizontal, ArrowLeft } from "lucide-react";
 import { AutomationIndex } from "../../components/ui/automation-index/automation-index";
 // import { isPolygon } from "../../../../utils/sharepoint.utils"; // ❌ SharePoint - Supprimé
 import { WorkflowRoot } from "./components/workflow-root/WorkflowRoot";
@@ -390,13 +390,13 @@ const AutomationPage = (): React.ReactElement => {
                     <div className={styles.automationPageIhm}>
                         <div className={styles.automationPageIhmHeader}>
                             <Button
-                                variant="outline"
+                                variant="link"
                                 size="sm"
                                 onClick={() => navigate(`/workflow/${workflowId}`)}
                             >
-                                ← Retour au designer
+                                <ArrowLeft size={16} style={{ marginRight: 'var(--spacing-2)' }} /> Back
                             </Button>
-                            <h1>Vue IHM - Workflow {selectedWorkflow?.Title || workflowId}</h1>
+                            <h1>IHM - Workflow {selectedWorkflow?.Title || workflowId}</h1>
                         </div>
                         <div className={styles.automationPageIhmContent}>
                             <h2>Hello World</h2>

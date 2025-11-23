@@ -1,35 +1,22 @@
 import React from 'react';
-import { Home, ChevronRight } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '../../../../../lib/utils';
 import styles from './polygon-sidebar-landing-view.module.scss';
-
-// TODO: Remplacer par le vrai store quand il sera connecté
-// import { useWorkflowStore } from '../../../../../modules/workflow-automation/store/workflow.store';
+import { useWorkflowAutomationStore } from '../../../../../modules/workflow-automation/store/workflow-automation.store';
 
 type TPolygonSidebarLandingViewProps = {
     onNavigate: (viewIndex: number) => void;
 }
-
-// Mock data - à remplacer par les vraies données du store
-const mockWorkflows = [
-    { id: '1', title: 'Onboarding Process' },
-    { id: '2', title: 'Leave Request Automation' },
-    { id: '3', title: 'Document Approval' },
-];
 
 const PolygonSidebarLandingView = ({}: TPolygonSidebarLandingViewProps): React.ReactElement => {
 
     const location = useLocation();
     const navigate = useNavigate();
     
-    // TODO: Récupérer les workflows depuis le store
-    // const workflows = useWorkflowStore(s => s.workflows);
-    // const isLoading = useWorkflowStore(s => s.isLoading);
-    const workflows = mockWorkflows;
-    const isLoading = false;
-
-    const isHomePage = location.pathname === '/';
+    // Récupérer les workflows depuis le store
+    const allWorkflows = useWorkflowAutomationStore(s => s.workflowItem.processedData);
+    const isLoading = false; // TODO: Ajouter un vrai état de chargement dans le store
 
     return <div className={styles.polygonSidebarLandingView}>
         
@@ -37,21 +24,6 @@ const PolygonSidebarLandingView = ({}: TPolygonSidebarLandingViewProps): React.R
 
         {/* Section Workflows */}
         <div className={styles.polygonSidebarLandingViewContent}>
-{/* Navigation principale */}
-<div className={styles.polygonSidebarLandingViewNavigation}>
-            <div
-                className={cn(
-                    styles.polygonSidebarLandingViewNavigationItem,
-                    isHomePage && styles.polygonSidebarLandingViewNavigationItemActive
-                )}
-                onClick={() => navigate('/')}
-            >
-                <Home size={18} />
-                <span>Home</span>
-            </div>
-        </div>
-            {/* Divider */}
-            <div className={styles.polygonSidebarLandingViewDivider} />
 
             {/* Liste des workflows */}
             <div className={styles.polygonSidebarLandingViewSection}>
@@ -75,7 +47,7 @@ const PolygonSidebarLandingView = ({}: TPolygonSidebarLandingViewProps): React.R
                             </div>
                         ))}
                     </div>
-                ) : workflows.length === 0 ? (
+                ) : allWorkflows.length === 0 ? (
                     // Empty state
                     <div className={styles.polygonSidebarLandingViewEmpty}>
                         <p>No workflows yet</p>
@@ -86,18 +58,18 @@ const PolygonSidebarLandingView = ({}: TPolygonSidebarLandingViewProps): React.R
                 ) : (
                     // Liste des workflows
                     <div className={styles.polygonSidebarLandingViewWorkflowsList}>
-                        {workflows.map((workflow) => (
+                        {allWorkflows.map((workflow) => (
                             <div
-                                key={workflow.id}
+                                key={workflow.Id}
                                 className={cn(
                                     styles.polygonSidebarLandingViewWorkflowItem,
-                                    location.pathname === `/workflow/${workflow.id}` && 
+                                    location.pathname === `/workflow/${workflow.Id}` && 
                                     styles.polygonSidebarLandingViewWorkflowItemActive
                                 )}
-                                onClick={() => navigate(`/workflow/${workflow.id}`)}
+                                onClick={() => navigate(`/workflow/${workflow.Id}`)}
                             >
                                 <span className={styles.polygonSidebarLandingViewWorkflowItemTitle}>
-                                    {workflow.title}
+                                    {workflow.Title}
                                 </span>
                                 <ChevronRight size={16} />
                             </div>

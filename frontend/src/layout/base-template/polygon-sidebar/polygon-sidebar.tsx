@@ -18,10 +18,16 @@ export const PolygonSidebar = (): React.ReactElement => {
         const pathname = location.pathname;
         let newViewIndex = 0;
 
+        // Si on est sur une page IHM (/workflow/:id/ihm)
+        if (pathname.match(/^\/workflow\/[^/]+\/ihm$/)) {
+            newViewIndex = 2; // Vue IHM
+        }
         // Si on est sur une page de workflow designer (/workflow/:id)
-        if (pathname.match(/^\/workflow\/[^/]+$/)) {
+        else if (pathname.match(/^\/workflow\/[^/]+$/)) {
             newViewIndex = 1; // Vue designer avec AI panel
-        } else {
+        } 
+        // Sinon page d'accueil
+        else {
             newViewIndex = 0; // Vue landing avec Home + Workflows
         }
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { PolygonSidebarLandingView } from '../sidebars/polygon-sidebar-landing-view/polygon-sidebar-landing-view';
 import { PolygonSidebarDesignerView } from '../sidebars/polygon-sidebar-designer-view/polygon-sidebar-designer-view';
+import { PolygonSidebarIhmView } from '../sidebars/polygon-sidebar-ihm-view/polygon-sidebar-ihm-view';
 import { paths } from '../../../router.constants';
 import styles from './polygon-sidebar-slider.module.scss';
 
@@ -18,6 +19,10 @@ export const sidebarViews: TISidebarView[] = [
     {
         key: 'designer',
         path: paths.workflowDesigner,
+    },
+    {
+        key: 'ihm',
+        path: paths.workflowIhm,
     },
 ];
 
@@ -93,6 +98,8 @@ const PolygonSidebarSlider = ({
                 return <PolygonSidebarLandingView onNavigate={onNavigate} />;
             case 'designer':
                 return <PolygonSidebarDesignerView onNavigate={onNavigate} />;
+            case 'ihm':
+                return <PolygonSidebarIhmView onNavigate={onNavigate} />;
             default:
                 return null;
         }
