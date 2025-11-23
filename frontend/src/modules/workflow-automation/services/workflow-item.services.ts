@@ -13,40 +13,36 @@ const API_BASE_URL = '/api/workflows';
 
 /**
  * Convertit les données de l'API backend vers le format frontend
+ * Le backend utilise maintenant les mêmes noms de champs que le frontend (format compatible SharePoint)
  */
 function mapBackendToFrontend(backendData: any): TWorkflowItem {
-    // Le backend utilise: _id, title, description, workflowXML, preferences, isEnabled, fragmentId, createdAt, updatedAt
-    // Le frontend attend: Id, Title, Description, WorkflowText, Preferences, IsEnabled, FragmentId, Created, Modified
-    
+    // Le backend renvoie déjà: Id, Title, Description, WorkflowText, Preferences, IsEnabled, FragmentId, Created, Modified
     return {
-        Id: backendData._id ? parseInt(backendData._id.substring(backendData._id.length - 8), 16) : backendData.Id,
-        // Convertir _id MongoDB en nombre pour la compatibilité avec le frontend
-        Title: backendData.title || backendData.Title,
-        Description: backendData.description || backendData.Description || null,
-        WorkflowText: backendData.workflowXML || backendData.WorkflowText || null,
-        Preferences: typeof backendData.preferences === 'string' 
-            ? backendData.preferences 
-            : JSON.stringify(backendData.preferences || {}),
-        IsEnabled: backendData.isEnabled !== undefined 
-            ? (backendData.isEnabled ? 1 : 0)
-            : (backendData.IsEnabled || 0),
-        FragmentId: backendData.fragmentId || backendData.FragmentId || '',
-        Created: backendData.createdAt || backendData.Created || new Date().toISOString(),
-        Modified: backendData.updatedAt || backendData.Modified || new Date().toISOString(),
+        Id: backendData.Id,
+        Title: backendData.Title,
+        Description: backendData.Description || null,
+        WorkflowText: backendData.WorkflowText || null,
+        Preferences: backendData.Preferences || '{}',
+        IsEnabled: backendData.IsEnabled || 0,
+        FragmentId: backendData.FragmentId || 'DEFAULT',
+        Created: backendData.Created || backendData.createdAt || new Date().toISOString(),
+        Modified: backendData.Modified || backendData.updatedAt || new Date().toISOString(),
     };
 }
 
 /**
  * Convertit les données du frontend vers le format API backend
+ * Le backend accepte maintenant les mêmes noms de champs que le frontend
  */
 function mapFrontendToBackend(frontendData: TCreateWorkflowItemProps | TUpdateWorkflowItemProps) {
+    // Pas de conversion nécessaire, le backend utilise les mêmes noms
     return {
-        title: frontendData.Title,
-        description: frontendData.Description || undefined,
-        workflowXML: frontendData.WorkflowText,
-        preferences: frontendData.Preferences ? JSON.parse(frontendData.Preferences) : undefined,
-        isEnabled: frontendData.IsEnabled === 1,
-        fragmentId: frontendData.FragmentId || undefined,
+        Title: frontendData.Title,
+        Description: frontendData.Description || undefined,
+        WorkflowText: frontendData.WorkflowText,
+        Preferences: frontendData.Preferences || undefined,
+        IsEnabled: frontendData.IsEnabled,
+        FragmentId: frontendData.FragmentId || undefined,
     };
 }
 

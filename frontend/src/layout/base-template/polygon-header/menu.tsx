@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { Button } from "../../../components/ui/button/button";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ColorThemeToggle } from "./color-theme-toggle/color-theme-toggle";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "../../../components/ui/sheet/sheet";
 import { ChevronRight, MenuIcon } from "lucide-react";
 import { cn } from "../../../lib/utils";
 import styles from "./menu.module.scss";
-import { SettingsDropdown } from "./settings-dropdown/settings-dropdown";
 
 
 type TMenuProps = {
@@ -22,9 +20,9 @@ const Menu = ({
     const location = useLocation();
 
     // Navigation items - hardcodé pour l'instant
-    const navigationItems = [
-        { id: 1, title: 'Home', path: '/' },
-        { id: 2, title: 'Automation', path: '/admin/automation' },
+    const navigationItems: { id: number; title: string; path: string }[] = [
+        // { id: 1, title: 'Home', path: '/' },
+        // { id: 2, title: 'Automation', path: '/admin/automation' },
     ];
 
     // Fonction pour vérifier si un élément de navigation est actif
@@ -56,10 +54,6 @@ const Menu = ({
                     <span className={styles.menuItemFancyBar} />
                 </Button>
             ))}
-
-            <ColorThemeToggle className={styles.colorThemeToggle} />
-
-            <SettingsDropdown className={styles.settingsDropdown} />
         </div>
         <div
             data-menu="mobile"
@@ -117,9 +111,6 @@ const Menu = ({
                                     <ChevronRight size={16} />
                                 </Button>
                             ))}
-                        </div>
-                        <div className={styles.mobileSheetContentBodyFooter}>
-                            <ColorThemeToggle />
                         </div>
                     </div>
                 </SheetContent>

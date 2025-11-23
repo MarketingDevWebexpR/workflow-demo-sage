@@ -1,0 +1,68 @@
+.uiTaskForm {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6);
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+}
+
+.selectItemContent {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    
+    svg {
+        color: var(--text-2);
+        flex-shrink: 0;
+    }
+}
+
+.previewCard {
+    border: 1px solid var(--border-color-standard);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--bg-1);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.previewHeader {
+    padding: var(--spacing-3) var(--spacing-4);
+    background: var(--bg-2);
+    border-bottom: 1px solid var(--border-color-standard);
+}
+
+.previewTitle {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-1);
+}
+
+.previewBody {
+    padding: var(--spacing-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+    align-items: flex-start;
+}
+
+.previewDescription {
+    font-size: var(--text-sm);
+    color: var(--text-2);
+    margin: 0;
+    line-height: 1.6;
+}
+
+.openButton {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    
+    svg {
+        flex-shrink: 0;
+    }
+}
+

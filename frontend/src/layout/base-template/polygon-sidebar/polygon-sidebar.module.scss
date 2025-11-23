@@ -1,0 +1,58 @@
+.polygonSidebar {
+    width: var(--polygon-sidebar-width, 280px);
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 0;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    background-color: var(--polygon-sidebar-bg, rgba(255, 255, 255, 0.8));
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+
+    position: fixed;
+    --s: var(--spacing-8);
+    top: var(--s);
+    bottom: var(--s);
+    left: var(--s);
+    border-radius: var(--radius-lg);
+}
+
+.polygonSidebarNavigation {
+    display: flex;
+    flex-direction: column;
+}
+
+.polygonSidebarNavigationItem {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2, 8px);
+    padding: var(--spacing-2-5) var(--spacing-8);
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+    font-size: var(--text-sm, 14px);
+    font-weight: 500;
+    
+    &:hover {
+        background-color: var(--polygon-sidebar-bg-hover, rgba(0, 0, 0, 0.05));
+    }
+    
+    &:active,
+    &Active {
+        background-color: var(--polygon-sidebar-bg-active, rgba(0, 0, 0, 0.1));
+    }
+    
+    svg {
+        flex-shrink: 0;
+    }
+}
+
+.polygonSidebarDivider {
+    height: 1px;
+    background-color: var(--border-color-standard, rgba(0, 0, 0, 0.1));
+    margin: var(--spacing-4, 16px);
+}
+

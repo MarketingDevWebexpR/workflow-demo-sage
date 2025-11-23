@@ -44,7 +44,7 @@
 
 .automationPageMain {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex: 1;
     // overflow: hidden;
     position: relative;
@@ -53,31 +53,24 @@
 .automationPageHeader {
     padding: 0;
     background: var(--surface);
-    padding-inline: var(--spacing-8);
-    padding-top: var(--spacing-8);
-    padding-bottom: var(--spacing-3);
     gap: var(--spacing-4);
     display: flex;
     align-items: center;
     border-bottom: 1px solid var(--border-color-standard);
-
-    // background: var(--surface-1);
-    // position: absolute;
-    // top: 24px;
-    // right: var(--spacing-8);
-    // z-index: 1;
-    // left: var(--spacing-8);
-    // border-radius: var(--radius-md);
-    // padding-block: 0;
-    // padding-inline: var(--spacing-4);
-    // height: 59px;
-    // background: #15191dba;
-    // backdrop-filter: blur(10px);
-
     background-color: var(--polygon-sidebar-bg);
-    padding-top: var(--spacing-8);
-    padding-bottom: var(--spacing-3);
-    min-height: 85px;
+    min-height: var(--header-height);
+    max-height: var(--header-height);
+    right: 0;
+    background: transparent;
+    border: 0;
+    padding-right: var(--spacing-8);
+    z-index: 1;
+
+    position: fixed;
+    left: var(--spacing-8);
+    top: var(--spacing-8);
+
+
 
     &[data-state="open"] {
         animation: dialogIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -139,6 +132,8 @@
     align-items: center;
     gap: var(--spacing-3);
     margin-left: auto;
+    box-shadow: 0 2px 20px 20px var(--surface-alpha-75);
+    background: var(--surface-alpha-75);
 }
 
 .actionsDropdown {
@@ -216,7 +211,7 @@
     display: flex;
     justify-content: center;
     height: 100%;
-    overflow-y: auto;
+    // overflow-y: auto;
     padding: 0;
     position: relative;
     isolation: isolate;
@@ -242,7 +237,7 @@
 
 .automationPageWorkflowViewer {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     height: 100%;
     width: 100%;
     background: transparent;
@@ -261,6 +256,51 @@
 
     p {
         font-size: var(--text-base);
+        margin: 0;
+    }
+}
+
+// Vue IHM
+.automationPageIhm {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    padding: var(--spacing-8);
+    gap: var(--spacing-6);
+}
+
+.automationPageIhmHeader {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    padding-bottom: var(--spacing-4);
+    border-bottom: 1px solid var(--border-color-standard);
+
+    h1 {
+        margin: 0;
+        font-size: var(--text-xl);
+        font-weight: 600;
+        color: var(--text);
+    }
+}
+
+.automationPageIhmContent {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+    flex: 1;
+    
+    h2 {
+        font-size: var(--text-2xl);
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0;
+    }
+
+    p {
+        font-size: var(--text-base);
+        color: var(--text-2);
         margin: 0;
     }
 }

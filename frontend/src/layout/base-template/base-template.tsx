@@ -6,6 +6,7 @@ import styles from './base-template.module.scss';
 import { DragContext } from '../../providers/drag.context';
 import { fonts } from '../../style/fonts/fonts';
 import { PolygonHeader } from './polygon-header/header';
+import { PolygonSidebar } from './polygon-sidebar/polygon-sidebar';
 
 
 
@@ -61,7 +62,7 @@ const BaseTemplate = ({
         <PolygonHeader />
 
         <div className={styles.appContent}>
-            {/* <AdminSidebar /> */}
+            <PolygonSidebar />
             <Main>{children}</Main>
         </div>
     </div>;

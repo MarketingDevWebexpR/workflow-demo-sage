@@ -1,0 +1,53 @@
+// Styles minimaux - on réutilise au maximum les styles du dropdown existant
+
+.headerMenuDropdownTrigger {
+    // Rien de spécial, on garde le style du Button
+    pointer-events: auto;
+    flex-shrink: 0;
+}
+
+.headerMenuDropdownContent {
+    min-width: 240px;
+}
+
+.headerMenuDropdownLabel {
+    // On utilise le label par défaut du dropdown
+}
+
+.headerMenuDropdownItem {
+    // On utilise le style par défaut du dropdownMenuItem
+}
+
+.headerMenuDropdownItemActive {
+    // Juste un peu de surbrillance pour l'élément actif
+    background: var(--surface-primary-soft);
+    color: var(--text-primary-2);
+    
+    &:hover {
+        background: var(--surface-primary-soft);
+    }
+}
+
+.headerMenuDropdownItemCheck {
+    margin-left: auto;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary-2);
+}
+
+.headerMenuDropdownSeparator {
+    // On utilise le séparateur par défaut
+}
+
+.screenReaderOnly {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+

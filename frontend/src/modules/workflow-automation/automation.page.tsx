@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, MoreVertical, Edit3, Power, Download, Upload, Trash2, Copy, History, Share2, SlidersHorizontal } from "lucide-react";
+import { MoreVertical, Edit3, Power, Download, Upload, Trash2, Copy, History, Share2, SlidersHorizontal } from "lucide-react";
 import { AutomationIndex } from "../../components/ui/automation-index/automation-index";
-import { AutomationWorkflowsSidebar } from "./components/automation-workflows-sidebar/automation-workflows-sidebar";
 // import { isPolygon } from "../../../../utils/sharepoint.utils"; // ❌ SharePoint - Supprimé
 import { WorkflowRoot } from "./components/workflow-root/WorkflowRoot";
 import { createWorkflowFromText } from "../../modules/workflow-automation/engine/create-workflow-from-text";
@@ -43,6 +42,11 @@ const TEXTS = {
 const AutomationPage = (): React.ReactElement => {
     const navigate = useNavigate();
     const { workflowId } = useParams<{ workflowId: string }>();
+    const location = useLocation();
+    
+    // Détection de la vue IHM
+    const isIhm = location.pathname.includes('/ihm');
+    
     const [isClosing, setIsClosing] = useState(false);
     const [workflowName, setWorkflowName] = useState('');
     const hasCreatedWorkflow = useRef(false);
@@ -82,13 +86,13 @@ const AutomationPage = (): React.ReactElement => {
         // ❌ ANCIEN CODE SharePoint (commenté)
         // const result = await workflowItemServices.update.execute({ sp, id: workflowId, props: {...} });
 
-        // ✅ TODO: Remplacer par appel API
+        // ✅ Appel API pour mettre à jour les préférences
         try {
             const response = await fetch(`/api/workflows/${workflowId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    preferences: JSON.stringify(preferences),
+                    Preferences: JSON.stringify(preferences),
                 }),
             });
             
@@ -221,7 +225,7 @@ const AutomationPage = (): React.ReactElement => {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        workflowText: workflowData.workflowText,
+                        WorkflowText: workflowData.workflowText,
                     }),
                 });
 
@@ -290,17 +294,16 @@ const AutomationPage = (): React.ReactElement => {
         setWorkflowName(name);
         setIsClosing(true);
         setTimeout(() => {
-            navigate('/admin/automation/workflow/new');
+            navigate('/workflow/new');
         }, 75);
     };
 
-    const location = useLocation();
 
     useEffect(() => {
 
         void (async () => {
 
-            if (location.pathname.includes('/admin/automation/workflow/new') && !hasCreatedWorkflow.current) {
+            if (location.pathname.includes('/workflow/new') && !hasCreatedWorkflow.current) {
                 hasCreatedWorkflow.current = true;
 
 
@@ -349,11 +352,11 @@ const AutomationPage = (): React.ReactElement => {
                     toast.error('Error creating workflow', {
                         description: extractErrorMessage(error),
                     });
-                    navigate('/admin/automation');
+                    navigate('/');
                 } else {
                     // Le workflow est déjà sélectionné et mis à jour dans le reducer
                     // Naviguer vers le workflow avec son vrai ID
-                    navigate('/admin/automation/workflow/' + resultData.data?.Id, { replace: true });
+                    navigate('/workflow/' + resultData.data?.Id, { replace: true });
 
                     dispatch({ type: 'SELECT_WORKFLOW_ITEM', payload: resultData.data });
                 }
@@ -363,7 +366,7 @@ const AutomationPage = (): React.ReactElement => {
     }, [location.pathname, dispatch]);
 
     // Déterminer si on affiche un workflow ou l'index
-    const isViewingWorkflow = workflowId && workflowId !== 'new';
+    const isViewingWorkflow = workflowId && workflowId !== 'new' && !isIhm;
     const isNewWorkflow = workflowId === 'new';
 
     // Récupérer les workflowInfos depuis le WorkflowText
@@ -378,11 +381,35 @@ const AutomationPage = (): React.ReactElement => {
     };
 
     const workflowInfos = getWorkflowInfos();
-    const workflowTitle = (selectedWorkflow?.Title || 'New workflow');
+
+    // Si on est en mode IHM, afficher la vue IHM
+    if (isIhm && workflowId) {
+        return <div className={styles.automationPage}>
+            <div className={styles.automationPageContent}>
+                <div className={styles.automationPageMain}>
+                    <div className={styles.automationPageIhm}>
+                        <div className={styles.automationPageIhmHeader}>
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => navigate(`/workflow/${workflowId}`)}
+                            >
+                                ← Retour au designer
+                            </Button>
+                            <h1>Vue IHM - Workflow {selectedWorkflow?.Title || workflowId}</h1>
+                        </div>
+                        <div className={styles.automationPageIhmContent}>
+                            <h2>Hello World</h2>
+                            <p>Interface utilisateur du workflow à venir...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>;
+    }
 
     return <div className={styles.automationPage}>
         <div className={styles.automationPageContent}>
-            <AutomationWorkflowsSidebar />
             <div className={styles.automationPageMain}>
                 {!isViewingWorkflow && !isNewWorkflow ? (
                     <AutomationIndex
@@ -393,31 +420,13 @@ const AutomationPage = (): React.ReactElement => {
                     <>
                         <div className={styles.automationPageHeader} data-state="open">
                             <div className={styles.automationPageHeaderInner}>
-                                <Button
-                                    variant="link"
-                                    className={styles.automationPageBackButton}
-                                    onClick={() => navigate('/admin/automation')}
-                                >
-                                    <ArrowLeft size={16} style={{ marginRight: 'var(--spacing-1)' }} />
-                                    Back
-                                </Button>
-                                <div className={styles.automationPageTitleRow}>
-                                    <h3>{workflowTitle}</h3>
-                                    {selectedWorkflow && (
-                                        <div
-                                            className={styles.automationPageStatusBadge}
-                                            data-enabled={!!selectedWorkflow.IsEnabled}
-                                            title={selectedWorkflow.IsEnabled ? 'Enabled' : 'Disabled'}
-                                        />
-                                    )}
-                                </div>
                                 <div className={styles.automationPageHeaderActions}>
                                     {/* Menu Affichage */}
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>
                                             <Button variant="outline" size="sm">
                                                 <SlidersHorizontal size={16} style={{ marginRight: 'var(--spacing-2)' }} />
-                                                Display settings
+                                                Affichage 
                                             </Button>
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent
@@ -551,7 +560,7 @@ const AutomationPage = (): React.ReactElement => {
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>
                                             <Button variant="outline" size="sm">
-                                                <MoreVertical size={16} style={{ marginRight: 'var(--spacing-2)' }} />
+                                                <MoreVertical size={16} style={{ marginRight: 'var(--spacing-1)' }} />
                                                 Actions
                                             </Button>
                                         </DropdownMenuTrigger>
@@ -654,6 +663,19 @@ const AutomationPage = (): React.ReactElement => {
                                             </button>
                                         </DropdownMenuContent>
                                     </DropdownMenu>
+
+                                    {/* Partager */}
+                                    <Button
+                                        variant="default"
+                                        size="sm"
+                                        onClick={() => {
+                                            // TODO: Implémenter le partage
+                                            console.log('Partager le workflow');
+                                        }}
+                                    >
+                                        <Share2 size={16} style={{ marginRight: 'var(--spacing-2)' }} />
+                                        <span>Partager</span>
+                                    </Button>
                                 </div>
                             </div>
                         </div>

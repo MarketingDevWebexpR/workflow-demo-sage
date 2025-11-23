@@ -1,0 +1,185 @@
+.polygonSidebarLandingView {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    padding-block-start: var(--header-height);
+}
+
+.polygonSidebarLandingViewNavigation {
+    display: flex;
+    flex-direction: column;
+}
+
+.polygonSidebarLandingViewNavigationItem {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2, 8px);
+    padding: var(--spacing-3) var(--spacing-8);
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+    font-size: var(--text-sm, 14px);
+    font-weight: 500;
+    color: var(--text-secondary, #6b7280);
+    
+    &:hover {
+        background-color: var(--polygon-sidebar-bg-hover, rgba(0, 0, 0, 0.05));
+        color: var(--text-primary, #111827);
+    }
+    
+    &Active {
+        background-color: var(--polygon-sidebar-bg-active, rgba(0, 0, 0, 0.08));
+        color: var(--text-primary, #111827);
+        font-weight: 600;
+    }
+    
+    svg {
+        flex-shrink: 0;
+    }
+}
+
+.polygonSidebarLandingViewDivider {
+    height: 1px;
+    background-color: var(--border-color-standard, rgba(0, 0, 0, 0.1));
+    margin: var(--spacing-4);
+}
+
+.polygonSidebarLandingViewContent {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+}
+
+.polygonSidebarLandingViewHeader {
+    padding: var(--spacing-3, 12px) var(--spacing-4, 16px);
+}
+
+.polygonSidebarLandingViewHeaderTitle {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2, 8px);
+    font-size: var(--text-base, 16px);
+    font-weight: 600;
+    color: var(--text-primary, #111827);
+    margin: 0;
+    
+    svg {
+        flex-shrink: 0;
+    }
+}
+
+.polygonSidebarLandingViewSection {
+    display: flex;
+    flex-direction: column;
+}
+
+.polygonSidebarLandingViewCreateButton {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2, 8px);
+    padding: var(--spacing-2-5, 10px) var(--spacing-4, 16px);
+    margin: 0 var(--spacing-4, 16px);
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+    font-size: var(--text-sm, 14px);
+    font-weight: 500;
+    color: var(--text-secondary, #6b7280);
+    border-radius: var(--radius-md, 8px);
+    
+    &:hover {
+        background-color: var(--polygon-sidebar-bg-hover, rgba(0, 0, 0, 0.05));
+        color: var(--text-primary, #111827);
+    }
+    
+    svg {
+        flex-shrink: 0;
+    }
+}
+
+.polygonSidebarLandingViewSectionHeader {
+    padding: var(--spacing-2) var(--spacing-8);
+    font-size: var(--text-xs, 12px);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-tertiary, #9ca3af);
+}
+
+.polygonSidebarLandingViewWorkflowsList {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.polygonSidebarLandingViewWorkflowItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-2, 8px);
+    padding: var(--spacing-2-5) var(--spacing-8);
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+    font-size: var(--text-sm, 14px);
+    color: var(--text-secondary, #6b7280);
+    
+    &:hover {
+        background-color: var(--polygon-sidebar-bg-hover, rgba(0, 0, 0, 0.05));
+        color: var(--text-primary, #111827);
+    }
+    
+    &Active {
+        background-color: var(--polygon-sidebar-bg-active, rgba(0, 0, 0, 0.08));
+        color: var(--text-primary, #111827);
+        font-weight: 500;
+    }
+    
+    &[data-loading="true"] {
+        opacity: 0.5;
+        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    
+    svg {
+        flex-shrink: 0;
+        opacity: 0.5;
+    }
+}
+
+.polygonSidebarLandingViewWorkflowItemTitle {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.polygonSidebarLandingViewEmpty {
+    padding: var(--spacing-6, 24px) var(--spacing-4, 16px);
+    text-align: center;
+    color: var(--text-tertiary, #9ca3af);
+    font-size: var(--text-sm, 14px);
+    
+    p {
+        margin: 0 0 var(--spacing-2, 8px) 0;
+    }
+}
+
+.polygonSidebarLandingViewEmptyDescription {
+    font-size: var(--text-xs, 12px);
+    opacity: 0.7;
+}
+
+.polygonSidebarLandingViewLoading {
+    display: flex;
+    flex-direction: column;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 0.3;
+    }
+}
+

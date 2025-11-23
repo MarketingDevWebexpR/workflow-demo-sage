@@ -5,6 +5,7 @@ import { IfConditionForm } from './IfConditionForm';
 import { ListSelectionForm } from './ListSelectionForm';
 import { ItemSelectionForm } from './ItemSelectionForm';
 import { BreakPermissionForm } from './BreakPermissionForm';
+import { UITaskForm } from './UITaskForm';
 import styles from './WorkflowOptionsRenderer.module.scss';
 
 
@@ -18,6 +19,11 @@ export const WorkflowOptionsRenderer: React.FC<IWorkflowOptionsRendererProps> = 
     // Switch statements (conditions)
     if (optionId === 'SWITCH_IF' || optionId === 'SWITCH_SPLIT') {
         return <IfConditionForm />;
+    }
+
+    // UI Tasks (tâches avec IHM)
+    if (optionId?.startsWith('ACTION_UI_')) {
+        return <UITaskForm />;
     }
 
     // Actions

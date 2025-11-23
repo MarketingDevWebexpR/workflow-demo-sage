@@ -29,7 +29,8 @@ const AutomationIndex: React.FC<IAutomationHomePageProps> = ({ onCreateClick, da
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+        
+        if (e.key === 'Enter') {
             e.preventDefault();
             handleCreateClick();
         }
@@ -256,13 +257,23 @@ const AutomationIndex: React.FC<IAutomationHomePageProps> = ({ onCreateClick, da
                             onChange={(e) => setWorkflowName(e.target.value)}
                             onKeyDown={handleKeyDown}
                             autoFocus
-                            rows={4}
+                            rows={1}
                         />
                     </div>
-                    <Button onClick={handleCreateClick} size="lg" className={styles.submitButton}>
-                        {TEXTS.createButton}
+                    <div className={styles.automationFormContainerActions}>
+                        <Button variant="outline" size="iconSm" rounded="full">
+                            <Icons.Image size={14} />
+                        </Button>
+                        <Button variant="outline" size="iconSm" rounded="full">
+                            <Icons.Paperclip size={14} />
+                        </Button>
+                        <Button variant="outline" size="iconSm" rounded="full">
+                            <Icons.AtSign size={14} />
+                        </Button>
+                    <Button onClick={handleCreateClick} size="icon" rounded="full" className={styles.submitButton}>
                         <Icons.ArrowRight size={18} className={styles.buttonIconRight} />
                     </Button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -778,13 +778,14 @@
     // min-height: max( 100vh - var(--header-height) - 85px + var(--spacing-8), 1px * var(--y-coefficient) * var(--max-y-value) +  1px * var(--x-axis-thickness) + var(--spacing-8));
     min-width: max(100vw - var(--polygon-sidebar-width), 1px * var(--x-coefficient) * var(--max-x-value) + 1px * var(--y-axis-thickness) + var(--spacing-8));
 
-    min-height: max(100vh - var(--header-height) - 85px, 1px * var(--y-coefficient) * var(--max-y-value) + 1px * var(--x-axis-thickness) + var(--spacing-8) * 2);
+    min-height: max(100vh, 1px * var(--y-coefficient) * var(--max-y-value) + 1px * var(--x-axis-thickness) + var(--spacing-8) * 2);
     position: absolute;
     inset: 0px;
     z-index: -1;
     margin-block: calc(-1 * var(--spacing-8));
     margin-inline: calc(-1 * var(--spacing-8));
     margin-top: calc(-1 * var(--spacing-8));
-    top: calc(var(--show-indexes, 1) * -1px * var(--y-coefficient));
+    top: calc(var(--show-indexes, 1) * -1px * var(--y-coefficient) - var(--header-height));
     left: calc(var(--show-indexes, 1) * -1px * var(--x-coefficient));
+    z-index: -1;
 }

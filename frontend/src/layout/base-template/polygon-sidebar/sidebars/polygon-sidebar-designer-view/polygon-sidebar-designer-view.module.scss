@@ -1,0 +1,165 @@
+.polygonSidebarDesignerView {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+.polygonSidebarDesignerViewContentHeader {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+}
+
+.polygonSidebarDesignerViewHeader {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2, 8px);
+    padding: var(--spacing-2-5, 16px) var(--spacing-8);
+}
+
+.polygonSidebarDesignerViewBackButton {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2, 8px);
+    font-size: var(--text-sm, 14px);
+    color: var(--text-secondary, #6b7280);
+    padding: var(--spacing-2, 8px);
+
+    &:hover {
+        color: var(--text-primary, #111827);
+    }
+
+    svg {
+        flex-shrink: 0;
+    }
+}
+
+.polygonSidebarDesignerViewContent {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+}
+
+.polygonSidebarDesignerViewAiHeader {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2, 8px);
+    padding: var(--spacing-4, 16px);
+
+    svg {
+        flex-shrink: 0;
+        color: var(--primary-color, #8b5cf6);
+    }
+}
+
+.polygonSidebarDesignerViewAiTitle {
+    margin: 0;
+    font-size: var(--text-base, 16px);
+    font-weight: 600;
+    color: var(--text-primary, #111827);
+}
+
+.polygonSidebarDesignerViewConversation {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--spacing-4, 16px);
+}
+
+.polygonSidebarDesignerViewWelcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--spacing-8, 32px) var(--spacing-4, 16px);
+    gap: var(--spacing-3, 12px);
+}
+
+.polygonSidebarDesignerViewWelcomeIcon {
+    color: var(--primary-color, #8b5cf6);
+    opacity: 0.8;
+}
+
+.polygonSidebarDesignerViewWelcomeText {
+    margin: 0;
+    font-size: var(--text-base, 16px);
+    font-weight: 600;
+    color: var(--text-primary, #111827);
+}
+
+.polygonSidebarDesignerViewWelcomeDescription {
+    margin: 0;
+    font-size: var(--text-sm, 14px);
+    color: var(--text-secondary, #6b7280);
+    line-height: 1.5;
+}
+
+.polygonSidebarDesignerViewMessages {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3, 12px);
+    margin-top: var(--spacing-4, 16px);
+}
+
+.polygonSidebarDesignerViewInputContainer {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2, 8px);
+    background-color: var(--surface-minus-2);
+    margin: var(--spacing-4);
+    border-radius: var(--radius-lg);
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2, 8px);
+}
+
+.polygonSidebarDesignerViewInputWrapper {
+    flex: 1;
+    width: 100%;    
+}
+
+.polygonSidebarDesignerViewInputFooter {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: var(--spacing-2, 8px);
+}
+
+.polygonSidebarDesignerViewInput {
+    flex: 1;
+    padding: var(--spacing-2-5, 10px) var(--spacing-3, 12px);
+    border: 1px solid var(--border-color-standard, rgba(0, 0, 0, 0.1));
+    border-radius: var(--radius-md, 8px);
+    font-size: var(--text-sm, 14px);
+    background-color: var(--surface);
+    padding: var(--spacing-4)!important;
+    border: 0!important;
+    box-shadow: unset!important;
+    resize: none!important;
+    field-sizing: content;
+    min-height: 20px;
+    padding-bottom: var(--spacing-12)!important;
+
+    &:focus {
+        outline: none;
+        border-color: var(--primary-color, #8b5cf6);
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+    }
+
+    &::placeholder {
+        color: var(--text-tertiary, #9ca3af);
+    }
+}
+
+.polygonSidebarDesignerViewSendButton {
+    gap: var(--spacing-1);
+    font-size: var(--text-sm);
+}

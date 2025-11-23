@@ -3,6 +3,8 @@ import { Menu } from "./menu";
 import styles from "./header.module.scss";
 import { useNavigate } from "react-router-dom";
 import webexprLogo from "../../../assets/img/webexpr-logo.png";
+import { usePrefersColorThemeStore } from "../../../providers/prefers-color-theme/store";
+import { HeaderMenuDropdown } from "./header-menu-dropdown/header-menu-dropdown";
 
 
 const PolygonHeader = (): React.ReactElement => {
@@ -14,6 +16,13 @@ const PolygonHeader = (): React.ReactElement => {
     const headerEndRef = useRef<HTMLDivElement>(null);
 
     const navigate = useNavigate();
+
+    const theme = usePrefersColorThemeStore((state) => state.value);
+    const colorSchemeInSystemSettingsIsDark = usePrefersColorThemeStore((state) => state.colorSchemeInSystemSettingsIsDark);
+    
+    const isDark = theme === 'prefers-color-scheme-dark' || (
+        theme === 'prefers-color-scheme-system' && colorSchemeInSystemSettingsIsDark
+    );
 
     useEffect(() => {
 
@@ -48,7 +57,15 @@ const PolygonHeader = (): React.ReactElement => {
         <div className={styles.polygonHeaderContainer}>
             <div
                 className={styles.polygonLogoContainer}
-                onClick={() => navigate('/')}
+                onClick={(e) => {
+                    
+                    if( e.target && (e.target as HTMLElement).closest(`[class*="Trigger"]`)) {
+                        return;
+                    }
+
+                    console.log('clicked', e.target);
+                    navigate('/');
+                }}
                 role="button"
                 tabIndex={0}
                 onKeyDown={e => {
@@ -59,12 +76,15 @@ const PolygonHeader = (): React.ReactElement => {
                 title="Go to home"
             >
                 <div className={styles.headerLogoFocusFix}>Focus fix</div>
+                <div className={styles.headerLogoImgWrapper}>
                 <img
                     src={webexprLogo}
                     onClick={() => navigate('/')}
-                    className={styles.headerLogoImg}
+                    className={`${styles.headerLogoImg} ${isDark ? styles.filterInvert : ''}`}
                     alt="WebExpr Logo"
                 />
+                </div>
+                <HeaderMenuDropdown />
             </div>
         </div>
         <div className={styles.headerContainer}>
@@ -131,8 +151,6 @@ const PolygonHeader = (): React.ReactElement => {
                             <div className={styles.polygonFullDiagonalBar} />
                         </div>
                     </div> */}
-                    <span>Automation</span>
-                    <span className={styles.polygonLogoVersion}>v1.0.0</span>
                 </div>
 
                 <nav

@@ -5,12 +5,12 @@ import { BaseTemplate } from './base-template/base-template';
 import { paths } from './router.constants';
 
 // @@ pages
-import { AutomationPage } from '../modules/workflow-automation/automation.page';
 
 // @@ react router
 import { HashRouter, Route, Routes } from 'react-router-dom';
 import { Loading } from '../modules/loading/loading';
 import { NotFound } from '../modules/not-found/not-found';
+import { AutomationPage } from '../modules/workflow-automation/automation.page';
 
 type TRoute = {
     path: (typeof paths)[keyof typeof paths] | (string & {}),
@@ -41,6 +41,11 @@ const Router = () => {
 
         {
             path: paths.workflowDesigner,
+            Page: <AutomationPage />,
+        },
+
+        {
+            path: paths.workflowIhm,
             Page: <AutomationPage />,
         },
 

@@ -201,7 +201,7 @@
     --icon-color: var(--text);
     --bg-dot: #c5c5c57a;
 
-    --polygon-sidebar-width: 280px;
+    --polygon-sidebar-width: 420px;
 
     /* Automation */
     --automation-content-bg: rgb(255 255 255 / 68%);
@@ -226,6 +226,9 @@
     --surface-4: var(--gray-200);
     --surface-invert: var(--gray-800);
     --surface-invert-1: var(--gray-950);
+
+    // --- Alpha ---
+    --surface-alpha-75: #ffffffb8;
 
     // --- Primaires ---
     --surface-primary-soft-2: var(--primary-color-25);
@@ -401,6 +404,7 @@
 
     /* Workflow Categories Colors */
     --workflow-category-control-flow: #7c3aed;    /* Purple - Logique de contrôle */
+    --workflow-category-ui-tasks: #f59e0b;        /* Amber - Tâches avec IHM */
     --workflow-category-permissions: #ef4444;     /* Red - Permissions & sécurité */
     --workflow-category-groups: #3b82f6;          /* Blue - Groupes */
     --workflow-category-notifications: #ec4899;   /* Pink - Notifications */
@@ -418,6 +422,7 @@
 
     /* Workflow Categories Border Colors (Light Mode - Punchy) */
     --workflow-category-control-flow-border-color: #7c3aed;
+    --workflow-category-ui-tasks-border-color: #f59e0b;
     --workflow-category-permissions-border-color: #ef4444;
     --workflow-category-groups-border-color: #3b82f6;
     --workflow-category-notifications-border-color: #ec4899;
@@ -463,12 +468,19 @@
     --surface: var(--gray-800);
     --surface-0-5: var(--gray-800);
     --surface-1: var(--gray-775);
+    // --surface-1-5: #2a3038;
+    // --surface-2: var(--gray-750);
+
     --surface-1-5: #2a3038;
-    --surface-2: var(--gray-750);
+    --surface-2: var(--gray-950);//var(--gray-750);
+
     --surface-3: var(--gray-700);
     --surface-4: var(--gray-600);
     --surface-invert: var(--gray-200);
     --surface-invert-1: var(--gray-100);
+
+    // Alpha
+    --surface-alpha-75: #20252bb8;
 
     // Primaires
     --surface-primary-soft-2: var(--primary-color-950);
@@ -658,6 +670,7 @@
 
     /* Workflow Categories Colors - Dark Mode */
     --workflow-category-control-flow: #a78bfa;    /* Purple - Logique de contrôle */
+    --workflow-category-ui-tasks: #fbbf24;        /* Amber - Tâches avec IHM */
     --workflow-category-permissions: #f87171;     /* Red - Permissions & sécurité */
     --workflow-category-groups: #60a5fa;          /* Blue - Groupes */
     --workflow-category-notifications: #f472b6;   /* Pink - Notifications */
@@ -675,6 +688,7 @@
 
     /* Workflow Categories Border Colors (Dark Mode - Soft) */
     --workflow-category-control-flow-border-color: #6b5a8f;
+    --workflow-category-ui-tasks-border-color: #a67c52;
     --workflow-category-permissions-border-color: #9a5a5a;
     --workflow-category-groups-border-color: #5a7a9f;
     --workflow-category-notifications-border-color: #9a6a85;

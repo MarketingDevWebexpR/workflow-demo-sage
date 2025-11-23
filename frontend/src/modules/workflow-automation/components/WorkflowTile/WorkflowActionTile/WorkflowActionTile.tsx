@@ -8,6 +8,8 @@ import WorkflowAction from '../../../models/workflow/elements/WorkflowAction.mod
 import WorkflowElementContextMenu from '../WorkflowElementContextMenu/WorkflowElementContextMenu';
 import { useWorkflowElementActions } from '../../../hooks/use-workflow-element-actions';
 import { WorkflowSelectionContext } from '../../workflow-root/WorkflowRoot';
+import { useNavigate } from 'react-router-dom';
+import { paths } from '../../../../../layout/router.constants';
 
 
 export default function WorkflowActionTile(props: TMapPoint) {
@@ -23,7 +25,15 @@ export default function WorkflowActionTile(props: TMapPoint) {
     const categoryColor = actionOption?.category ? getCategoryColor(actionOption.category) : 'var(--primary-color-500)';
     const categoryBorderColor = actionOption?.category ? getCategoryBorderColor(actionOption.category) : 'var(--primary-color-500)';
 
+    const navigate = useNavigate();
+
     const handleClick = () => {
+
+        if( action.optionId === 'ACTION_UI_CUSTOM_AI') {
+
+            navigate(paths.workflowIhm.replace(':workflowId', action.id));
+            return;
+        }
         setSelectedElement(action);
     };
 
