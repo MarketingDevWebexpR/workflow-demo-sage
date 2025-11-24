@@ -1,0 +1,59 @@
+.pageRenderer {
+    max-height: 100%;
+    min-height: fit-content;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transform-origin: top left;
+
+    &Builder {
+
+        :global(*:not([data-page-component-id])) {
+            pointer-events: none;
+        }
+
+        :global([data-page-component-id]) {
+            pointer-events: auto;
+        }
+
+        :global([data-keep-pointer-events]) {
+            pointer-events: auto;
+        }
+
+        :global([data-keep-pointer-events] *) {
+            pointer-events: auto;
+        }
+
+        :global(span[data-state]) {
+            display: contents;
+
+            // display: inherit;
+            // flex-direction: inherit;
+            // max-height: inherit;
+            // height: inherit;
+            // transform-origin: inherit;
+        }
+    }
+}
+
+.emptyBox {
+    width: 100%;
+
+    &Content {
+        background-color: var(--surface-2);
+        padding: calc(0.75rem / var(--scale-value));
+        border-radius: calc(0.25rem / var(--scale-value));
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-weight: 500;
+        font-size: calc(0.75rem / var(--scale-value));
+        line-height: calc(1rem / var(--scale-value));
+    }
+}
+
+:global([data-cursor-grab="true"]) {
+    cursor: grab;
+}

@@ -1,0 +1,29 @@
+.dropPreview {
+    position: absolute;
+    pointer-events: none;
+    border-radius: var(--radius-md);
+    transition-property: top, left, width;
+    transition-duration: 0.3s;
+    box-shadow: var(--box-shadow-large);
+    background-color: var(--surface-invert);
+    height: 2px;
+
+    &Visible {
+        opacity: 1;
+    }
+
+    &Hidden {
+        opacity: 0;
+    }
+}
+
+.dropPreviewBadge {
+    font-size: var(--text-xs);
+    line-height: var(--text-xs--line-height);
+    background-color: var(--surface);
+    position: absolute;
+    top: 0;
+    right: var(--spacing-2);
+    transform: translateY(-50%);
+    border-radius: var(--radius-sm);
+}

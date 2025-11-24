@@ -1,0 +1,20 @@
+.fancyTitle {
+    font-family: var(--font-brand)!important;
+    font-size: var(--text-3xl);
+    line-height: var(--text-3xl--line-height);
+    font-weight: 500;
+    color: var(--text-1);
+    position: relative;
+    width: fit-content;
+
+    &::after {
+        position: absolute;
+        content: '';
+        height: 4px;
+        width: 40px;
+        background-image: var(--gradient-3);
+        bottom: calc(-1 * var(--spacing-2));
+        left: 0;
+        border-radius: var(--radius-full);
+    }
+}

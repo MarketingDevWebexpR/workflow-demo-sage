@@ -1,0 +1,31 @@
+.branchHighlighter {
+
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.05);
+    pointer-events: none;
+    border: 1px solid var(--border-color-standard);
+    z-index: 1000;
+    transition-property: border, box-shadow;
+    transition-duration: 300ms;
+
+    left: var(--rect-left);
+    top: var(--rect-top);
+
+    &Visible {
+        opacity: 1;
+    }
+
+    &Hidden {
+        opacity: 0;
+    }
+
+    &Editing {
+        border: 1px solid var(--border-color-offset-3);
+        box-shadow: var(--box-shadow-medium);
+    }
+
+    &Regular {
+        border: 1px dashed var(--border-color-offset-2);
+        box-shadow: var(--box-shadow-medium);
+    }
+}

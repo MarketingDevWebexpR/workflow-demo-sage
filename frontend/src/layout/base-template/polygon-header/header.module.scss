@@ -229,8 +229,8 @@
     cursor: pointer;
 
     // transform: translateX(var(--spacing-8)) translateY(var(--spacing-8));
-    border-top-left-radius: var(--radius-lg);
-    border-top-right-radius: var(--radius-lg);
+    border-top-left-radius: var(--radius-2xl);
+    border-top-right-radius: var(--radius-2xl);
     position: fixed;
     top: var(--spacing-8);
     left: var(--spacing-8);

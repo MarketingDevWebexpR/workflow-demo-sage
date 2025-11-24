@@ -9,6 +9,23 @@
 
 @mixin general-theme {
 
+
+    /*
+    Automation - Profiter de l'occas pour repenser et simplifier le design system ici 
+    */
+
+    --text-primary: #4a9d8f;
+
+
+
+
+
+
+
+
+
+
+
     /* Police */
     --font-brand: var(--font-brand, 'Ubuntu');//var(--font-brand, sans-serif);
     --font-standard: 'Roboto';// var(--font-standard, sans-serif);
@@ -102,19 +119,35 @@
     --black: #000000;
 
 
-    /* Couleurs primaires - Bleu violacé */
-    --primary-color-25: #f7f8fe;    /* Très pâle, presque blanc avec une pointe de bleu-violet */
-    --primary-color-50: #e6eafd;    /* Bleu-violet très clair */
-    --primary-color-100: #d0d6fa;   /* Bleu-violet pastel */
-    --primary-color-200: #b1baf5;   /* Bleu-violet doux */
-    --primary-color-300: #8d9ae9;   /* Bleu-violet moyen clair */
-    --primary-color-400: #6a7ad8;   /* Bleu-violet moyen */
-    --primary-color-500: #4969c6;   /* Bleu violacé principal */
-    --primary-color-600: #3a53a3;   /* Bleu-violet soutenu */
-    --primary-color-700: #2e417f;   /* Bleu-violet foncé */
-    --primary-color-800: #232f5c;   /* Bleu-violet très foncé */
-    --primary-color-900:#0f1326;   /* Presque noir, nuance de bleu-violet */
-    --primary-color-950: #0c0e16;   /* Presque noir, nuance de bleu-violet */
+    /* Couleurs primaires - Vert-bleu doux (Teal désaturé) */
+    --primary-color-25: #f0faf8;    /* Très pâle, presque blanc avec une pointe de vert-bleu */
+    --primary-color-50: #daf2ed;    /* Vert-bleu très clair et doux */
+    --primary-color-100: #b8e5dc;   /* Vert-bleu pastel désaturé */
+    --primary-color-200: #8dcfc3;   /* Vert-bleu doux */
+    --primary-color-300: #65b5a8;   /* Vert-bleu moyen clair */
+    --primary-color-400: #4a9d8f;   /* Vert-bleu moyen */
+    --primary-color-500: #3a8577;   /* Vert-bleu principal (moins saturé) */
+    --primary-color-600: #2f6d61;   /* Vert-bleu soutenu */
+    --primary-color-700: #26574e;   /* Vert-bleu foncé */
+    --primary-color-800: #1e443c;   /* Vert-bleu très foncé */
+    --primary-color-900: #172f2b;   /* Presque noir, nuance de vert-bleu */
+    --primary-color-950: #0f1f1c;   /* Presque noir, nuance de vert-bleu */
+
+    /* Anciennes couleurs primaires - Bleu violacé (commentées) */
+    /* --primary-color-25: #f7f8fe;    Très pâle, presque blanc avec une pointe de bleu-violet */
+    /* --primary-color-50: #e6eafd;    Bleu-violet très clair */
+    /* --primary-color-100: #d0d6fa;   Bleu-violet pastel */
+    /* --primary-color-200: #b1baf5;   Bleu-violet doux */
+    /* --primary-color-300: #8d9ae9;   Bleu-violet moyen clair */
+    /* --primary-color-400: #6a7ad8;   Bleu-violet moyen */
+    /* --primary-color-500: #4969c6;   Bleu violacé principal */
+    /* --primary-color-600: #3a53a3;   Bleu-violet soutenu */
+    /* --primary-color-700: #2e417f;   Bleu-violet foncé */
+    /* --primary-color-800: #232f5c;   Bleu-violet très foncé */
+    /* --primary-color-900:#0f1326;   Presque noir, nuance de bleu-violet */
+    /* --primary-color-950: #0c0e16;   Presque noir, nuance de bleu-violet */
+
+    
 
 
     /* Couleurs de fichiers */
@@ -420,6 +453,17 @@
     --workflow-category-logging: #64748b;         /* Slate - Logs */
     --workflow-category-integration: #f97316;     /* Orange - Intégration */
 
+    /* New Categories - Modern Backend */
+    --workflow-category-database: #6366f1;        /* Indigo - Database Operations */
+    --workflow-category-data-transform: #8b5cf6;  /* Violet - Data Transformations */
+    --workflow-category-variables: #06b6d4;       /* Cyan - Variables & State */
+    --workflow-category-http: #f97316;            /* Orange - HTTP & APIs */
+    --workflow-category-files: #10b981;           /* Emerald - Files & Storage */
+    --workflow-category-scheduling: #0ea5e9;      /* Sky - Scheduling */
+    --workflow-category-ai: #ec4899;              /* Pink - AI Operations */
+    --workflow-category-code: #64748b;            /* Slate - Code Execution */
+    --workflow-category-connectors: #a855f7;      /* Purple - Connecteurs */
+
     /* Workflow Categories Border Colors (Light Mode - Punchy) */
     --workflow-category-control-flow-border-color: #7c3aed;
     --workflow-category-ui-tasks-border-color: #f59e0b;
@@ -437,6 +481,17 @@
     --workflow-category-compliance-border-color: #a855f7;
     --workflow-category-logging-border-color: #64748b;
     --workflow-category-integration-border-color: #f97316;
+
+    /* New Categories Border Colors (Light Mode) */
+    --workflow-category-database-border-color: #6366f1;
+    --workflow-category-data-transform-border-color: #8b5cf6;
+    --workflow-category-variables-border-color: #06b6d4;
+    --workflow-category-http-border-color: #f97316;
+    --workflow-category-files-border-color: #10b981;
+    --workflow-category-scheduling-border-color: #0ea5e9;
+    --workflow-category-ai-border-color: #ec4899;
+    --workflow-category-code-border-color: #64748b;
+    --workflow-category-connectors-border-color: #a855f7;
 
     /* Workflow Triggers (Boundaries) */
     --trigger-color: #d28200;
@@ -686,6 +741,17 @@
     --workflow-category-logging: #94a3b8;         /* Slate - Logs */
     --workflow-category-integration: #fb923c;     /* Orange - Intégration */
 
+    /* New Categories - Dark Mode */
+    --workflow-category-database: #818cf8;        /* Indigo - Database Operations */
+    --workflow-category-data-transform: #a78bfa;  /* Violet - Data Transformations */
+    --workflow-category-variables: #22d3ee;       /* Cyan - Variables & State */
+    --workflow-category-http: #fb923c;            /* Orange - HTTP & APIs */
+    --workflow-category-files: #34d399;           /* Emerald - Files & Storage */
+    --workflow-category-scheduling: #38bdf8;      /* Sky - Scheduling */
+    --workflow-category-ai: #f472b6;              /* Pink - AI Operations */
+    --workflow-category-code: #94a3b8;            /* Slate - Code Execution */
+    --workflow-category-connectors: #c084fc;      /* Purple - Connecteurs */
+
     /* Workflow Categories Border Colors (Dark Mode - Soft) */
     --workflow-category-control-flow-border-color: #6b5a8f;
     --workflow-category-ui-tasks-border-color: #a67c52;
@@ -703,6 +769,17 @@
     --workflow-category-compliance-border-color: #7a6090;
     --workflow-category-logging-border-color: #6a7580;
     --workflow-category-integration-border-color: #9a7a5a;
+
+    /* New Categories Border Colors (Dark Mode - Soft) */
+    --workflow-category-database-border-color: #6a6f95;
+    --workflow-category-data-transform-border-color: #6b5a8f;
+    --workflow-category-variables-border-color: #5a8a95;
+    --workflow-category-http-border-color: #9a7a5a;
+    --workflow-category-files-border-color: #5a8a6f;
+    --workflow-category-scheduling-border-color: #5a7a8f;
+    --workflow-category-ai-border-color: #9a6a85;
+    --workflow-category-code-border-color: #6a7580;
+    --workflow-category-connectors-border-color: #7a6090;
 
     /* Workflow Triggers (Boundaries) */
     --trigger-color: #d28200;
@@ -728,6 +805,20 @@
     //     color: hsl(0 0% 98%) !important;
     //     font-family: 'Inter', sans-serif;
     // }
+
+
+
+
+
+
+
+
+
+
+
+    // Automation: c'est l'occasion pour repenser et simplifier le design system ici // DARK
+    --surface-primary: #4ba494;
+    --text-primary-foreground: black;
 }
 
 

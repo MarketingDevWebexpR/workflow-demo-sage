@@ -1,6 +1,6 @@
-import React from "react";
+
 import { FormControl, FormField, FormItem, FormLabel } from "../../form/form";
-import { Control } from "react-hook-form";
+import { type Control } from "react-hook-form";
 import styles from './alignment-selector-field.module.scss';
 import { RadioGroup, RadioGroupItem } from "../../base-fields/radio-group/radio-group";
 import { alignments } from "../../../../../modules/misc/data/alignments";

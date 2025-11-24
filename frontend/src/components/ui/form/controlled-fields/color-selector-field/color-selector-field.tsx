@@ -1,6 +1,6 @@
-import React from "react";
+
 import styles from "./color-selector-field.module.scss";
-import { Control } from "react-hook-form";
+import { type Control } from "react-hook-form";
 import { FormControl, FormDescription, FormField, FormItem, FormLabel } from "../../form/form";
 import { cn } from "../../../../../lib/utils";
 import { backgrounds } from "../../../../../modules/misc/data/backgrounds";

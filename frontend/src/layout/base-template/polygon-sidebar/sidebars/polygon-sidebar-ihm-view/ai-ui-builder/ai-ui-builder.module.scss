@@ -1,0 +1,102 @@
+.aiUiBuilder {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+.aiUiBuilderContent {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+}
+
+.aiUiBuilderHeader {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2, 8px);
+    padding: var(--spacing-4, 16px) var(--spacing-8);
+    background: linear-gradient(135deg, rgba(236, 72, 153, 0.1) 0%, rgba(249, 115, 22, 0.1) 100%);
+
+    svg {
+        flex-shrink: 0;
+        color: var(--primary-color, #ec4899);
+    }
+}
+
+.aiUiBuilderTitle {
+    margin: 0;
+    font-size: var(--text-base, 16px);
+    font-weight: 600;
+    color: var(--text-primary, #111827);
+}
+
+.aiUiBuilderConversation {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--spacing-4, 16px);
+}
+
+.aiUiBuilderMessages {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3, 12px);
+    margin-top: var(--spacing-4, 16px);
+}
+
+.aiUiBuilderInputContainer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2, 8px);
+    background-color: var(--surface-minus-2);
+    margin: var(--spacing-4);
+    border-radius: var(--radius-lg);
+    position: relative;
+}
+
+.aiUiBuilderInputWrapper {
+    flex: 1;
+    width: 100%;    
+}
+
+.aiUiBuilderInputFooter {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: var(--spacing-2, 8px);
+}
+
+.aiUiBuilderInput {
+    flex: 1;
+    padding: var(--spacing-4)!important;
+    border: 0!important;
+    box-shadow: unset!important;
+    resize: none!important;
+    field-sizing: content;
+    min-height: 20px;
+    padding-bottom: var(--spacing-12)!important;
+    background-color: var(--surface);
+    font-size: var(--text-sm, 14px);
+
+    &:focus {
+        outline: none;
+        border-color: var(--primary-color, #ec4899);
+        box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+    }
+
+    &::placeholder {
+        color: var(--text-tertiary, #9ca3af);
+    }
+}
+
+.aiUiBuilderSendButton {
+    gap: var(--spacing-1);
+    font-size: var(--text-sm);
+}
+

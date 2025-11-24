@@ -1,0 +1,22 @@
+.builderLayoutPage {
+    max-height: calc(100% - var(--header-height) - var(--current-admin-menu-height));
+    opacity: 0;
+    position: absolute;
+    pointer-events: none;
+    transition: max-height 0.175s ease-in-out;
+    margin-top: var(--current-menu-height);
+
+    &[data-is-animated="true"] {
+
+        animation: fromInvisibleToVisible 600ms ease-in-out forwards;
+
+        @keyframes fromInvisibleToVisible {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    }
+}

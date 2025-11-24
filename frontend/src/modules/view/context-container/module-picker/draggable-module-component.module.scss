@@ -1,0 +1,77 @@
+.draggableModuleComponent {
+    border-radius: 0.125rem;
+    cursor: grab;
+    position: relative;
+    transition: box-shadow 0.3s ease, translate 0.2s ease;
+    background-color: var(--surface);
+    bottom: 0;
+    box-shadow: var(--box-shadow-medium);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-1-5) var(--spacing-2-5);
+    border: 1px solid var(--border-color-standard);
+    will-change: translate, box-shadow;
+
+    &:active {
+        cursor: grabbing;
+    }
+
+    &:hover {
+        translate: 0 -3px;
+        box-shadow: var(--box-shadow-medium-hover);
+    }
+
+    &Content {
+
+        display: flex;
+        flex-direction: row;
+        gap: var(--spacing-2);
+        align-items: center;
+    }
+
+    &Head {
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    &IconWrapper {
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius-md);
+        background-color: var(--surface-2);
+    }
+
+    &Icon {
+        stroke: var(--text-primary);
+        width: 16px;
+        height: 16px;
+    }
+
+    &Title {
+        font-weight: 500;
+        color: var(--text);
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        font-size: var(--text-sm);
+        line-height: var(--text-sm--line-height);
+        max-width: 100%;
+        font-family: var(--font-brand) !important;
+    }
+
+    &Description {
+        color: var(--text-3);
+        font-size: 0.775rem;
+        line-height: 1rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+}

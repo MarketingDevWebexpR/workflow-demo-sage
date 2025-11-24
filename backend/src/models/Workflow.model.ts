@@ -1,62 +1,93 @@
 import { Schema, model, Document } from 'mongoose';
 
-// Interface TypeScript pour le workflow
+// Interface TypeScript pour le workflow (format compatible SharePoint)
 export interface IWorkflow extends Document {
-	title: string;
-	description?: string;
-	fragmentId?: string;
-	isEnabled: boolean;
-	workflowXML: string;
-	preferences?: {
-		zoom?: number;
-		panX?: number;
-		panY?: number;
-	};
+	Id: string; // L'_id de MongoDB sera mappé sur Id
+	Title: string;
+	Description?: string;
+	FragmentId?: string;
+	IsEnabled: number; // 0 ou 1 pour compatibilité SharePoint
+	WorkflowText: string;
+	Preferences?: string; // JSON stringifié des préférences d'affichage
+	Created?: Date;
+	Modified?: Date;
 	createdAt: Date;
 	updatedAt: Date;
-	createdBy?: {
-		id: string;
-		email: string;
-		displayName: string;
-	};
 }
 
-// Schéma Mongoose
+// Schéma Mongoose avec noms de champs compatibles SharePoint
 const WorkflowSchema = new Schema<IWorkflow>({
-	title: {
+	Title: {
 		type: String,
 		required: true,
 		trim: true,
 		maxlength: 255,
 	},
-	description: {
+	Description: {
 		type: String,
 		trim: true,
 	},
-	fragmentId: {
+	FragmentId: {
 		type: String,
 		trim: true,
+		default: 'DEFAULT',
 	},
-	isEnabled: {
-		type: Boolean,
-		default: true,
+	IsEnabled: {
+		type: Number,
+		default: 0, // 0 = désactivé, 1 = activé
+		enum: [0, 1],
 	},
-	workflowXML: {
+	WorkflowText: {
 		type: String,
 		required: true,
 	},
-	preferences: {
-		zoom: { type: Number, default: 1 },
-		panX: { type: Number, default: 0 },
-		panY: { type: Number, default: 0 },
+	Preferences: {
+		type: String, // JSON stringifié
+		default: JSON.stringify({
+			xCoefficient: 200,
+			yCoefficient: 30,
+			xAxisThickness: 2,
+			yAxisThickness: 2,
+			elementWidth: 12,
+			elementHeight: 12,
+			connectorThickness: 2,
+			connectorRadius: 15,
+			arrowPointerThickness: 8,
+			showIndexes: true,
+		}),
 	},
-	createdBy: {
-		id: { type: String },
-		email: { type: String },
-		displayName: { type: String },
+	Views: {
+		type: String, // JSON stringifié : Record<stepId, components>
+		default: JSON.stringify({}),
 	},
 }, {
 	timestamps: true, // Ajoute automatiquement createdAt et updatedAt
+});
+
+// Ajouter des champs virtuels pour compatibilité
+WorkflowSchema.virtual('Id').get(function() {
+	return this._id.toString();
+});
+
+WorkflowSchema.virtual('Created').get(function() {
+	return this.createdAt;
+});
+
+WorkflowSchema.virtual('Modified').get(function() {
+	return this.updatedAt;
+});
+
+// S'assurer que les champs virtuels sont inclus dans JSON
+WorkflowSchema.set('toJSON', {
+	virtuals: true,
+	transform: function(doc, ret: any) {
+		ret.Id = ret._id.toString();
+		ret.Created = ret.createdAt;
+		ret.Modified = ret.updatedAt;
+		delete ret._id;
+		delete ret.__v;
+		return ret;
+	}
 });
 
 // Exporter le modèle

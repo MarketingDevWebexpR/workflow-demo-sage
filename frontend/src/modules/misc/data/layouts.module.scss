@@ -1,0 +1,68 @@
+.layoutFitContent {
+    & > div {
+        width: fit-content;
+    }
+}
+
+.layoutEqualSplit {
+    & > div:first-child, & > div:last-child {
+        width: 100%;
+        max-width: calc(50% - var(--spacing-6) / 2);
+    }
+}
+
+.layoutLeftHeavy {
+    & > div:first-child, & > div:last-child {
+        width: 100%;
+    }
+
+    & > div:first-child {
+        max-width: calc(65% - var(--spacing-6) / 2);
+    }
+
+    & > div:last-child {
+        max-width: calc(35% - var(--spacing-6) / 2);
+    }
+}
+
+.layoutRightHeavy {
+    & > div:first-child, & > div:last-child {
+        width: 100%;
+    }
+
+    & > div:first-child {
+        max-width: calc(35% - var(--spacing-6) / 2);
+    }
+
+    & > div:last-child {
+        max-width: calc(65% - var(--spacing-6) / 2);
+    }
+}
+
+.layoutLeftCompact {
+    & > div:first-child, & > div:last-child {
+        width: 100%;
+    }
+
+    & > div:first-child {
+        max-width: calc(75% - var(--spacing-6) / 2);
+    }
+
+    & > div:last-child {
+        max-width: calc(25% - var(--spacing-6) / 2);
+    }
+}
+
+.layoutRightCompact {
+    & > div:first-child, & > div:last-child {
+        width: 100%;
+    }
+
+    & > div:first-child {
+        max-width: calc(25% - var(--spacing-6) / 2);
+    }
+
+    & > div:last-child {
+        max-width: calc(75% - var(--spacing-6) / 2);
+    }
+}

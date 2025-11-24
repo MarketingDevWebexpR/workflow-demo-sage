@@ -3,7 +3,7 @@ import { ChevronRight } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '../../../../../lib/utils';
 import styles from './polygon-sidebar-landing-view.module.scss';
-import { useWorkflowAutomationStore } from '../../../../../modules/workflow-automation/store/workflow-automation.store';
+import { useWorkflowAutomationStore } from '../../../../../modules/workflow/store/workflow-automation.store';
 
 type TPolygonSidebarLandingViewProps = {
     onNavigate: (viewIndex: number) => void;
@@ -28,7 +28,7 @@ const PolygonSidebarLandingView = ({}: TPolygonSidebarLandingViewProps): React.R
             {/* Liste des workflows */}
             <div className={styles.polygonSidebarLandingViewSection}>
                 <div className={styles.polygonSidebarLandingViewSectionHeader}>
-                    Workflows
+                    RÉCENTS
                 </div>
 
                 {isLoading ? (

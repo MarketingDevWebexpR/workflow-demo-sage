@@ -1,0 +1,6 @@
+.multipleSynchronizedSliders {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    column-gap: var(--spacing-8);
+    row-gap: var(--spacing-5);
+}

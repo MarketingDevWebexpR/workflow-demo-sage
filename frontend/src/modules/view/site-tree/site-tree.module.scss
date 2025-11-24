@@ -1,0 +1,220 @@
+.siteTree {
+
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 100%;
+
+    &Header {
+        display: flex;
+        justify-content: space-between;
+        gap: var(--spacing-2);
+        padding-inline: var(--spacing-8);
+
+        &TitleWrapper {
+            font-size: var(--text-lg);
+            line-height: var(--text-lg--line-height);
+            font-weight: 700;
+            gap: var(--spacing-2);
+            align-items: center;
+            display: flex;
+        }
+
+        &Icon {
+            stroke: var(--text-primary);
+        }
+
+        &Title {
+            // transform: translateY(var(--spacing-0-5)); // Activer cette ligne pour les fonts qui sont mal calibrées (type BNPP)
+            font-family: var(--font-brand)!important;
+        }
+    }
+
+    &Content {
+        flex: 1;
+        overflow-y: auto;
+        padding-top: 1px;
+        transform: translateY(1px);
+    }
+}
+
+.treeNode {
+    position: relative;
+
+    &Static {
+        position: static;
+    }
+}
+
+.treeNodeRow {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+    position: static;
+    min-height: 28px;
+    padding-left: var(--tree-content-left);
+    padding-right: var(--spacing-8);
+
+    &Hovered {
+        background-color: var(--polygon-sidebar-bg-hover);
+    }
+
+    &Edited {
+        background-color: var(--polygon-sidebar-bg-active);
+        color: var(--text-minus-1);
+
+        &:hover {
+            background-color: var(--polygon-sidebar-bg-active)!important;
+        }
+    }
+
+    &Page {
+        border-bottom: 1px solid var(--border-color-standard);
+    }
+
+    &PageEdited {
+        border-bottom: 1px solid var(--border-color-offset-2-black);
+        box-shadow: 0px -1px 0 0px var(--border-color-offset-2-black), -1px 0 0 0px var(--border-color-offset-2-black) inset, 1px 0 0 0px var(--border-color-offset-2-black) inset;
+    }
+
+    &Line {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background-color: var(--surface-4);
+        z-index: 100;
+        height: 100%;
+        left: var(--tree-line-left);
+        pointer-events: none;
+    }
+
+    &Toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        width: 20px;
+        height: 28px;
+        position: relative;
+        flex-shrink: 0;
+
+        &:hover {
+            color: var(--text-primary-1);
+        }
+
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            left: calc( var(--tree-content-left) * -1);
+            background-color: transparent;
+        }
+
+        &Expanded {
+            color: var(--text-primary-1);
+        }
+
+        &Icon {
+            stroke: var(--text-primary);
+        }
+    }
+
+    &TypeIcon {
+        width: 20px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &Title {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        font-size: 0.775rem;
+        line-height: 1rem;
+    }
+
+    &End {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-1);
+        margin-left: auto;
+
+        &Action {
+
+            background-color: var(--surface-2);
+            border-radius: 9999px;
+            width: 24px;
+            height: 24px;
+            display: none;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: center;
+
+            &:hover {
+                .treeNodeRowEndActionIcon {
+                    stroke: var(--text-primary);
+                }
+            }
+        }
+
+        &Spinner {
+            margin-left: auto;
+            border-radius: 9999px;
+            width: 24px;
+            height: 24px;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+
+            &Icon {
+                stroke: var(--text-primary);
+                animation: spin 1s linear infinite;
+            }
+        }
+
+        &ChangesIndicator {
+            margin-left: auto;
+            border-radius: 9999px;
+            width: 24px;
+            height: 24px;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+
+            &Icon {
+                stroke: var(--text-primary);
+                fill: var(--text-primary);
+            }
+        }
+    }
+
+    &:hover {
+        background-color: var(--polygon-sidebar-bg-hover);
+
+        .treeNodeRowEndAction {
+            display: flex;
+        }
+    }
+}
+
+.createPageButton {
+    gap: var(--spacing-1);
+    max-width: calc(var(--polygon-sidebar-width) - var(--spacing-8) * 2);
+    margin-left: var(--spacing-8);
+    margin-right: var(--spacing-8);
+    width: 100%;
+}
+
+.siteTreeEmpty {
+    margin: auto;
+    height: calc(100% + 85px + var(--spacing-4) + var(--spacing-8) * 2);
+    transform: translateY(calc(-85px - var(--spacing-4) - var(--spacing-8)));
+    max-width: calc(var(--polygon-sidebar-width) - var(--spacing-8) * 2);
+    
+}

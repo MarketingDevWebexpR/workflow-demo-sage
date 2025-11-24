@@ -1,7 +1,7 @@
 const paths = {
     automation: `/`,
     workflowDesigner: `/workflow/:workflowId`,
-    workflowIhm: `/workflow/:workflowId/ihm`,
+    workflowIhm: `/workflow/:workflowId/:stepId/ihm`,
     '*': '*',
 } as const;
 

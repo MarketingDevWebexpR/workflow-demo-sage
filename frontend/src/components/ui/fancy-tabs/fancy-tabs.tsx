@@ -13,6 +13,7 @@ export interface IFancyTabValue {
 export interface IFancyTabsProps {
     values: IFancyTabValue[];
     defaultValue?: string;
+    value?: string;
     onValueChange?: (value: string) => void;
     className?: string;
     children?: React.ReactNode;
@@ -21,6 +22,7 @@ export interface IFancyTabsProps {
 const FancyTabs: React.FC<IFancyTabsProps> = ({
     values,
     defaultValue,
+    value,
     onValueChange,
     className,
     children,
@@ -28,6 +30,7 @@ const FancyTabs: React.FC<IFancyTabsProps> = ({
     return (
         <TabsPrimitive.Root
             defaultValue={defaultValue || values[0]?.value}
+            value={value}
             onValueChange={onValueChange}
             className={cn(styles.fancyTabs, className)}
         >

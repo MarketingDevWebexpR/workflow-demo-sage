@@ -21,6 +21,7 @@ const BaseTemplate = ({
     const { setIsDraggingFile } = useContext(DragContext);
 
     const location = useLocation();
+
     useEffect(() => {
 
         // A chaque changement de route, on remonte en haut de la page

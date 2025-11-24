@@ -1,7 +1,11 @@
 import { Hono } from 'hono';
+import { cors } from 'hono/cors';
 import { Workflow } from '../models/Workflow.model';
 
 const workflows = new Hono();
+
+// CORS pour permettre les appels depuis le frontend
+workflows.use('/*', cors());
 
 // GET /api/workflows - Liste tous les workflows
 workflows.get('/', async (c) => {
@@ -9,7 +13,7 @@ workflows.get('/', async (c) => {
     const workflows = await Workflow.find().sort({ createdAt: -1 });
     return c.json({
       success: true,
-      data: workflows,
+      data: workflows.map(w => w.toJSON()),
       count: workflows.length,
     });
   } catch (error) {
@@ -34,7 +38,7 @@ workflows.get('/:id', async (c) => {
     
     return c.json({
       success: true,
-      data: workflow,
+      data: workflow.toJSON(),
     });
   } catch (error) {
     return c.json({
@@ -49,22 +53,25 @@ workflows.post('/', async (c) => {
   try {
     const body = await c.req.json();
     
-    // Validation simple
-    if (!body.title || !body.workflowXML) {
+    // Validation simple (champs compatibles SharePoint)
+    if (!body.Title || !body.WorkflowText) {
       return c.json({
         success: false,
-        error: 'Les champs "title" et "workflowXML" sont requis',
+        error: 'Les champs "Title" et "WorkflowText" sont requis',
       }, 400);
     }
     
     const workflow = await Workflow.create(body);
+
+    console.log('ICI workflow', workflow);
     
     return c.json({
       success: true,
-      data: workflow,
+      data: (workflow as any).toJSON(),
       message: 'Workflow créé avec succès',
     }, 201);
   } catch (error) {
+    console.log('ICI error', error);
     return c.json({
       success: false,
       error: error instanceof Error ? error.message : 'Erreur inconnue',
@@ -74,12 +81,21 @@ workflows.post('/', async (c) => {
 
 // PUT /api/workflows/:id - Modifier un workflow
 workflows.put('/:id', async (c) => {
+
+  console.log('ICI', c);
+  console.log('ICI cid', c.req.param('id'));
+
   try {
     const body = await c.req.json();
     
+    // Filtrer les champs undefined pour éviter de les enregistrer
+    const updateData = Object.fromEntries(
+      Object.entries(body).filter(([_, value]) => value !== undefined)
+    );
+    
     const workflow = await Workflow.findByIdAndUpdate(
       c.req.param('id'),
-      body,
+      updateData,
       { new: true, runValidators: true }
     );
     
@@ -89,10 +105,13 @@ workflows.put('/:id', async (c) => {
         error: 'Workflow non trouvé',
       }, 404);
     }
+
+    console.log('ICI workflow', workflow);
+    console.log('ICI updateData', updateData);
     
     return c.json({
       success: true,
-      data: workflow,
+      data: workflow.toJSON(),
       message: 'Workflow modifié avec succès',
     });
   } catch (error) {

@@ -3,28 +3,29 @@
     flex-direction: column;
     height: 100%;
     overflow: hidden;
-    padding-block-start: var(--header-height);
+    padding-block-start: calc( var(--header-height) + 46px);
+}
+
+.fancyTabs {
+    padding-inline: var(--spacing-8);
+    padding-block: var(--spacing-4);
+
+    button[role*="tab"] {
+        font-size: var(--text-xs);
+    text-transform: uppercase;
+    padding-inline: var(--spacing-2-5);
+    }
 }
 
 .polygonSidebarIhmViewContent {
     display: flex;
     flex-direction: column;
     flex: 1;
-    padding: var(--spacing-8);
-    gap: var(--spacing-4);
-    padding-top: calc( 46px + var(--spacing-4 ));
+    overflow: hidden;
+}
 
-    h2 {
-        font-size: var(--text-2xl);
-        font-weight: 700;
-        color: var(--text-primary);
-        margin: 0;
-    }
-
-    p {
-        font-size: var(--text-base);
-        color: var(--text-2);
-        margin: 0;
-    }
+.siteTree {
+    flex: 1;
+    overflow: hidden;
 }
 

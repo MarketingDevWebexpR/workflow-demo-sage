@@ -1,0 +1,50 @@
+.synchronizedSliders {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+}
+
+.sliderContainer {
+
+    display: flex;
+    flex-direction: row;
+
+    >label {
+        display: none;
+    }
+}
+
+.sliderContainers {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    grid-gap: var(--spacing-8) var(--spacing-8);
+}
+
+.sliderContainerSyncLabel {
+
+    position: relative;
+
+    &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
+    &[data-prefers-distinction="true"] {
+        &::before {
+            content: '';
+            position: absolute;
+            background: var(--border-color-offset-1);
+            height: calc(100% * 2 + var(--spacing-5) * 2);
+            width: 1px;
+            top: 100%;
+            left: 6px;
+        }
+    }
+}
+
+.sliderDistinctionLabel {
+
+    >svg:first-child {
+        opacity: 0;
+    }
+}

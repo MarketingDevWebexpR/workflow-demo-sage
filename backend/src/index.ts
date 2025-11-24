@@ -1,6 +1,8 @@
 import { Hono } from 'hono'
 import mongoose from 'mongoose'
 import workflowsRoutes from './routes/workflows.routes'
+import viewsRoutes from './routes/views.routes'
+import aiRoutes from './routes/ai.routes'
 
 const app = new Hono()
 
@@ -17,10 +19,14 @@ app.get('/', (c) => c.json({
   message: 'API Workflow Automation', 
   version: '1.0.0',
   endpoints: {
-    workflows: '/api/workflows'
+    workflows: '/api/workflows',
+    views: '/api/workflows/:workflowId/views',
+    ai: '/api/ai'
   }
 }))
 
 app.route('/api/workflows', workflowsRoutes)
+app.route('/api/workflows', viewsRoutes)
+app.route('/api/ai', aiRoutes)
 
 export default app

@@ -9,6 +9,8 @@
     display: flex;
     align-items: center;
     background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+    max-height: 46px;
+    display: none;
 }
 
 .polygonSidebarDesignerViewHeader {
@@ -39,6 +41,7 @@
     display: flex;
     flex-direction: column;
     flex: 1;
+    padding-top: calc(var(--header-height) + 46px);
     overflow: hidden;
 }
 
@@ -102,6 +105,81 @@
     flex-direction: column;
     gap: var(--spacing-3, 12px);
     margin-top: var(--spacing-4, 16px);
+}
+
+.message {
+    display: flex;
+    gap: var(--spacing-2, 8px);
+    padding: var(--spacing-3, 12px);
+    border-radius: var(--radius-md, 8px);
+    animation: fadeIn 0.3s ease-in;
+
+    &.user {
+        background-color: var(--primary-color, rgba(139, 92, 246, 0.1));
+        margin-left: var(--spacing-4, 16px);
+
+        .messageIcon {
+            color: var(--primary-color, #8b5cf6);
+        }
+    }
+
+    &.assistant {
+        background-color: var(--surface-minus-1, rgba(0, 0, 0, 0.02));
+        margin-right: var(--spacing-4, 16px);
+
+        .messageIcon {
+            color: var(--primary-color, #8b5cf6);
+        }
+    }
+}
+
+.messageIcon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+}
+
+.messageContent {
+    flex: 1;
+    min-width: 0;
+}
+
+.messageText {
+    font-size: var(--text-sm, 14px);
+    line-height: 1.5;
+    color: var(--text-primary, #111827);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.cursor {
+    display: inline-block;
+    margin-left: 2px;
+    animation: blink 1s infinite;
+    color: var(--primary-color, #8b5cf6);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes blink {
+    0%, 50% {
+        opacity: 1;
+    }
+    51%, 100% {
+        opacity: 0;
+    }
 }
 
 .polygonSidebarDesignerViewInputContainer {

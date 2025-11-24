@@ -7,7 +7,7 @@ import { usePrefersColorThemeStore } from "../../../providers/prefers-color-them
 import { HeaderMenuDropdown } from "./header-menu-dropdown/header-menu-dropdown";
 import { Home, ChevronRight } from "lucide-react";
 import { cn } from "../../../lib/utils";
-import { useWorkflowAutomationStore } from "../../../modules/workflow-automation/store/workflow-automation.store";
+import { useWorkflowAutomationStore } from "../../../modules/workflow/store/workflow-automation.store";
 
 
 const PolygonHeader = (): React.ReactElement => {

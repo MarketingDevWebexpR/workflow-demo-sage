@@ -1,5 +1,4 @@
-import React from "react";
-import { Control } from "react-hook-form";
+import { type Control } from "react-hook-form";
 import { layouts } from "../../../../../modules/misc/data/layouts";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../form/form";
 import { RadioGroup, RadioGroupItem } from "../../base-fields/radio-group/radio-group";
@@ -18,7 +17,6 @@ type TLayoutFieldProps = {
 const LayoutField = ({
     name,
     control,
-    label,
 }: TLayoutFieldProps) => {
 
     return <FormField

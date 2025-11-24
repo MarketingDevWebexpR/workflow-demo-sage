@@ -21,7 +21,7 @@ dist/
 build/
 out/
 *.tgz
-lib/
+frontend/lib/
 *.sppkg
 
 # ===========================

@@ -1,0 +1,132 @@
+.spacingNone {
+    &Gap { gap: 0 }
+    &PaddingBlock { padding-block: 0 }
+    &PaddingInline { padding-inline: 0 }
+
+    &PaddingTop { padding-top: 0 }
+    &PaddingBottom { padding-bottom: 0 }
+    &PaddingLeft { padding-left: 0 }
+    &PaddingRight { padding-right: 0 }
+
+    &MarginTop { margin-top: 0 }
+    &MarginBottom { margin-bottom: 0 }
+    &MarginLeft { margin-left: 0 }
+    &MarginRight { margin-right: 0 }
+
+    &RowGap { row-gap: 0 }
+    &ColumnGap { column-gap: 0 }
+}
+
+.spacingXs {
+    &Gap { gap: var(--spacing-2) }
+    &PaddingBlock { padding-block: var(--spacing-2) }
+    &PaddingInline { padding-inline: var(--spacing-2) }
+
+    &PaddingTop { padding-top: var(--spacing-2) }
+    &PaddingBottom { padding-bottom: var(--spacing-2) }
+    &PaddingLeft { padding-left: var(--spacing-2) }
+    &PaddingRight { padding-right: var(--spacing-2) }
+
+    &MarginTop { margin-top: var(--spacing-2) }
+    &MarginBottom { margin-bottom: var(--spacing-2) }
+    &MarginLeft { margin-left: var(--spacing-2) }
+    &MarginRight { margin-right: var(--spacing-2) }
+
+    &RowGap { row-gap: var(--spacing-2) }
+    &ColumnGap { column-gap: var(--spacing-2) }
+}
+
+.spacingSm {
+    &Gap { gap: var(--spacing-4) }
+    &PaddingBlock { padding-block: var(--spacing-4) }
+    &PaddingInline { padding-inline: var(--spacing-4) }
+
+    &PaddingTop { padding-top: var(--spacing-4) }
+    &PaddingBottom { padding-bottom: var(--spacing-4) }
+    &PaddingLeft { padding-left: var(--spacing-4) }
+    &PaddingRight { padding-right: var(--spacing-4) }
+
+    &MarginTop { margin-top: var(--spacing-4) }
+    &MarginBottom { margin-bottom: var(--spacing-4) }
+    &MarginLeft { margin-left: var(--spacing-4) }
+    &MarginRight { margin-right: var(--spacing-4) }
+
+    &RowGap { row-gap: var(--spacing-4) }
+    &ColumnGap { column-gap: var(--spacing-4) }
+}
+
+.spacingMd {
+    &Gap { gap: var(--spacing-8) }
+    &PaddingBlock { padding-block: var(--spacing-8) }
+    &PaddingInline { padding-inline: var(--spacing-8) }
+
+    &PaddingTop { padding-top: var(--spacing-8) }
+    &PaddingBottom { padding-bottom: var(--spacing-8) }
+    &PaddingLeft { padding-left: var(--spacing-8) }
+    &PaddingRight { padding-right: var(--spacing-8) }
+
+    &MarginTop { margin-top: var(--spacing-8) }
+    &MarginBottom { margin-bottom: var(--spacing-8) }
+    &MarginLeft { margin-left: var(--spacing-8) }
+    &MarginRight { margin-right: var(--spacing-8) }
+
+    &RowGap { row-gap: var(--spacing-8) }
+    &ColumnGap { column-gap: var(--spacing-8) }
+}
+
+.spacingLg {
+    &Gap { gap: var(--spacing-16) }
+    &PaddingBlock { padding-block: var(--spacing-16) }
+    &PaddingInline { padding-inline: var(--spacing-16) }
+
+    &PaddingTop { padding-top: var(--spacing-16) }
+    &PaddingBottom { padding-bottom: var(--spacing-16) }
+    &PaddingLeft { padding-left: var(--spacing-16) }
+    &PaddingRight { padding-right: var(--spacing-16) }
+
+    &MarginTop { margin-top: var(--spacing-16) }
+    &MarginBottom { margin-bottom: var(--spacing-16) }
+    &MarginLeft { margin-left: var(--spacing-16) }
+    &MarginRight { margin-right: var(--spacing-16) }
+
+    &RowGap { row-gap: var(--spacing-16) }
+    &ColumnGap { column-gap: var(--spacing-16) }
+}
+
+.spacingXl {
+    &Gap { gap: var(--spacing-24) }
+    &PaddingBlock { padding-block: var(--spacing-24) }
+    &PaddingInline { padding-inline: var(--spacing-24) }
+
+    &PaddingTop { padding-top: var(--spacing-24) }
+    &PaddingBottom { padding-bottom: var(--spacing-24) }
+    &PaddingLeft { padding-left: var(--spacing-24) }
+    &PaddingRight { padding-right: var(--spacing-24) }
+
+    &MarginTop { margin-top: var(--spacing-24) }
+    &MarginBottom { margin-bottom: var(--spacing-24) }
+    &MarginLeft { margin-left: var(--spacing-24) }
+    &MarginRight { margin-right: var(--spacing-24) }
+
+    &RowGap { row-gap: var(--spacing-24) }
+    &ColumnGap { column-gap: var(--spacing-24) }
+}
+
+.spacing2xl {
+    &Gap { gap: var(--spacing-32) }
+    &PaddingBlock { padding-block: var(--spacing-32) }
+    &PaddingInline { padding-inline: var(--spacing-32) }
+
+    &PaddingTop { padding-top: var(--spacing-32) }
+    &PaddingBottom { padding-bottom: var(--spacing-32) }
+    &PaddingLeft { padding-left: var(--spacing-32) }
+    &PaddingRight { padding-right: var(--spacing-32) }
+
+    &MarginTop { margin-top: var(--spacing-32) }
+    &MarginBottom { margin-bottom: var(--spacing-32) }
+    &MarginLeft { margin-left: var(--spacing-32) }
+    &MarginRight { margin-right: var(--spacing-32) }
+
+    &RowGap { row-gap: var(--spacing-32) }
+    &ColumnGap { column-gap: var(--spacing-32) }
+}

@@ -1,0 +1,47 @@
+.accordion {
+    min-height: 30px;
+}
+
+.accordionComponent {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6);
+}
+
+.accordionItem {
+    background-color: var(--surface);
+    padding-inline: var(--spacing-6);
+    border-radius: var(--radius-lg);
+}
+
+.accordionTrigger {
+    font-weight: 500;
+    font-size: var(--text-lg);
+    line-height: var(--text-lg--line-height);
+
+    &:hover {
+        .accordionTriggerContentTitle {
+            text-decoration: underline;
+        }
+    }
+}
+
+.accordionTriggerContent {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+}
+
+.accordionTriggerContentIndex {
+    font-family: var(--font-brand)!important;
+    color: var(--text-primary);
+}
+
+.accordionTriggerContentTitle {
+    font-family: var(--font-brand)!important;
+}
+
+.accordionPageRenderer {
+    width: 100%;
+}

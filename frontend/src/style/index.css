@@ -145,3 +145,7 @@ div[class*="root-"] {
   pointer-events: none;
 }
 
+html{
+  max-width: 100%;
+    overflow: hidden;
+}

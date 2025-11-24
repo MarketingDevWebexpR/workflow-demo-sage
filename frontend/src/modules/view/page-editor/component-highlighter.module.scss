@@ -1,0 +1,74 @@
+.componentHighlighter {
+    position: absolute;
+    pointer-events: none;
+    border: 1px solid var(--border-color-standard);
+    z-index: 1000;
+    transition: border 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
+    &Visible {
+        opacity: 1;
+    }
+
+    &Hidden {
+        opacity: 0;
+    }
+
+    &EditOn {
+        border-style: solid;
+        border-color: var(--border-color-offset-3);
+        box-shadow: var(--box-shadow-large);
+    }
+
+    &EditOff {
+        border-style: dashed;
+        border-color: var(--border-color-offset-2);
+        box-shadow: var(--box-shadow-medium);
+    }
+}
+
+.componentHighlighterBadge {
+    font-size: var(--text-xs);
+    line-height: var(--text-xs--line-height);
+    position: absolute;
+    top: 0;
+    left: 100%;
+    transform: translateY(-75%) translateX(-50%);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color-standard);
+    color: var(--text-minus-1);
+    border: 1px solid var(--border-color-standard);
+    color: var(--text-minus-1);
+    display: flex;
+    align-items: center;
+    background-color: var(--surface);
+    padding: var(--spacing-0-5) var(--spacing-1);
+    white-space: nowrap;
+    gap: var(--spacing-0-5);
+
+    &EditOn {
+        border-style: solid;
+        border-color: var(--border-color-offset-3);
+        box-shadow: var(--box-shadow-large);
+    }
+
+    &EditOff {
+        border-style: dashed;
+        border-color: var(--border-color-offset-2);
+        box-shadow: var(--box-shadow-medium);
+    }
+}
+
+.componentHighlighterIcon {
+    background-color: var(--surface-2);
+    border-radius: var(--radius-md);
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+
+    > svg {
+        stroke: var(--text-primary);
+    }
+}

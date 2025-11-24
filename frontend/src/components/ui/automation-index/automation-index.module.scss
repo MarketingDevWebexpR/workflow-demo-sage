@@ -5,7 +5,7 @@
 
 html:is([class*="dark"]) {
     --trigger-color: #d0ad32; // Dark mode : jaune orangé
-    --border-automation: #766012; // Dark mode : or foncé
+    --border-automation: #15563e; // Dark mode : or foncé
 }
 
 @keyframes dialogIn {
@@ -136,7 +136,7 @@ html:is([class*="dark"]) {
 }
 
 .automationTitleHighlight {
-    color: var(--automation-title-highlight);
+    color: var(--text-primary);
 
     background: linear-gradient(90deg, #c5bd74 0%, #c5bd74 100%);
     -webkit-background-clip: text;
@@ -249,7 +249,7 @@ html:is([class*="dark"]) {
     border-radius: var(--radius-2xl) !important;
     box-shadow: unset !important;
     padding-bottom: 70px !important;
-    
+
     &:focus {
         outline: 2px solid var(--border-automation);
         outline-offset: 2px;
@@ -267,7 +267,9 @@ html:is([class*="dark"]) {
 
 button:hover .buttonIconRight {
     transform: translateX(2px);
+    stroke: #000d09;
 }
+
 
 .buttonIconLeft {
     margin-right: var(--spacing-2);

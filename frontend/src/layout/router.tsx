@@ -10,7 +10,7 @@ import { paths } from './router.constants';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 import { Loading } from '../modules/loading/loading';
 import { NotFound } from '../modules/not-found/not-found';
-import { AutomationPage } from '../modules/workflow-automation/automation.page';
+import { AutomationPage } from '../modules/workflow/automation.page';
 
 type TRoute = {
     path: (typeof paths)[keyof typeof paths] | (string & {}),
