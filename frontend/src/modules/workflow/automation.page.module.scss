@@ -135,6 +135,18 @@
     background: var(--surface-alpha-75);
 }
 
+.automationPageHeaderActionsLeft {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+}
+
+.automationPageHeaderActionsRight {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+}
+
 .actionsDropdown {
     width: 240px;
 }
@@ -268,6 +280,15 @@
     padding: var(--spacing-8);
     margin-top: calc(-1 * var(--header-height));
     padding-left: 0;
+
+    // Ajuster le header pour l'IHM (au lieu de fixed comme le workflow)
+    .automationPageHeader {
+        position: relative;
+        left: 0;
+        top: 0;
+        padding: 0;
+        margin-bottom: var(--spacing-4);
+    }
 }
 
 .automationPageIhmHeader {
@@ -291,11 +312,37 @@
     display: flex;
     align-items: center;
     gap: var(--spacing-4);
+
+    h1 {
+        font-family: var(--font-brand) !important;
+        margin: 0;
+        font-size: var(--text-xl);
+        font-weight: 600;
+        color: var(--text);
+    }
 }
 
 .automationPageIhmHeaderEnd {
     margin-left: auto;
     margin-right: var(--spacing-8);
+}
+
+.automationPageIhmToggleWrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    padding: var(--spacing-2) var(--spacing-3);
+    border-radius: var(--radius-full);
+    background: var(--surface-alpha-75);
+    border: 1px solid var(--border-color-standard);
+}
+
+.automationPageIhmToggleLabel {
+    font-size: var(--text-xs);
+    line-height: var(--text-xs--line-height);
+    font-weight: 500;
+    color: var(--text-1);
+    text-transform: uppercase;
 }
 
 .automationPageIhmContent {

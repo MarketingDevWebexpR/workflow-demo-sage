@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import styles from './polygon-sidebar-ihm-view.module.scss';
 import { SiteTree } from '../../../../../modules/view/site-tree/site-tree';
-import FancyTabs from '../../../../../components/ui/fancy-tabs/fancy-tabs';
+import FancyTabs from '../../../../../modules/misc/components/fancy-tabs/fancy-tabs';
 import { AiUiBuilder } from './ai-ui-builder/ai-ui-builder';
 import { ComponentsPicker } from './components-picker/components-picker';
 import { SelectedComponent } from './selected-component/selected-component';
@@ -15,7 +15,7 @@ type TPolygonSidebarIhmViewProps = {
 type TabKey = 'ai-builder' | 'site-tree' | 'components' | 'selected-component';
 
 const PolygonSidebarIhmView = ({ }: TPolygonSidebarIhmViewProps): React.ReactElement => {
-    const [activeTab, setActiveTab] = useState<TabKey>('components');
+    const [activeTab, setActiveTab] = useState<TabKey>('ai-builder');
     const editedComponentId = usePageStore(state => state.editedComponentId);
 
     // Basculer automatiquement vers "selected-component" quand un composant est édité
@@ -36,7 +36,7 @@ const PolygonSidebarIhmView = ({ }: TPolygonSidebarIhmViewProps): React.ReactEle
     return <div className={styles.polygonSidebarIhmView}>
         <FancyTabs
             className={styles.fancyTabs}
-            defaultValue="components"
+            defaultValue="ai-builder"
             value={activeTab}
             values={[
                 { value: 'ai-builder', label: 'AI Builder' },

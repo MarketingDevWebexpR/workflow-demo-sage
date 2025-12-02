@@ -12,6 +12,7 @@ interface IUseHiddenFieldsReturnType<EFieldNames> {
     setHiddenFields: React.Dispatch<React.SetStateAction<EFieldNames[]>>,
     isVisible: ( fieldName: EFieldNames ) => boolean,
     handleFieldsVisibility: ( fieldsVisibilityRules: (IFieldVisibilityRule<EFieldNames>)[] ) => () => void,
+    ifVisible: ( fieldName: EFieldNames ) => EFieldNames[],
 }
 
 export default function useHiddenFields<EFieldNames>(
@@ -26,22 +27,24 @@ export default function useHiddenFields<EFieldNames>(
 
         return function() {
 
-            const hiddenFieldsCopy = [ ...hiddenFields, ];
+            setHiddenFields( currentHiddenFields => {
+                const hiddenFieldsCopy = [ ...currentHiddenFields ];
 
-            for( const { name, isVisible } of fieldsVisibilityRules ) {
+                for( const { name, isVisible } of fieldsVisibilityRules ) {
 
-                const index = hiddenFieldsCopy.indexOf( name );
+                    const index = hiddenFieldsCopy.indexOf( name );
 
-                if( isVisible && index > -1 ) {
+                    if( isVisible && index > -1 ) {
 
-                    hiddenFieldsCopy.splice( index, 1 );
-                } else if( ! isVisible && index === -1 ) {
-    
-                    hiddenFieldsCopy.push( name );
+                        hiddenFieldsCopy.splice( index, 1 );
+                    } else if( ! isVisible && index === -1 ) {
+        
+                        hiddenFieldsCopy.push( name );
+                    }
                 }
-            }
 
-            setHiddenFields( hiddenFieldsCopy );
+                return hiddenFieldsCopy;
+            });
         };
     }
 
@@ -52,10 +55,20 @@ export default function useHiddenFields<EFieldNames>(
         return ! hiddenFields.includes( fieldName );
     }
 
+    function ifVisible(
+        fieldName: EFieldNames,
+    ): (EFieldNames)[] {
+
+        return hiddenFields.includes( fieldName )
+        ? []
+        : [ fieldName ];
+    }
+
     return {
         hiddenFields,
         setHiddenFields,
         isVisible,
         handleFieldsVisibility,
+        ifVisible,
     };
 }

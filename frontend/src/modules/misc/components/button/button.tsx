@@ -4,12 +4,12 @@ import { z } from "zod";
 import { Button as ButtonComponent, type ButtonProps } from "../../../../components/ui/button/button";
 import { type TButtonOnClickBehavior } from "../../data/button-onclick-behaviors";
 import { buttonOnClickBehaviors } from "../../data/button-onclick-behaviors";
-import { Dialog, DialogContent, DialogFooter, } from "../../../../components/ui/dialog/dialog";
 import { ArrowLeft } from "lucide-react";
 import RichTextEditor from "../../../../components/ui/form/base-fields/rich-text-editor/rich-text-editor";
 import { useNavigate } from "react-router-dom";
 import { DEBOUNCE_PROP } from "../../../../hooks/use-props-form";
 import { usePageStore } from "../../../view/store/page.store";
+import { Dialog, DialogContent, DialogFooter } from "../dialog/dialog";
 
 
 const ConfigurableButtonPropsSchema = z

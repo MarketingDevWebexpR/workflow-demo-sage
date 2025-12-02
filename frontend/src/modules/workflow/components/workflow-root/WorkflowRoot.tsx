@@ -14,7 +14,7 @@ import WorkflowHorizontalLineLeft from '../connectors/WorkflowConnector/Workflow
 import WorkflowHorizontalLineRight from '../connectors/WorkflowConnector/WorkflowHorizontalLineRight/WorkflowHorizontalLineRight';
 import WorkflowBottomToLeft from '../connectors/WorkflowConnector/WorkflowBottomToLeft/WorkflowBottomToLeft';
 import WorkflowUpToLeft from '../connectors/WorkflowConnector/WorkflowUpToLeft/WorkflowUpToLeft';
-import FancyTabs, { FancyTabsContent } from '../../../../components/ui/fancy-tabs/fancy-tabs';
+import FancyTabs, { FancyTabsContent } from '../../../misc/components/fancy-tabs/fancy-tabs';
 import { Input } from '../../../../components/ui/form/base-fields/input/input';
 import { WorkflowOptionsRenderer } from './workflow-forms/WorkflowOptionsRenderer';
 
@@ -120,7 +120,7 @@ function WorkflowRoot({
     const [tooltipWidthBasedOnGhost, setTooltipWidthBasedOnGhost] = useState<number>();
     const [isTooltipVisible, setIsTooltipVisible] = useState<boolean>(false);
     const [distanceBetweenElementAndTooltip,] = useState<number>(0);
-    const [tooltipPosition] = useState<ETooltipPosition>(ETooltipPosition.LEFT);
+    const [tooltipPosition] = useState<ETooltipPosition>(ETooltipPosition.RIGHT);
     const [formBoxHeightBasedOnGhost, setFormBoxHeightBasedOnGhost] = useState<number>();
     const [formBoxWidthBasedOnGhost, setFormBoxWidthBasedOnGhost] = useState<number>();
     const [isFormBoxVisible, setIsFormBoxVisible] = useState<boolean>(false);

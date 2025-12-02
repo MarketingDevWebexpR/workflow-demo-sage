@@ -5,23 +5,30 @@
     overflow: hidden;
 }
 
-.aiUiBuilderContent {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    overflow: hidden;
-}
-
 .aiUiBuilderHeader {
     display: flex;
     align-items: center;
     gap: var(--spacing-2, 8px);
-    padding: var(--spacing-4, 16px) var(--spacing-8);
-    background: linear-gradient(135deg, rgba(236, 72, 153, 0.1) 0%, rgba(249, 115, 22, 0.1) 100%);
+    padding: var(--spacing-4, 16px);
+    border-bottom: 1px solid var(--border-color-standard);
+    display: none;
 
     svg {
         flex-shrink: 0;
-        color: var(--primary-color, #ec4899);
+        color: var(--text-primary, #8b5cf6);
+    }
+}
+
+.aiUiBuilderHeaderIcon {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.6;
     }
 }
 
@@ -44,17 +51,245 @@
     display: flex;
     flex-direction: column;
     gap: var(--spacing-3, 12px);
-    margin-top: var(--spacing-4, 16px);
+    padding-bottom: var(--spacing-4, 16px);
 }
+
+.aiUiBuilderFooter {
+    display: flex;
+    flex-direction: column;
+}
+
+.aiUiBuilderActions {
+    display: flex;
+    justify-content: flex-end;
+    padding: var(--spacing-2) var(--spacing-4) 0;
+}
+
+.clearButton {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2, 8px);
+    font-size: var(--text-xs, 12px);
+    color: var(--text-3, #6b7280);
+    line-height: var(--text-xs--line-height);
+    
+    &:hover {
+        color: var(--destructive, #ef4444);
+    }
+}
+
+// ========================================
+// Messages
+// ========================================
+
+div.message {
+    display: flex;
+    gap: var(--spacing-2, 8px);
+    padding: var(--spacing-3, 12px);
+    border-radius: var(--radius-md, 8px);
+    animation: fadeIn 0.3s ease-in;
+
+    * {
+        color: var(--text);
+    }
+
+    &.user {
+        background-color: var(--surface-2);
+        margin-left: var(--spacing-4, 16px);
+
+        * {
+            color: var(--text);
+        }
+
+        .messageIcon {
+            color: var(--primary-color, #8b5cf6);
+        }
+    }
+
+    &.assistant {
+        background-color: transparent;
+        margin-right: var(--spacing-4, 16px);
+
+        .messageIcon {
+            color: var(--primary-color, #8b5cf6);
+        }
+    }
+}
+
+.messageIcon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+}
+
+.messageContent {
+    flex: 1;
+    min-width: 0;
+}
+
+.messageText {
+    font-size: var(--text-sm, 14px);
+    line-height: 1.5;
+    color: var(--text);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.cursor {
+    display: inline-block;
+    margin-left: 2px;
+    animation: blink 1s infinite;
+    color: var(--text-primary);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes blink {
+    0%, 50% {
+        opacity: 1;
+    }
+    51%, 100% {
+        opacity: 0;
+    }
+}
+
+// ========================================
+// Styles Markdown
+// ========================================
+
+.markdownH1 {
+    font-size: var(--text-xl, 20px);
+    font-weight: 700;
+    margin: var(--spacing-4, 16px) 0 var(--spacing-2, 8px) 0;
+    color: var(--text-primary, #111827);
+    line-height: 1.3;
+
+    &:first-child {
+        margin-top: 0;
+    }
+}
+
+.markdownH2 {
+    font-size: var(--text-lg, 18px);
+    font-weight: 600;
+    margin: var(--spacing-3, 12px) 0 var(--spacing-2, 8px) 0;
+    color: var(--text-primary, #111827);
+    line-height: 1.4;
+
+    &:first-child {
+        margin-top: 0;
+    }
+}
+
+.markdownH3 {
+    font-size: var(--text-base, 16px);
+    font-weight: 600;
+    margin: var(--spacing-3, 12px) 0 var(--spacing-2, 8px) 0;
+    color: var(--text-primary, #111827);
+    line-height: 1.4;
+
+    &:first-child {
+        margin-top: 0;
+    }
+}
+
+.markdownP {
+    margin: 0 0 var(--spacing-2, 8px) 0;
+    line-height: 1.6;
+    color: var(--text-primary, #111827);
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.markdownUl,
+.markdownOl {
+    margin: var(--spacing-2, 8px) 0;
+    padding-left: var(--spacing-5, 20px);
+    line-height: 1.6;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.markdownLi {
+    margin: var(--spacing-1, 4px) 0;
+    color: var(--text-primary, #111827);
+}
+
+.markdownInlineCode {
+    background-color: rgba(139, 92, 246, 0.1);
+    color: var(--primary-color, #8b5cf6);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm, 4px);
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+}
+
+.markdownCodeBlock {
+    display: block;
+    background-color: var(--surface-minus-2, rgba(0, 0, 0, 0.05));
+    color: var(--text-primary, #111827);
+    padding: var(--spacing-3, 12px);
+    border-radius: var(--radius-md, 8px);
+    font-family: 'Courier New', monospace;
+    font-size: var(--text-sm, 14px);
+    line-height: 1.5;
+    overflow-x: auto;
+    margin: var(--spacing-2, 8px) 0;
+    white-space: pre;
+}
+
+.markdownStrong {
+    font-weight: 700;
+    color: var(--text-primary, #111827);
+}
+
+.markdownEm {
+    font-style: italic;
+    color: var(--text-secondary, #6b7280);
+}
+
+.markdownBlockquote {
+    border-left: 3px solid var(--primary-color, #8b5cf6);
+    padding-left: var(--spacing-3, 12px);
+    margin: var(--spacing-2, 8px) 0;
+    color: var(--text-secondary, #6b7280);
+    font-style: italic;
+
+    p {
+        margin: 0;
+    }
+}
+
+// ========================================
+// Input
+// ========================================
 
 .aiUiBuilderInputContainer {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     gap: var(--spacing-2, 8px);
     background-color: var(--surface-minus-2);
     margin: var(--spacing-4);
     border-radius: var(--radius-lg);
     position: relative;
+    flex-direction: column;
+    margin-top: var(--spacing-2);
 }
 
 .aiUiBuilderInputWrapper {
@@ -81,13 +316,11 @@
     field-sizing: content;
     min-height: 20px;
     padding-bottom: var(--spacing-12)!important;
-    background-color: var(--surface);
+    background-color: var(--ai-panel-input-bg)!important;
     font-size: var(--text-sm, 14px);
 
     &:focus {
         outline: none;
-        border-color: var(--primary-color, #ec4899);
-        box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
     }
 
     &::placeholder {
@@ -100,3 +333,6 @@
     font-size: var(--text-sm);
 }
 
+.buttonIconRight {
+    flex-shrink: 0;
+}

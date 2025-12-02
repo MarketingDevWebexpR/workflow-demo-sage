@@ -16,7 +16,7 @@ const ViewServices = {
 		if (!result.success) {
 			throw new Error(result.error || 'Erreur lors de la récupération des vues');
 		}
-		
+
 		return result.data;
 	},
 

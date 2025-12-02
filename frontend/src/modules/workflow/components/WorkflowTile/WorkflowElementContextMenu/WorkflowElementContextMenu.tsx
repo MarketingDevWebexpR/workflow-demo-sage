@@ -1,5 +1,5 @@
 import React from 'react';
-import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuSeparator, ContextMenuTrigger } from '../../../../../components/ui/context-menu/context-menu';
+import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuSeparator, ContextMenuTrigger } from '../../../../misc/components/context-menu/context-menu';
 import { Trash2, Plus, Copy, ArrowUp, ArrowDown } from 'lucide-react';
 
 

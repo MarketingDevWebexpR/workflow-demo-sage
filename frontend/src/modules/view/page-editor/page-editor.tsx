@@ -87,6 +87,7 @@ const PageEditor = (): React.ReactElement => {
     const hoveredComponentId = usePageStore(state => state.hoveredComponentId);
     const dragOverInfos = usePageStore(state => state.dragOverInfos);
     const editorScrollTop = usePageStore(state => state.editorScrollTop);
+    const isEditMode = usePageStore(state => state.isEditMode);
 
     const editedPage = useWorkflowAutomationStore(state => state.workflowItem.selected.item);
 
@@ -108,6 +109,10 @@ const PageEditor = (): React.ReactElement => {
             return [];
         }
     }, [selectedView?.Components]);
+    console.log('Chimpenfeu: PageEditor',{
+        selectedView,
+        pageComponents,
+    });
 
     const editedComponent = useMemo(() =>
         pageComponents.find(component => component.id === editedComponentId),
@@ -162,6 +167,10 @@ const PageEditor = (): React.ReactElement => {
 
     // Effet pour mettre à jour le rectangle du composant survolé/édité
     useEffect(() => {
+
+        if(! isEditMode ) 
+            return;
+        
         const hoveredComponentElement = document.querySelector(
             `[data-page-component-id="${hoveredComponentId}"]`
         );

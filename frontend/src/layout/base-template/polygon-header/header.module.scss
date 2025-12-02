@@ -165,14 +165,13 @@
 
         pointer-events: auto;
         cursor: pointer;
-        display: flex
-    ;
+        display: flex;
         align-items: center;
         width: 100%;
         height: var(--header-height);
         margin-left: calc(-1 * var(--spacing-8));
         padding-left: var(--spacing-8);
-    
+
     }
 
     &LogoImg {
@@ -221,29 +220,33 @@
 }
 
 .polygonHeaderContainer {
-    min-width: var(--polygon-sidebar-width);
+    min-width: calc( var(--polygon-sidebar-width) - 2px);
     max-width: var(--polygon-sidebar-width);
     display: flex;
     flex-direction: column;
-    background: var(--polygon-sidebar-top-left-corner-bg);
+    // background: var(--polygon-sidebar-top-left-corner-bg);
     cursor: pointer;
 
     // transform: translateX(var(--spacing-8)) translateY(var(--spacing-8));
-    border-top-left-radius: var(--radius-2xl);
-    border-top-right-radius: var(--radius-2xl);
+    // border-top-left-radius: var(--radius-2xl);
+    // border-top-right-radius: var(--radius-2xl);
     position: fixed;
     top: var(--spacing-8);
     left: var(--spacing-8);
     min-height: var(--header-height);
+
+    margin-right: 1Px;
+    margin-top: 1px;
+    margin-left: 1px;
 }
 
 // Arborescence de navigation (Breadcrumb)
 .headerBreadcrumb {
     display: flex;
     align-items: center;
-    gap: var(--spacing-1-5);
-    padding: var(--spacing-2) var(--spacing-4);
-    flex-wrap: wrap;
+    gap: var(--spacing-3);
+    padding: var(--spacing-2) var(--spacing-8);
+    flex-wrap: nowrap;
     cursor: default;
     border-top: 1px solid var(--surface);
 }
@@ -253,40 +256,49 @@
     align-items: center;
     gap: var(--spacing-1-5);
     cursor: pointer;
-    transition: all 0.15s ease-in-out;
     font-size: var(--text-sm);
     font-weight: 500;
     color: var(--text-2);
-    padding: var(--spacing-1) var(--spacing-2);
+    padding: var(--spacing-1-5) var(--spacing-2-5);
     border-radius: var(--radius-sm);
     pointer-events: auto;
-    
+    line-height: normal;
+    background: var(--polygon-sidebar-breadcrumb-item-bg);
+    border-radius: var(--radius-full);
+    display: inline-flex;
+    overflow: hidden;
+    margin-inline: calc(-1 * var(--spacing-2-5));
+    transition: all 0.2s ease-in-out;
+
     &:hover {
-        background-color: var(--surface);
+        background-color: var(--polygon-sidebar-breadcrumb-item-bg-hover);
     }
 
     &:not(:last-child):hover {
         color: var(--text);
     }
-    
+
     &Active {
         color: var(--text-primary);
         font-weight: 600;
         cursor: default;
-        
+        flex-shrink: 0;
+        background-color: transparent;
+        cursor: default;
+
         &:hover {
             background-color: transparent;
         }
     }
-    
+
     svg {
         flex-shrink: 0;
     }
 
     span {
-        max-width: 180px;
         overflow: hidden;
         text-overflow: ellipsis;
+        font-family: var(--font-brand) !important;
         white-space: nowrap;
     }
 }
@@ -328,7 +340,7 @@
         min-height: var(--header-height);
 
         &:focus {
-            outline: 0;//1px solid var(--border-color-standard);
+            outline: 0; //1px solid var(--border-color-standard);
             outline-offset: -1px;
         }
 
@@ -358,8 +370,17 @@
     // margin-left: var(--spacing-8);
     justify-content: space-between;
     // margin-inline: var(--spacing-8);
-    width: 100%;max-width: 100%;
+    width: 100%;
+    max-width: 100%;
     padding-inline: var(--spacing-8);
+
+    background: var(--polygon-sidebar-top-left-corner-bg);
+    border-top-left-radius: var(--radius-xl);
+    border-top-right-radius: var(--radius-xl);
+
+    > button {
+        pointer-events: auto;
+    }
 }
 
 .polygonLogo {

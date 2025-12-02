@@ -1,4 +1,4 @@
-import { Anchor, Binary, Columns2, ListCollapse, MousePointerClick, PanelTopClose, RectangleHorizontal, Rows3, Text,  } from "lucide-react";
+import { Anchor, Binary, Columns2, FileText, Image as ImageIcon, ListCollapse, Minus, MousePointerClick, PanelTopClose, PanelTopDashed, RectangleHorizontal, Rows3, Text } from "lucide-react";
 import { type IModuleConfig } from "../config";
 import { CustomTabs, getLayerIds as getCustomTabsLayerIds, getDefaultProps as getCustomTabsDefaultProps } from "./components/custom-tabs/custom-tabs";
 import { Section2Columns, getLayerIds as getSection2ColumnsLayerIds, getDefaultProps as getSection2ColumnsDefaultProps } from "./components/section-2-columns/section-2-columns";
@@ -8,15 +8,15 @@ import { Column, getDefaultProps as getColumnDefaultProps, getLayerIds as getCol
 import { RichTextPropsForm } from "./components/rich-text/rich-text.props.form";
 import { RichText, getDefaultProps as getRichTextDefaultProps } from "./components/rich-text/rich-text";
 import { ColumnPropsForm } from "./components/column/column.props.form";
-// import { SubpageBanner, getDefaultProps as getSubpageBannerDefaultProps } from "./components/subpage-banner/subpage-banner";
-// import { SubpageBannerPropsForm } from "./components/subpage-banner/subpage-banner.props.form";
+import { SubpageBanner, getDefaultProps as getSubpageBannerDefaultProps } from "./components/subpage-banner/subpage-banner";
+import { SubpageBannerPropsForm } from "./components/subpage-banner/subpage-banner.props.form";
 import { Accordion, getLayerIds as getAccordionLayerIds, getDefaultProps as getAccordionDefaultProps } from "./components/accordion/accordion";
 import { KeyNumbers, getDefaultProps as getKeyNumbersDefaultProps } from "./components/key-numbers/key-numbers";
 import { SectionPropsForm } from "./components/section-1-column/section.props.form";
 import { ContainersWithAnchors, getDefaultProps as getContainersWithAnchorsDefaultProps, getLayerIds as getContainersWithAnchorsLayerIds } from "./components/containers-with-anchors/containers-with-anchors";
 import { ContainersWithAnchorsPropsForm } from "./components/containers-with-anchors/containers-with-anchors.props.form";
-// import { ImagePropsForm } from "./components/image/image.props.form";
-// import { Image, getDefaultProps as getImageDefaultProps } from "./components/image/image";
+import { ImagePropsForm } from "./components/image/image.props.form";
+import { Image, getDefaultProps as getImageDefaultProps } from "./components/image/image";
 import { Section2ColumnsPropsForm } from "./components/section-2-columns/section-2-columns.props.form";
 import { AccordionPropsForm } from "./components/accordion/accordion.props.form";
 import { ButtonPropsForm } from "./components/button/button.props.form";
@@ -25,6 +25,10 @@ import { KeyNumbersPropsForm } from "./components/key-numbers/key-numbers.props.
 import { FancyTitle } from "./components/fancy-title/fancy-title";
 import { getDefaultProps as getFancyTitleDefaultProps } from "./components/fancy-title/fancy-title";
 import { FancyTitlePropsForm } from "./components/fancy-title/fancy-title.props.form";
+import { Separator, getDefaultProps as getSeparatorDefaultProps } from "./components/separator/separator";
+import { SeparatorPropsForm } from "./components/separator/separator.props.form";
+import { FormEngineComponent, getDefaultProps as getFormEngineComponentDefaultProps } from "./components/form-engine-component/form-engine-component";
+import { FormEngineComponentPropsForm } from "./components/form-engine-component/form-engine-component.props.form";
 
 
 import { MODULES_MAP } from "../modules-map";
@@ -110,16 +114,16 @@ export const config: IModuleConfig = {
             categoryId: 'layout',
             keywords: ['section', 'two columns', 'deux colonnes', 'layout', 'double', 'split'],
         },
-        // {
-        //     titleKey: `modules.${MODULE_IDS.MISC}.components.subpageBanner.title`,
-        //     descriptionKey: `modules.${MODULE_IDS.MISC}.components.subpageBanner.description`,
-        //     Icon: PanelTopDashed,
-        //     Component: SubpageBanner,
-        //     PropsForm: SubpageBannerPropsForm,
-        //     getDefaultProps: getSubpageBannerDefaultProps,
-        //     categoryId: 'advanced',
-        //     keywords: ['banner', 'bannière', 'subpage', 'sous-page', 'header', 'hero'],
-        // },
+        {
+            titleKey: 'Bannière sous-page',
+            descriptionKey: 'Ajoutez une bannière visuelle avec image et contenu enrichi pour vos sous-pages',
+            Icon: PanelTopDashed,
+            Component: SubpageBanner,
+            PropsForm: SubpageBannerPropsForm,
+            getDefaultProps: getSubpageBannerDefaultProps,
+            categoryId: 'advanced',
+            keywords: ['banner', 'bannière', 'subpage', 'sous-page', 'header', 'hero'],
+        },
         {
             titleKey: 'Accordéon',
             descriptionKey: 'Affichez du contenu extensible qui se replie et se déplie au clic (idéal pour les FAQ)',
@@ -152,16 +156,16 @@ export const config: IModuleConfig = {
             getDefaultProps: getContainersWithAnchorsDefaultProps,
             keywords: ['containers', 'conteneurs', 'anchors', 'ancres', 'navigation', 'links', 'scroll', 'index', 'table of contents', 'sommaire', 'table des matières'],
         },
-        // {
-        //     titleKey: `modules.${MODULE_IDS.MISC}.components.image.title`,
-        //     descriptionKey: `modules.${MODULE_IDS.MISC}.components.image.description`,
-        //     Icon: ImageIcon,
-        //     Component: Image,
-        //     PropsForm: ImagePropsForm,
-        //     categoryId: 'basic',
-        //     getDefaultProps: getImageDefaultProps,
-        //     keywords: ['image', 'picture', 'photo', 'graphic', 'visual', 'visuel'],
-        // },
+        {
+            titleKey: 'Image',
+            descriptionKey: 'Intégrez une image avec contrôle de taille, marges et bordures',
+            Icon: ImageIcon,
+            Component: Image,
+            PropsForm: ImagePropsForm,
+            categoryId: 'basic',
+            getDefaultProps: getImageDefaultProps,
+            keywords: ['image', 'picture', 'photo', 'graphic', 'visual', 'visuel'],
+        },
         {
             titleKey: 'Bouton',
             descriptionKey: 'Ajoutez un bouton cliquable pour déclencher des actions ou rediriger vers une page',
@@ -181,6 +185,26 @@ export const config: IModuleConfig = {
             getDefaultProps: getFancyTitleDefaultProps,
             PropsForm: FancyTitlePropsForm,
             keywords: ['title', 'titre', 'fancy', 'stylish', 'heading', 'text', 'gradient', 'color', 'style'],
+        },
+        {
+            titleKey: 'Séparateur',
+            descriptionKey: 'Ajoutez une ligne de séparation horizontale ou verticale entre vos sections',
+            Icon: Minus,
+            Component: Separator,
+            categoryId: 'basic',
+            getDefaultProps: getSeparatorDefaultProps,
+            PropsForm: SeparatorPropsForm,
+            keywords: ['separator', 'séparateur', 'divider', 'line', 'hr', 'separation'],
+        },
+        {
+            titleKey: 'Formulaire dynamique',
+            descriptionKey: 'Créez des formulaires complexes avec validation, logique conditionnelle et configuration JSON',
+            Icon: FileText,
+            Component: FormEngineComponent,
+            categoryId: 'basic',
+            getDefaultProps: getFormEngineComponentDefaultProps,
+            PropsForm: FormEngineComponentPropsForm,
+            keywords: ['form', 'formulaire', 'input', 'validation', 'dynamic', 'engine', 'json'],
         }
     ],
     translations: {

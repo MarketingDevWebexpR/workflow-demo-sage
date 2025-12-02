@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { PrefersColorSchemeSetup } from './prefers-color-theme/setup';
 import { Provider as WorkflowAutomationProvider } from '../modules/workflow/store/workflow-automation.store';
+import { DragProvider } from './drag.context';
 
 
 type TProviders = {
@@ -26,13 +27,15 @@ const Providers = ({
 
     return <PrefersColorSchemeSetup>
         <WorkflowAutomationProvider>
-            {/* <TranslationProvider
-                defaultLocale={defaultLocale}
-                fallbackLocale={["en"]}
-                translations={translations}
-            > */}
-                {children}
-            {/* </TranslationProvider> */}
+            <DragProvider>
+                {/* <TranslationProvider
+                    defaultLocale={defaultLocale}
+                    fallbackLocale={["en"]}
+                    translations={translations}
+                > */}
+                    {children}
+                {/* </TranslationProvider> */}
+            </DragProvider>
         </WorkflowAutomationProvider>
     </PrefersColorSchemeSetup>;
 };

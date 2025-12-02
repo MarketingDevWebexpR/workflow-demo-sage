@@ -1,22 +1,12 @@
 import React from "react";
-import { Moon, Sun, SunMoon, Home, FolderOpen, Download, HelpCircle, Keyboard, Upload, Share2, Sparkles, FileJson, Code, Library } from "lucide-react";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuItemContent,
-    DropdownMenuItemIcon,
-    DropdownMenuItemChevron,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-    DropdownMenuLabel,
-    DropdownMenuShortcut,
-} from "../../../../components/ui/dropdown-menu/dropdown-menu";
+import { Moon, Sun, SunMoon, Home, FolderOpen, Download, HelpCircle, Keyboard, Upload, Share2, Sparkles, FileJson, Code, Library, Menu } from "lucide-react";
+
 import { Button } from "../../../../components/ui/button/button";
 import { usePrefersColorThemeStore } from "../../../../providers/prefers-color-theme/store";
 import { useNavigate } from "react-router-dom";
 import { cn } from "../../../../lib/utils";
 import styles from "./header-menu-dropdown.module.scss";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuItemChevron, DropdownMenuItemContent, DropdownMenuItemIcon, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger } from "../../../../modules/misc/components/dropdown-menu/dropdown-menu";
 
 
 type THeaderMenuDropdownProps = {
@@ -32,24 +22,12 @@ const HeaderMenuDropdown = ({ className }: THeaderMenuDropdownProps): React.Reac
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button 
-                    variant="outline" 
+                    variant="ghost" 
                     size="icon"
+                    rounded="full"
                     className={cn(styles.headerMenuDropdownTrigger, className)}
                 >
-                    <svg
-                        width="18"
-                        height="18"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                    >
-                        <line x1="3" y1="12" x2="21" y2="12"></line>
-                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                        <line x1="3" y1="18" x2="21" y2="18"></line>
-                    </svg>
+                    <Menu size={18} />
                     <span className={styles.screenReaderOnly}>Menu</span>
                 </Button>
             </DropdownMenuTrigger>

@@ -1,0 +1,162 @@
+.container {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+
+  h2 {
+    margin-bottom: 1.5rem;
+    color: var(--color-text-primary);
+  }
+
+  h3 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    color: var(--color-text-primary);
+  }
+
+  h4 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+  }
+}
+
+.uploadSection {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  background-color: var(--color-bg-secondary, #f9f9f9);
+
+  input[type="file"] {
+    margin-bottom: 1rem;
+    width: 100%;
+    padding: 0.5rem;
+  }
+
+  button {
+    margin-top: 1rem;
+  }
+}
+
+.fileInfo {
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: var(--color-bg-primary, #fff);
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+
+  p {
+    margin: 0.25rem 0;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+
+    strong {
+      color: var(--color-text-primary);
+    }
+  }
+}
+
+.error {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: #fee;
+  border: 1px solid #fcc;
+  border-radius: 4px;
+  color: #c33;
+  font-weight: 500;
+}
+
+.success {
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  background-color: #efe;
+  border: 1px solid #cfc;
+  border-radius: 8px;
+
+  > p {
+    margin-top: 0;
+    color: #393;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+}
+
+.urlInfo {
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+
+  p {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+  }
+
+  code {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    background-color: #333;
+    color: #0f0;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    word-break: break-all;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.preview {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+
+  p {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  img {
+    display: block;
+    margin-top: 0.5rem;
+    border-radius: 4px;
+  }
+}
+
+.instructions {
+  margin-top: 3rem;
+  padding: 1.5rem;
+  background-color: var(--color-bg-secondary, #f0f0f0);
+  border-radius: 8px;
+
+  ol, ul {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+
+    li {
+      margin: 0.5rem 0;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+  }
+
+  code {
+    padding: 0.2rem 0.4rem;
+    background-color: #333;
+    color: #0f0;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+  }
+}
+

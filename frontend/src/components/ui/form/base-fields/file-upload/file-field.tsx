@@ -1,7 +1,7 @@
-import React, { useRef, useState, DragEvent, useContext } from "react";
+import React, { useRef, useState, type DragEvent, useContext } from "react";
 import { Button } from "../../../button/button";
 import { Eye, RefreshCw, X, FileText, FileX, FileImage, FileSpreadsheet, FileVideo, FileAudio, FileArchive, File, ArrowDown, FileUp } from "lucide-react";
-import { DragContext } from "../../../../../contexts/drag.context";
+import { DragContext } from "../../../../../providers/drag.context";
 import { cn } from "../../../../../lib/utils";
 import styles from "./file-upload.module.scss";
 

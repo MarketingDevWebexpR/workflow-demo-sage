@@ -21,19 +21,19 @@
     font-size: var(--text-sm, 14px);
     font-weight: 500;
     color: var(--text-3, #6b7280);
-    
-    
+
+
     &:hover {
         background-color: var(--polygon-sidebar-bg-hover, rgba(0, 0, 0, 0.05));
         color: var(--text-primary, #111827);
     }
-    
+
     &Active {
         background-color: var(--polygon-sidebar-bg-active, rgba(0, 0, 0, 0.08));
         color: var(--text-primary, #111827);
         font-weight: 600;
     }
-    
+
     svg {
         flex-shrink: 0;
     }
@@ -54,7 +54,7 @@
     flex-direction: column;
     flex: 1;
     overflow: hidden;
-    padding-top: calc( 46px + var(--spacing-4 ));
+    padding-top: 45px; // calc( 45px + var(--spacing-4 ));
 }
 
 .polygonSidebarLandingViewHeader {
@@ -69,7 +69,7 @@
     font-weight: 600;
     color: var(--text-primary, #111827);
     margin: 0;
-    
+
     svg {
         flex-shrink: 0;
     }
@@ -78,6 +78,7 @@
 .polygonSidebarLandingViewSection {
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .polygonSidebarLandingViewCreateButton {
@@ -92,12 +93,12 @@
     font-weight: 500;
     color: var(--text-secondary, #6b7280);
     border-radius: var(--radius-md, 8px);
-    
+
     &:hover {
         background-color: var(--polygon-sidebar-bg-hover, rgba(0, 0, 0, 0.05));
         color: var(--text-primary, #111827);
     }
-    
+
     svg {
         flex-shrink: 0;
     }
@@ -124,30 +125,49 @@
     align-items: center;
     justify-content: space-between;
     gap: var(--spacing-2, 8px);
-    padding: var(--spacing-2-5) var(--spacing-8);
     cursor: pointer;
     transition: all 0.15s ease-in-out;
     font-size: var(--text-sm, 14px);
     color: var(--text-1);
-    
+    // margin-inline: var(--spacing-8);
+    padding-inline: 0;
+    padding-block: var(--spacing-4);
+    padding-inline: var(--spacing-8);
+
+    position: relative;
+
+    &::before {
+        content: '';
+        position: absolute;
+        background: var(--border-color-subtle);
+        height: 1px;
+        inset-inline: var(--spacing-8);
+        bottom: -1px;
+    }
+
     &:hover {
         background-color: var(--polygon-sidebar-bg-hover, rgba(0, 0, 0, 0.05));
-        color: var(--text-primary, #111827);
+        color: var(--text-minus-1, #111827);
+
+        svg {
+            translate: var(--spacing-1);
+        }
     }
-    
+
     &Active {
         background-color: var(--polygon-sidebar-bg-active, rgba(0, 0, 0, 0.08));
         color: var(--text-primary, #111827);
         font-weight: 500;
     }
-    
+
     &[data-loading="true"] {
         opacity: 0.5;
         animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     }
-    
+
     svg {
         flex-shrink: 0;
+        transition: translate 0.15s ease-in-out;
         opacity: 0.5;
     }
 }
@@ -157,6 +177,9 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-family: var(--font-brand);
+    color: var(--text-1);
+    font-weight: 500;
 }
 
 .polygonSidebarLandingViewEmpty {
@@ -164,7 +187,7 @@
     text-align: center;
     color: var(--text-tertiary, #9ca3af);
     font-size: var(--text-sm, 14px);
-    
+
     p {
         margin: 0 0 var(--spacing-2, 8px) 0;
     }
@@ -181,11 +204,13 @@
 }
 
 @keyframes pulse {
-    0%, 100% {
+
+    0%,
+    100% {
         opacity: 0.5;
     }
+
     50% {
         opacity: 0.3;
     }
 }
-

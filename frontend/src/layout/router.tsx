@@ -11,6 +11,7 @@ import { HashRouter, Route, Routes } from 'react-router-dom';
 import { Loading } from '../modules/loading/loading';
 import { NotFound } from '../modules/not-found/not-found';
 import { AutomationPage } from '../modules/workflow/automation.page';
+import { FileUploadTest } from '../modules/misc/components/file-upload-test/file-upload-test';
 
 type TRoute = {
     path: (typeof paths)[keyof typeof paths] | (string & {}),
@@ -47,6 +48,11 @@ const Router = () => {
         {
             path: paths.workflowIhm,
             Page: <AutomationPage />,
+        },
+
+        {
+            path: paths.fileUploadTest,
+            Page: <FileUploadTest />,
         },
 
         {

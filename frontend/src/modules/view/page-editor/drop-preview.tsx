@@ -1,7 +1,7 @@
 import React from "react";
 import { cn } from "../../../lib/utils";
 import styles from "./drop-preview.module.scss";
-import { Badge } from "../../../components/ui/badge/badge";
+import { Badge } from "../../misc/components/badge/badge";
 import { ArrowDown } from "lucide-react";
 
 

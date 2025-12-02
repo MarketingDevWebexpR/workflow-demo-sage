@@ -29,7 +29,7 @@ const AutomationIndex: React.FC<IAutomationHomePageProps> = ({ onCreateClick, da
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        
+
         if (e.key === 'Enter') {
             e.preventDefault();
             handleCreateClick();
@@ -91,6 +91,10 @@ const AutomationIndex: React.FC<IAutomationHomePageProps> = ({ onCreateClick, da
                         />
                     </div>
                     <div className={styles.automationFormContainerActions}>
+                        <Button onClick={handleCreateClick} size="icon" rounded="full" className={styles.submitButton}>
+                            <Icons.ArrowRight size={18} className={styles.buttonIconRight} />
+                        </Button>
+                        <div className={styles.automationFormContainerActionsIcons}>
                         <Button variant="outline" size="iconSm" rounded="full">
                             <Icons.Image size={14} />
                         </Button>
@@ -100,9 +104,7 @@ const AutomationIndex: React.FC<IAutomationHomePageProps> = ({ onCreateClick, da
                         <Button variant="outline" size="iconSm" rounded="full">
                             <Icons.AtSign size={14} />
                         </Button>
-                    <Button onClick={handleCreateClick} size="icon" rounded="full" className={styles.submitButton}>
-                        <Icons.ArrowRight size={18} className={styles.buttonIconRight} />
-                    </Button>
+                        </div>
                     </div>
                 </div>
             </div>

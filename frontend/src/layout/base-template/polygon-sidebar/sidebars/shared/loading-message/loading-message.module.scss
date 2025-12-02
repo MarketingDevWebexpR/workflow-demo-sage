@@ -1,0 +1,49 @@
+.loadingMessage {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3, 12px);
+    padding: var(--spacing-3, 12px) var(--spacing-4, 16px);
+    border-radius: var(--radius-md, 8px);
+    background-color: var(--surface);
+    margin: var(--spacing-2, 8px) 0;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.loadingIcon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+}
+
+.loadingText {
+    font-size: var(--text-sm, 14px);
+    color: var(--text-3, #6b7280);
+    font-style: italic;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+

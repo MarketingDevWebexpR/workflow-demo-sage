@@ -28,6 +28,7 @@ type TPageStoreState = {
     } | null,
     editorScrollTop: number | null,
     treeViewScrollTop: number | null,
+    isEditMode: boolean,
 }
 
 const initialState: TPageStoreState = {
@@ -52,6 +53,7 @@ const initialState: TPageStoreState = {
     dragOverInfos: null,
     editorScrollTop: null,
     treeViewScrollTop: null,
+    isEditMode: true,
 };
 
 const reducer = (
@@ -124,6 +126,11 @@ const reducer = (
                     saveStatus: action.payload.status,
                     saveError: action.payload.error || null,
                 },
+            };
+        case 'SET_EDIT_MODE':
+            return {
+                ...state,
+                isEditMode: action.payload,
             };
         default:
             return state;

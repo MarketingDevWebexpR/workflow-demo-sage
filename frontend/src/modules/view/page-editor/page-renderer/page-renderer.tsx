@@ -3,8 +3,6 @@ import { cn } from "../../../../lib/utils";
 import EditableComponent from "./editable-component";
 import { type TPageComponent } from "../../models/page.model";
 import { throttle } from "lodash";
-import { useLocation } from "react-router-dom";
-import { paths } from "../../../../layout/router.constants";
 import { usePageStore } from "../../store/page.store";
 import styles from "./page-renderer.module.scss";
 import { useWorkflowAutomationStore } from "../../../workflow/store/workflow-automation.store";
@@ -26,8 +24,8 @@ const PageRenderer = React.forwardRef<
         ...props
     }, ref) => {
 
-        const location = useLocation();
-        const builder = true;//location.pathname.startsWith(paths.workflowIhm.replace(/\/\*$/, ''));
+        const isEditMode = usePageStore(state => state.isEditMode);
+        const builder = isEditMode; // Mode édition activé via le toggle
         const moduleConfigs = [config];
         
         const selectedWorkflow = useWorkflowAutomationStore(state => state.workflowItem.selected.item);

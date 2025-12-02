@@ -15,13 +15,13 @@ import {
     DropdownMenuSubContent,
     DropdownMenuSubTrigger,
     DropdownMenuTrigger,
-} from '../../../../../components/ui/dropdown-menu/dropdown-menu';
+} from '../../../../misc/components/dropdown-menu/dropdown-menu';
 import { placeholderOptions, workflowCategories, getCategoryColor } from '../../../data/workflow-placeholder-options';
 import { generateWorkflowElementText, insertBeforePlaceholderById } from '../../../utils/insert-workflow-element';
 import workflowItemServices from '../../../services/workflow-item.services';
 import { useWorkflowAutomationStore } from '../../../store/workflow-automation.store';
 import { type TMapPoint } from '../../../useCases/mapEngine/mapEngineParts_02_01_2024_test/calcMapPoints';
-import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuSeparator, ContextMenuTrigger } from '../../../../../components/ui/context-menu/context-menu';
+import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuSeparator, ContextMenuTrigger } from '../../../../misc/components/context-menu/context-menu';
 import { Plus, Trash2 } from 'lucide-react';
 import { useWorkflowElementActions } from '../../../hooks/use-workflow-element-actions';
 

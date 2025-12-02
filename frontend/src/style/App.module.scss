@@ -10,12 +10,6 @@
 @mixin general-theme {
 
 
-    /*
-    Automation - Profiter de l'occas pour repenser et simplifier le design system ici 
-    */
-
-    --text-primary: #4a9d8f;
-
 
 
 
@@ -234,7 +228,7 @@
     --icon-color: var(--text);
     --bg-dot: #c5c5c57a;
 
-    --polygon-sidebar-width: 420px;
+    --polygon-sidebar-width: 430px;
 
     /* Automation */
     --automation-content-bg: rgb(255 255 255 / 68%);
@@ -432,7 +426,7 @@
 
     --polygon-sidebar-top-left-corner-bg: rgb(236 240 255);
     --polygon-sidebar-bg: rgb(230 237 255 / 52%);
-    --polygon-sidebar-bg-hover: var(--primary-color-50);
+    --polygon-sidebar-bg-hover: var(--surface-2);
     --polygon-sidebar-bg-active: var(--primary-color-100);
 
     /* Workflow Categories Colors */
@@ -510,6 +504,34 @@
     --workflow-yes-tile-icon-bg-color: #d1fadf;
     --workflow-no-tile-text-color: #c23c4e;
     --workflow-no-tile-icon-bg-color: #fee4e2;
+
+
+
+
+
+
+    /*
+    Automation - Profiter de l'occas pour repenser et simplifier le design system ici 
+    */
+
+    --text-primary: #4a9d8f;
+    --ai-panel-input-bg: white;
+    --surface-primary: #4ba494;
+
+    --polygon-sidebar-top-left-corner-bg: white;
+    --polygon-sidebar-bg: white;
+    --polygon-sidebar-border: #dbdfe2;
+    --polygon-sidebar-shadow: 0 6px 30px 5px #0f0f1015;
+    --home-textarea-shadow: 0 10px 30px 5px #71777529;
+
+    --polygon-sidebar-breadcrumb-item-bg: #1d262f;
+    --polygon-sidebar-breadcrumb-item-bg-hover: #222c36;
+
+    --border-color-subtle: #f0f0f0;
+    --home-textarea-bg: white;
+    --gradient-glow: rgb(61, 140, 122), rgb(61, 118, 193), rgb(23, 176, 145), rgb(69, 165, 134), rgb(11, 103, 153), rgb(61, 160, 196), rgb(56, 162, 168);
+
+
 }
 
 
@@ -522,10 +544,11 @@
     --surface-minus-1: var(--gray-900);
     --surface: var(--gray-800);
     --surface-0-5: var(--gray-800);
-    --surface-1: var(--gray-775);
+    // --surface-1: var(--gray-775);
     // --surface-1-5: #2a3038;
     // --surface-2: var(--gray-750);
 
+    --surface-1: #12161a;
     --surface-1-5: #2a3038;
     --surface-2: var(--gray-950);//var(--gray-750);
 
@@ -718,10 +741,11 @@
     --header-bg: var(--surface-minus-1);
     --header-bg-backdrop-filter: blur(24px) brightness(0.42);
 
-    --polygon-sidebar-top-left-corner-bg: #13181c;
-    --polygon-sidebar-bg:  #15191dc9;
+    --polygon-sidebar-top-left-corner-bg: var(--surface-2);//#13181c;
+    --polygon-sidebar-bg:  #101417de;//#0d0e10de; //#15191dc9; 
     --polygon-sidebar-bg-hover: #0e1215;
     --polygon-sidebar-bg-active: #04090d;
+
 
     /* Workflow Categories Colors - Dark Mode */
     --workflow-category-control-flow: #a78bfa;    /* Purple - Logique de contrôle */
@@ -819,6 +843,18 @@
     // Automation: c'est l'occasion pour repenser et simplifier le design system ici // DARK
     --surface-primary: #4ba494;
     --text-primary-foreground: black;
+
+    --ai-panel-input-bg: black;
+    --border-color-subtle: #20252b;
+    --polygon-sidebar-border: #333333d4;
+    --polygon-sidebar-shadow: 0 6px 30px 5px #0f0f1015;
+    --home-textarea-shadow: 0 10px 30px 5px #71777529;
+
+    --polygon-sidebar-breadcrumb-item-bg: #1d262f;
+    --polygon-sidebar-breadcrumb-item-bg-hover: #222c36;
+    --home-textarea-bg: var(--surface-2);
+    --gradient-glow: rgb(10, 61, 97), rgb(19, 104, 80), rgb(8, 69, 72), rgb(12, 75, 79), rgb(18, 103, 108), rgb(24, 98, 125), rgb(56, 162, 168);
+
 }
 
 

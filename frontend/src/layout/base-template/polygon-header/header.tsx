@@ -4,10 +4,10 @@ import styles from "./header.module.scss";
 import { useNavigate, useLocation } from "react-router-dom";
 import webexprLogo from "../../../assets/img/webexpr-logo.png";
 import { usePrefersColorThemeStore } from "../../../providers/prefers-color-theme/store";
-import { HeaderMenuDropdown } from "./header-menu-dropdown/header-menu-dropdown";
 import { Home, ChevronRight } from "lucide-react";
 import { cn } from "../../../lib/utils";
 import { useWorkflowAutomationStore } from "../../../modules/workflow/store/workflow-automation.store";
+import { ColorThemeToggle } from "./color-theme-toggle/color-theme-toggle";
 
 
 const PolygonHeader = (): React.ReactElement => {
@@ -75,7 +75,8 @@ const PolygonHeader = (): React.ReactElement => {
                 className={styles.polygonLogoContainer}
                 onClick={(e) => {
                     
-                    if( e.target && (e.target as HTMLElement).closest(`[class*="Trigger"]`)) {
+                    // Empêcher la navigation si on clique sur le toggle de thème ou le menu dropdown
+                    if( e.target && (e.target as HTMLElement).closest(`[class*="Trigger"], button[title="Toggle theme"]`)) {
                         return;
                     }
 
@@ -100,7 +101,7 @@ const PolygonHeader = (): React.ReactElement => {
                     alt="WebExpr Logo"
                 />
                 </div>
-                <HeaderMenuDropdown />
+                <ColorThemeToggle />
             </div>
 
             {/* Arborescence de navigation (Breadcrumb) - Toujours affichée */}

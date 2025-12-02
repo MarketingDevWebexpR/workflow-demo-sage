@@ -29,13 +29,12 @@ export function usePropsForm<
     }) => Promise<TProps>,
 }) {
 
-    const pages = usePageStore(state => state.data);
-    const editedId = usePageStore(state => state.editedId);
+    const selectedView = usePageStore(state => state.selected.item);
     const editedComponentId = usePageStore(state => state.editedComponentId);
     const dispatch = usePageStore(state => state.dispatch);
 
-    const editedPage = pages.find(page => page.Id === editedId);
-    const currentPageComponents = getArrayFromStringifiedJson<TPageComponent>(editedPage?.Components || '[]');
+    // Récupérer les composants depuis selected.item (nouvelle approche)
+    const currentPageComponents = getArrayFromStringifiedJson<TPageComponent>(selectedView?.Components || '[]');
     const indexOfEditedComponent = currentPageComponents.findIndex(component => component.id === editedComponentId);
     const editedComponent = currentPageComponents.find(component => component.id === editedComponentId);
 

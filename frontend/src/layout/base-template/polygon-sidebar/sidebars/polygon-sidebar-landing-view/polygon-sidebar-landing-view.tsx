@@ -27,10 +27,6 @@ const PolygonSidebarLandingView = ({}: TPolygonSidebarLandingViewProps): React.R
 
             {/* Liste des workflows */}
             <div className={styles.polygonSidebarLandingViewSection}>
-                <div className={styles.polygonSidebarLandingViewSectionHeader}>
-                    RÉCENTS
-                </div>
-
                 {isLoading ? (
                     // Loading state
                     <div className={styles.polygonSidebarLandingViewLoading}>

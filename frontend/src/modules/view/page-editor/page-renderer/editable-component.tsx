@@ -1,9 +1,9 @@
 import React, { useRef } from "react";
-import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from "../../../../components/ui/context-menu/context-menu";
 import { Trash } from "lucide-react";
 import { type TPageComponent } from "../../models/page.model";
 import { throttle } from "lodash";
 import { usePageStore } from "../../store/page.store";
+import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from "../../../misc/components/context-menu/context-menu";
 
 
 interface IEditableComponent {

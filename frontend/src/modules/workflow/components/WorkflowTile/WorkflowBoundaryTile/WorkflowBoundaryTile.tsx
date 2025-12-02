@@ -13,7 +13,7 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from '../../../../../components/ui/dropdown-menu/dropdown-menu';
+} from '../../../../misc/components/dropdown-menu/dropdown-menu';
 import { triggerOptions } from '../../../data/workflow-trigger-options';
 import type { LucideProps } from 'lucide-react';
 

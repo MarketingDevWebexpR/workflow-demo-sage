@@ -6,7 +6,7 @@ import {
     DropdownMenuItemContent,
     DropdownMenuItemIcon,
     DropdownMenuTrigger
-} from "../../../../components/ui/dropdown-menu/dropdown-menu"
+} from "../../../../modules/misc/components/dropdown-menu/dropdown-menu"
 import { Button } from "../../../../components/ui/button/button"
 import React from "react"
 import { usePrefersColorThemeStore } from "../../../../providers/prefers-color-theme/store"
@@ -21,7 +21,7 @@ const ColorThemeToggle = React.forwardRef<HTMLButtonElement, React.ComponentProp
 
     return <DropdownMenu>
         <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon" title="Toggle theme" className={cn(className)} {...props} ref={ref}>
+            <Button variant="outline" size="icon" rounded="full" title="Toggle theme" style={{ aspectRatio: '1 / 1' }} className={cn(className)} {...props} ref={ref}>
                 {theme === 'prefers-color-scheme-light' ? <Sun className={styles.triggerIcon} /> : null}
                 {theme === 'prefers-color-scheme-dark' ? <Moon className={styles.triggerIcon} /> : null}
                 {theme === 'prefers-color-scheme-system' ? <SunMoon className={styles.triggerIcon} /> : null}

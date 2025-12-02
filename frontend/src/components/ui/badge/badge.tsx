@@ -1,41 +1,33 @@
+import * as React from "react";
 import { cn } from "../../../lib/utils";
-import styles from './badge.module.scss';
-import React from "react";
+import styles from "./badge.module.scss";
 
 
-type TBadgeProps = React.HTMLAttributes<HTMLDivElement> & {
-    icon?: React.ReactNode;
-    text: string | React.ReactNode | null | undefined;
+type BadgeProps = {
+    text?: React.ReactNode;
+    className?: string;
+    children?: React.ReactNode;
     fallbackText?: string;
-};
+} & React.HTMLAttributes<HTMLDivElement>;
 
-const Badge = React.forwardRef<HTMLDivElement, TBadgeProps>(
-    ({
-        className,
-        icon,
-        text,
-        fallbackText = '—',
-        ...props
-    }, ref) => {
-
-        return <div
-            className={cn(
-                styles.badge,
-                className
-            )}
-            ref={ref}
-            data-fallback={!text}
-            {...props}
-        >
-            {icon}
-            <span>{text || fallbackText}</span>
-        </div>;
+const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
+    ({ text, className, children, fallbackText = '—', ...props }, ref) => {
+        return (
+            <div
+                ref={ref}
+                className={cn(styles.badge, className)}
+                {...props}
+            >
+                {text || children || fallbackText}
+            </div>
+        );
     }
 );
 
-Badge.displayName = 'Badge';
+Badge.displayName = "Badge";
 
 
 export {
     Badge,
 };
+

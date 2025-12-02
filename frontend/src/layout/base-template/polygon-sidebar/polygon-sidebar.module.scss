@@ -18,7 +18,9 @@
     top: var(--s);
     bottom: var(--s);
     left: var(--s);
-    border-radius: var(--radius-2xl);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--polygon-sidebar-shadow);
+    border: 1px solid var(--polygon-sidebar-border);
 }
 
 .polygonSidebarNavigation {

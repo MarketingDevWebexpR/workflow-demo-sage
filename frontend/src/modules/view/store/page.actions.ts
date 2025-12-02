@@ -11,6 +11,7 @@ const SET_EDITOR_SCROLL_TOP = 'SET_EDITOR_SCROLL_TOP' as const;
 const SET_TREE_VIEW_SCROLL_TOP = 'SET_TREE_VIEW_SCROLL_TOP' as const;
 const SET_HAS_UNSAVED_CHANGES = 'SET_HAS_UNSAVED_CHANGES' as const;
 const SET_VIEW_SAVE_STATUS = 'SET_VIEW_SAVE_STATUS' as const;
+const SET_EDIT_MODE = 'SET_EDIT_MODE' as const;
 
 
 type TPageAction = TStaticDataCrudActionInterfaces<"page", TPage, any>
@@ -26,7 +27,8 @@ type TPageAction = TStaticDataCrudActionInterfaces<"page", TPage, any>
 | { type: typeof SET_EDITOR_SCROLL_TOP, payload: number | null }
 | { type: typeof SET_TREE_VIEW_SCROLL_TOP, payload: number | null }
 | { type: typeof SET_HAS_UNSAVED_CHANGES, payload: boolean }
-| { type: typeof SET_VIEW_SAVE_STATUS, payload: { status: 'idle' | 'saving' | 'success' | 'error', error?: string | null } };
+| { type: typeof SET_VIEW_SAVE_STATUS, payload: { status: 'idle' | 'saving' | 'success' | 'error', error?: string | null } }
+| { type: typeof SET_EDIT_MODE, payload: boolean };
 
 
 export type TPageModuleAction = TPageAction;

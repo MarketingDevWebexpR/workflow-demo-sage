@@ -1,7 +1,7 @@
 import React, { forwardRef } from "react";
 import { Tabs, TabsList, TabsTrigger } from "../tabs/tabs";
 import { cn } from "../../../lib/utils";
-import { ScrollArea, ScrollBar } from "../scroll-area/scroll-area";
+import { ScrollArea, ScrollBar } from "../../../modules/misc/components/scroll-area/scroll-area";
 import styles from './category-tabs.module.scss';
 
 

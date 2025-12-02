@@ -1,11 +1,11 @@
 :root {
     --trigger-color: #d28200; // Light mode : orange
-    --border-automation: #f59700; // Light mode : orange vif
+    --border-automation: #5bab98;
 }
 
 html:is([class*="dark"]) {
     --trigger-color: #d0ad32; // Dark mode : jaune orangé
-    --border-automation: #15563e; // Dark mode : or foncé
+    --border-automation: #116053; 
 }
 
 @keyframes dialogIn {
@@ -163,7 +163,14 @@ html:is([class*="dark"]) {
     background-color: var(--surface-2);
 
     --border-width: 0px;
-    --glow-size: 1rem;
+
+    --glow-deg: 10deg;
+    // --gradient-glow: rgb(11, 94, 154), rgb(56, 162, 168), rgb(56, 162, 168), rgb(56, 162, 168), rgb(56, 162, 168), rgb(0, 187, 255), rgb(56, 162, 168);
+
+    // Dark mode OK
+
+
+
 
     transition: max-height 0.3s ease-in-out;
     border: var(--border-width) solid transparent;
@@ -172,6 +179,8 @@ html:is([class*="dark"]) {
     isolation: isolate;
     flex-direction: column;
     padding-inline: 0;
+    border: 1px solid var(--polygon-sidebar-border);
+
 
     &::before,
     &::after {
@@ -186,22 +195,23 @@ html:is([class*="dark"]) {
         bottom: -16rem;
         top: 1rem;
         // background: linear-gradient(to top, #0097ff69);
-        background: linear-gradient(to top, rgb(106 107 17 / 23%));
-        opacity: 0.385;
+        // background: linear-gradient(to top, rgb(106 107 17 / 23%));
+        background: conic-gradient(from var(--glow-deg), var(--gradient-glow));
+        opacity: 0.085;
         filter: blur(3rem);
         border-radius: 0;
         transform: unset;
-        transform-origin: top;
-        height: 100px;
+        transform-origin: center;
+        height: 100%;;
         width: 100%;
         left: 0;
         right: 0;
         max-width: unset;
         top: 0.5rem;
-        opacity: 0.38;
-        filter: blur(3rem);
-        border-radius: 100%;
-        height: 70px;
+        opacity: 0.3;
+        filter: blur(2rem);
+        border-radius: 100% 85%;
+        height: 100%;
         width: 100%;
         z-index: -1;
     }
@@ -220,11 +230,18 @@ html:is([class*="dark"]) {
     align-items: flex-end;
     gap: var(--spacing-2);
     justify-content: center;
+    flex-direction: row-reverse;
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
     padding: var(--spacing-4);
+}
+
+.automationFormContainerActionsIcons {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
 }
 
 .textareaContainer {
@@ -236,6 +253,7 @@ html:is([class*="dark"]) {
 
 .automationTextarea {
     min-height: 120px;
+    background-color: var(--home-textarea-bg);
     font-size: var(--text-base);
     border: 0;
     border-radius: var(--radius-2xl);

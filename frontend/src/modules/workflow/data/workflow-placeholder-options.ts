@@ -1686,6 +1686,22 @@ export const placeholderOptions: TPlaceholderOption[] = [
             fileFormItemNames: {},
         }),
     },
+    {
+        type: 'action',
+        id: 'ACTION_CUSTOM',
+        title: 'Action personnalisée',
+        description: 'Définir une action custom',
+        Icon: Icons.Wrench,
+        category: 'Code',
+        createInstance: () => new WorkflowAction({
+            id: uuidv4(),
+            optionId: 'ACTION_CUSTOM',
+            title: 'Action personnalisée',
+            peoplePickerFormItemNames: [],
+            keyDatas: [],
+            fileFormItemNames: {},
+        }),
+    },
 
     // ========== CONNECTEURS (NEW) ==========
     // Communication
