@@ -1,0 +1,52 @@
+Génère-moi la configuration JSON complète pour un formulaire étudiant similaire au questionnaire Student de VJ2.
+
+Le formulaire doit contenir les sections suivantes :
+
+1. **Profil académique**
+   - Poste actuel (input requis)
+   - Niveau de diplôme (select requis : Bac+2, Bac+3, Bac+4, Bac+5, Bac+6+)
+   - Diplôme en cours (input requis)
+   - Établissement (select requis avec liste d'écoles + option "Autre")
+   - Établissement autre (input conditionnel si "Autre" sélectionné)
+   - Domaines d'expertise (multiSelect max 3 items avec validation custom)
+   - Domaine d'expertise autre (input conditionnel si "Autre" sélectionné)
+
+2. **Projet professionnel**
+   - Continuer chez BNP Paribas ? (select Oui/Non)
+   - Raisons de départ (textarea conditionnel si "Non")
+   - Type de contrat recherché (select : CDI, CDD, VIE, Alternance, Stage)
+   - Zones géographiques VIE (multiSelect conditionnel si VIE sélectionné)
+   - Région d'emploi (select conditionnel si pas VIE ni Stage)
+   - Autres régions disponibles (multiSelect)
+   - Date de disponibilité (input type date)
+
+3. **Compétences**
+   - Compétences métiers spécifiques (multiSelect)
+   - Niveau d'anglais (select : A1 à C2 + Natif)
+
+4. **Coordonnées**
+   - Téléphone mobile (input type tel)
+   - Email personnel (input type email)
+   - Profil LinkedIn (input type url)
+   - CV (file upload, accept .pdf,.doc,.docx)
+
+**Règles de visibilité :**
+- "Établissement autre" visible si établissement === "autre"
+- "Domaine d'expertise autre" visible si expertiseDomains includes "autre"
+- "Raisons de départ" visible si continueBNPParibas === "non"
+- "Zones géographiques VIE" visible si prioritySearch === "vie"
+- "Région d'emploi" visible si prioritySearch !== "vie" ET !== "stage"
+
+**Layout :**
+- Titres de section sur 1 colonne (custom render)
+- Champs académiques sur 3 colonnes (responsive : 3→2→1)
+- Champs projet pro sur 4 colonnes (responsive : 4→2→1)
+- Champs compétences sur 3 colonnes (responsive : 3→2→1)
+- Champs coordonnées sur 2 colonnes (responsive : 2→1)
+
+Génère la configuration complète au format JSON avec :
+- L'objet `fields` avec tous les champs typés
+- L'objet `layout` avec la structure des rows
+- L'objet `behavior` avec initiallyHiddenFields, visibilityRules (en utilisant les opérateurs Logic), computedFields, et defaultValues
+
+La config doit être 100% JSON-serializable (pas de fonctions dans la base config).

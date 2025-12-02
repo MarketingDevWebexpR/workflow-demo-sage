@@ -76,6 +76,11 @@ Thumbs.db
 mongo_data/
 
 # ===========================
+# Uploaded files (local storage)
+# ===========================
+backend/uploads/
+
+# ===========================
 # Temporary files
 # ===========================
 temp/

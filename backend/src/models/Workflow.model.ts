@@ -56,10 +56,6 @@ const WorkflowSchema = new Schema<IWorkflow>({
 			showIndexes: true,
 		}),
 	},
-	Views: {
-		type: String, // JSON stringifié : Record<stepId, components>
-		default: JSON.stringify({}),
-	},
 }, {
 	timestamps: true, // Ajoute automatiquement createdAt et updatedAt
 });
