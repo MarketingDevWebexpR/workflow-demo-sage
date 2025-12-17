@@ -2,6 +2,8 @@
 // 💬 Modèles de Données - Chat AI
 // ========================================
 
+import { v4 as uuidv4 } from 'uuid';
+
 /**
  * Rôle du message dans la conversation
  */
@@ -137,7 +139,7 @@ export const createMessage = (
     content: string,
     status: TMessageStatus = 'completed'
 ): IMessage => ({
-    id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+    id: uuidv4(),
     role,
     content,
     timestamp: Date.now(),
@@ -151,7 +153,7 @@ export const createConversation = (
     workflowId: number,
     workflowContext?: IWorkflowContext
 ): IConversation => ({
-    id: `conv-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+    id: uuidv4(),
     workflowId,
     messages: [],
     createdAt: Date.now(),
