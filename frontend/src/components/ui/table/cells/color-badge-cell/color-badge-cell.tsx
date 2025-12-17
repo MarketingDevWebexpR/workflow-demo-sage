@@ -1,6 +1,5 @@
-import React from "react";
-import { ColorBadge, TColorBadgeProps } from "../../../color-badge/color-badge";
-import { COLOR_SCHEMES, } from "../../../../../../../models/misc/color.model";
+import { ColorBadge, type TColorBadgeProps } from "../../../color-badge/color-badge";
+import { COLOR_SCHEMES } from "@/models/misc/color.model";
 import styles from "./color-badge-cell.module.scss";
 import { Badge } from "../../../badge/badge";
 

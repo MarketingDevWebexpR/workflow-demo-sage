@@ -5,7 +5,7 @@ import {
     getSortedRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import { TDataTable } from "../regular-data-table";
+import { type TDataTable } from "../regular-data-table";
 import { RegularDataTableContent } from "../regular-data-table-content/regular-data-table-content";
 import { RegularDataTablePagination } from "../regular-data-table-pagination/regular-data-table-pagination";
 

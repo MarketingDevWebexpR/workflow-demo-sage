@@ -1,6 +1,6 @@
 // @@ models
 import { MODULE_IDS } from '../../modules-map';
-import { PathsWithNoParams } from '../../../../../i18n/lib/init';
+import type { PathsWithNoParams } from '../../../../i18n/lib/init';
 import WorkflowBoundary from '../models/workflow/elements/WorkflowBoundary.model';
 
 

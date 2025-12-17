@@ -1,15 +1,15 @@
 import React from "react";
 import { Cog } from "lucide-react";
 import { Button } from "../../../../components/ui/button/button";
-import { useAdminSidebarStore } from "../../../../stores/admin-sidebar/store";
+import { useAdminSidebarStore, type AdminSidebarState } from "../../../../stores/admin-sidebar/store";
 import { cn } from "../../../../lib/utils";
 import styles from "./admin-toggle.module.scss";
 
 
 const AdminToggle = React.forwardRef<HTMLButtonElement, React.ComponentPropsWithoutRef<typeof Button>>(({ className, ...props }, ref) => {
 
-    const dispatch = useAdminSidebarStore((state) => state.dispatch);
-    const isAdminSidebarOpened = useAdminSidebarStore((state) => state.isAdminSidebarOpened);
+    const dispatch = useAdminSidebarStore((state: AdminSidebarState) => state.dispatch);
+    const isAdminSidebarOpened = useAdminSidebarStore((state: AdminSidebarState) => state.isAdminSidebarOpened);
 
     return <Button 
         variant="outline" 

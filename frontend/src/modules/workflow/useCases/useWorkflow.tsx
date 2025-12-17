@@ -30,7 +30,8 @@ export default function useWorkflow({
     folder,
 }: TUseWorkflowProps) {
 
-    const workflowRef = useRef<ReturnType<typeof workflowInfos.generatorFn>>();
+    type WorkflowYieldType = WorkflowAction<unknown, unknown, unknown> | WorkflowStatus | WorkflowSwitch | WorkflowBoundary;
+    const workflowRef = useRef<Generator<WorkflowYieldType, void, unknown> | undefined>(undefined);
     const [pathTakenByFolder, setPathTakenByFolder] = useState<(WorkflowAction<unknown, unknown, unknown> | WorkflowStatus | WorkflowSwitch | WorkflowBoundary)[]>([]);
     const [currentWorkflowItem, setCurrentWorkflowItem] = useState<WorkflowAction<unknown, unknown, unknown> | null>(null);
 
@@ -39,15 +40,17 @@ export default function useWorkflow({
         const abortController = new AbortController();
         const switchValues = folder?.workflowSwitchValues?.map(({ id, value, }) => ({ id, value, }));
 
-        workflowRef.current = workflowInfos.generatorFn(folder, switchValues);
+        workflowRef.current = workflowInfos.generatorFn(folder, switchValues) as Generator<WorkflowYieldType, void, unknown>;
 
-        let isDone: boolean = false, value: WorkflowAction<unknown, unknown, unknown> | WorkflowStatus | WorkflowSwitch | WorkflowBoundary | undefined;
+        let isDone: boolean = false;
+        let value: WorkflowYieldType | undefined;
 
-        const pathTakenByFolder = [];
+        const pathTakenByFolder: WorkflowYieldType[] = [];
 
         if (folder?.currentWorkflowItemId) {
 
-            value = workflowRef.current!.next().value;
+            const initialNext = workflowRef.current.next();
+            value = initialNext.value as WorkflowYieldType | undefined;
             // console.log({ value });
             let y = 0;
 
@@ -57,11 +60,13 @@ export default function useWorkflow({
                     || value!.currentLoopTurn !== folder.currentLoopTurn
                 ) {
 
-                    pathTakenByFolder.push(value!);
+                    if (value) {
+                        pathTakenByFolder.push(value);
+                    }
 
                     const next = workflowRef.current!.next();
-                    isDone = next.done!;
-                    value = next.value;
+                    isDone = next.done ?? false;
+                    value = next.value as WorkflowYieldType | undefined;
                     y++;
                     if (y > 100) {
 
@@ -78,8 +83,8 @@ export default function useWorkflow({
         } else if (workflowRef.current) {
 
             const next = workflowRef.current.next();
-            isDone = next.done!;
-            value = next.value;
+            isDone = next.done ?? false;
+            value = next.value as WorkflowYieldType | undefined;
         }
 
         // console.log({ isDone, value,})

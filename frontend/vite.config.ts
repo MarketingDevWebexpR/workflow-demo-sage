@@ -43,7 +43,6 @@ export default defineConfig({
           'editor-vendor': [
             '@tiptap/react',
             '@tiptap/starter-kit',
-            '@tiptap/pm',
           ],
         },
       },

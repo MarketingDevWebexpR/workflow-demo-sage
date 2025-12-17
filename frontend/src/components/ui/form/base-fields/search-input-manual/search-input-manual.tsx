@@ -5,7 +5,7 @@ import React, { useImperativeHandle, useRef } from "react";
 import { cn } from "../../../../../lib/utils";
 
 
-type TSearchInputManualProps = React.ComponentProps<"input"> & {
+type TSearchInputManualProps = Omit<React.ComponentProps<"input">, "ref"> & {
     onSearch: (value: string) => void;
 }
 
@@ -14,8 +14,6 @@ const SearchInputManual = React.forwardRef<HTMLInputElement, TSearchInputManualP
     onSearch,
     ...props
 }, ref) => {
-
-    const {ref: _unusedRef, ..._props} = props;
     const inputRef = useRef<HTMLInputElement>(null);
 
     useImperativeHandle(ref, () => inputRef.current!);
@@ -34,7 +32,7 @@ const SearchInputManual = React.forwardRef<HTMLInputElement, TSearchInputManualP
 
                 onSearch?.(e.currentTarget.value);
             }}
-            {..._props}
+            {...props}
         />
         <button
             className={styles.searchInputManualButton}

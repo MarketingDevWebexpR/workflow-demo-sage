@@ -8,7 +8,7 @@ import {
 } from "../../../../components/ui/dropdown-menu/dropdown-menu"
 import { Button } from "../../../../components/ui/button/button"
 import React from "react"
-import { useTranslation } from "../../../../../../i18n/react"
+import { useTranslation } from "../../../../../i18n/react"
 import { cn } from "../../../../lib/utils"
 import styles from "./locale-toggle.module.scss";
 

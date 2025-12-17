@@ -1,9 +1,9 @@
-import React from "react";
+import type { ElementType, ReactElement, ReactNode } from "react";
 import { Empty } from "../empty/empty";
 import { Search, ShieldAlert } from "lucide-react";
 import { Button } from "../button/button";
 import emptyStyles from "../empty/empty.module.scss";
-import { TSPPermissionMap } from "../../../../../utils/sharepoint.utils";
+import { type TSPPermissionMap } from "@/utils/sharepoint.utils";
 
 
 type TSmartEmptyProps = {
@@ -25,10 +25,10 @@ type TSmartEmptyProps = {
 
     // Contenu pour le cas "liste vide avec permissions d'écriture"
     emptyContent: {
-        Icon: React.ElementType;
+        Icon: ElementType;
         title: string;
         description: string;
-        actions?: React.ReactNode;
+        actions?: ReactNode;
     };
 
     // Contenu pour le cas "aucun résultat (filtres/recherche actifs)"
@@ -66,7 +66,7 @@ const SmartEmpty = ({
     emptyContent,
     noResultsContent,
     readOnlyContent,
-}: TSmartEmptyProps): React.ReactElement => {
+}: TSmartEmptyProps): ReactElement => {
 
     // Détection du contexte
     const hasFilters = activeFiltersCount > 0;

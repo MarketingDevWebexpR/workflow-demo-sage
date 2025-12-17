@@ -1,6 +1,6 @@
-import { ColumnDef, useReactTable } from "@tanstack/react-table";
+import { type ColumnDef, useReactTable } from "@tanstack/react-table";
 import React from "react";
-import { LucideIcon } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { cn } from "../../../../lib/utils";
 import styles from "./regular-data-table.module.scss";
 import { useRegularDataTable, type TUseRegularDataTableProps, type TUseRegularDataTableReturn } from "./hook/use-regular-data-table";

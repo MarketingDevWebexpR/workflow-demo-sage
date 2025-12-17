@@ -1,8 +1,7 @@
-import React from "react";
-import { COLOR_SCHEMES, COLOR_SCHEME_CLASSES, TColorScheme } from "../../../../../models/misc/color.model";
+import { COLOR_SCHEMES, COLOR_SCHEME_CLASSES, type TColorScheme } from "@/models/misc/color.model";
 import { cn } from "../../../lib/utils";
 import styles from "./color-scheme-selector.module.scss";
-import { useTranslation } from "../../../../../i18n/react";
+import { useTranslation } from "../../../../i18n/react";
 
 
 interface ColorSchemeSelectorProps {

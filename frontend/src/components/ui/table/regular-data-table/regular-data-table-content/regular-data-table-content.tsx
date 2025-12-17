@@ -13,9 +13,9 @@ import {
 import { SearchIcon } from "lucide-react";
 import { Empty } from "../../../empty/empty";
 import { ErrorMessage } from "../../../error-message/error-message";
-import { useTranslation } from "../../../../../../../i18n/react";
-import { TUseRegularDataTableReturn } from "../hook/use-regular-data-table";
-import { TDataTable } from "../regular-data-table";
+import { useTranslation } from "../../../../../../i18n/react";
+import { type TUseRegularDataTableReturn } from "../hook/use-regular-data-table";
+import type { TDataTable } from "../regular-data-table";
 import {
     ContextMenu,
     ContextMenuContent,
@@ -23,8 +23,8 @@ import {
     ContextMenuSeparator,
     ContextMenuTrigger,
 } from "../../../context-menu/context-menu";
-import contextMenuStyles from "../../../context-menu/context-menu.module.scss";
-import { useVanillaCSSInjection } from "../../../../../../../hooks/use-vanilla-css-injection";
+import contextMenuStyles from "../../../../../modules/misc/components/context-menu/context-menu.module.scss";
+import { useVanillaCSSInjection } from "../../../../../hooks/use-vanilla-css-injection";
 
 
 type TRegularDataTableContentProps<TData, TValue> = {
@@ -178,7 +178,7 @@ const RegularDataTableContent = <TData, TValue>({
                     if (props.contextMenuActions && props.contextMenuActions.length > 0) {
                         return <ContextMenu
                             key={`context-menu-${row.id}`}
-                            onOpenChange={(open) => {
+                            onOpenChange={(open: boolean) => {
                                 setOpenContextMenuRowId(open ? row.id : null);
                             }}
                         >

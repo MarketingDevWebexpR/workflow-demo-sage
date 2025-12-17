@@ -1,10 +1,9 @@
 import { Loader, Trash } from "lucide-react";
-import React from "react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../alert-dialog/alert-dialog";
 import { Button, buttonVariants } from "../button/button";
 import styles from '../form/form/form.module.scss';
 import { cn } from "../../../lib/utils";
-import { useTranslation } from "../../../../../i18n/react";
+import { useTranslation } from "../../../../i18n/react";
 
 
 interface IDeleteItemDialogProps {

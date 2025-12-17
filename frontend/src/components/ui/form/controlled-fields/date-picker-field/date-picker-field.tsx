@@ -3,7 +3,7 @@ import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessa
 import { format } from "date-fns";
 import styles from "../../form/form.module.scss";
 import { DatePicker } from "../../base-fields/date-picker/date-picker";
-import { Control } from "react-hook-form";
+import { type Control } from "react-hook-form";
 
 
 type TDatePickerFieldProps = {

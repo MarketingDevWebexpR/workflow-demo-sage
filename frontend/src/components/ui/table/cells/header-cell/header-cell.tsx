@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./header-cell.module.scss";
 import { cn } from "../../../../../lib/utils";
 import { SortAsc, SortDesc } from "lucide-react";
-import { SortDirection } from "@tanstack/react-table";
+import { type SortDirection } from "@tanstack/react-table";
 
 
 type THeaderCellProps = React.HTMLAttributes<HTMLDivElement> & {

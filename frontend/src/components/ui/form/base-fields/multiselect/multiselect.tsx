@@ -454,8 +454,9 @@ export function MultiSelectContent({
                 return node;
             }
 
-            if (node.props.children) {
-                return React.cloneElement(node, {}, applyHighlight(node.props.children));
+            const nodeProps = node.props as { children?: React.ReactNode };
+            if (nodeProps.children) {
+                return React.cloneElement(node, {}, applyHighlight(nodeProps.children));
             }
         }
 
@@ -570,8 +571,11 @@ export function MultiSelectItem({
     const getTextFromNode = (node: React.ReactNode): string => {
         if (typeof node === 'string') return node;
         if (typeof node === 'number') return String(node);
-        if (React.isValidElement(node) && node.props.children) {
-            return getTextFromNode(node.props.children);
+        if (React.isValidElement(node)) {
+            const nodeProps = node.props as { children?: React.ReactNode };
+            if (nodeProps.children) {
+                return getTextFromNode(nodeProps.children);
+            }
         }
         if (Array.isArray(node)) {
             return node.map(getTextFromNode).join(' ');

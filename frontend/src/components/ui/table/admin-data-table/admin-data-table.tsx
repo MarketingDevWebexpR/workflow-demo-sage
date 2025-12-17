@@ -1,11 +1,11 @@
 import {
-    ColumnDef,
+    type ColumnDef,
     getCoreRowModel,
     getPaginationRowModel,
     getSortedRowModel,
-    SortingState,
-    TableOptions,
-    Updater,
+    type SortingState,
+    type TableOptions,
+    type Updater,
     useReactTable,
 } from "@tanstack/react-table"
 import React, { useEffect, useState } from "react"
@@ -15,7 +15,7 @@ import {
     RegularDataTablePagination,
     type TDataTable as TRegularDataTable,
 } from "../regular-data-table/regular-data-table";
-import { useTranslation } from "../../../../../../i18n/react";
+import { useTranslation } from "../../../../../i18n/react";
 import { Button } from "../../button/button";
 import { Sprout } from "lucide-react";
 

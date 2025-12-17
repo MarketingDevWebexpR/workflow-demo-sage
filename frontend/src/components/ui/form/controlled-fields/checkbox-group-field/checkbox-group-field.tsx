@@ -1,6 +1,6 @@
 import React from "react";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../form/form";
-import { Control } from "react-hook-form";
+import { type Control } from "react-hook-form";
 import { Checkbox } from "../../base-fields/checkbox/checkbox";
 import styles from '../../form/form.module.scss';
 

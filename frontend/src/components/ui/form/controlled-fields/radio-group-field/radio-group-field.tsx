@@ -1,6 +1,6 @@
 import React from "react";
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../../form/form";
-import { Control } from "react-hook-form";
+import { type Control } from "react-hook-form";
 import { RadioGroup, RadioGroupItem } from "../../base-fields/radio-group/radio-group";
 import styles from '../../form/form.module.scss';
 import { cn } from "../../../../../lib/utils";

@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import React from "react";
 import { Camera } from "lucide-react";
 import { cn } from "../../../../../lib/utils";
 import { v4 as uuidv4 } from 'uuid';
 import styles from "./picture-upload.module.scss";
-import { useTranslation } from "../../../../../../../i18n/react";
+import { useTranslation } from "../../../../../../i18n/react";
 
 
 export interface IPictureUploadProps {

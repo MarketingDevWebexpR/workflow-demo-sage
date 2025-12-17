@@ -12,7 +12,7 @@ import { SearchInputAuto } from "../../../../components/ui/form/base-fields/sear
 // import { ThemeField } from "../theme-field/theme-field";
 // import { useLookAndFeelForm } from "../hooks/use-look-and-feel-form";
 import { MODULE_CATEGORIES, MODULES_MAP } from "../../../modules-map";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { config } from "../../../misc/module.config";
 
 
@@ -23,7 +23,7 @@ const ModulePicker = () => {
         id: 'module-picker-css'
     });
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     // 🔧 FIX: Mémoriser les tableaux pour éviter la re-création à chaque render
     const moduleConfigs = useMemo(() => [
@@ -76,7 +76,7 @@ const ModulePicker = () => {
         setFilteredModuleComponents(filteredModuleComponents);
     }, [searchQuery, allModuleComponents]);
 
-    const [activeTab, setActiveTab] = useState<"components" | "look-and-feel">("components");
+    const [activeTab, _setActiveTab] = useState<"components" | "look-and-feel">("components");
 
     // const dispatch = useSettingStore(state => state.dispatch);
     // const currentSettings = useSettingStore(state => state.setting.data);

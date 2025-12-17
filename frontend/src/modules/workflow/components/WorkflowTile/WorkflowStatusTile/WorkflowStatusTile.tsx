@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import styles from './WorkflowStatusTile.module.scss';
 import workflowTileStyles from '../WorkflowTile.module.scss';
 

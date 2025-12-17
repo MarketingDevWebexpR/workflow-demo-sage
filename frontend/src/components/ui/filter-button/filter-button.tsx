@@ -2,7 +2,7 @@ import { Filter } from "lucide-react"
 import { Button } from "../button/button";
 import React from "react";
 import styles from './filter-button.module.scss';
-import { useTranslation } from "../../../../../i18n/react";
+import { useTranslation } from "../../../../i18n/react";
 import { cn } from "../../../lib/utils";
 
 

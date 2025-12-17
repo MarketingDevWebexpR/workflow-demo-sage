@@ -1,10 +1,9 @@
-import React from "react";
 import { Button } from "../../../button/button";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import styles from "./regular-data-table-pagination.module.scss";
-import { useTranslation } from "../../../../../../../i18n/react";
+import { useTranslation } from "../../../../../../i18n/react";
 import { useReactTable } from "@tanstack/react-table";
-import { TDataTable } from "../regular-data-table";
+import type { TDataTable } from "../regular-data-table";
 
 
 type TRegularDataTablePaginationProps<TData, TValue> = {

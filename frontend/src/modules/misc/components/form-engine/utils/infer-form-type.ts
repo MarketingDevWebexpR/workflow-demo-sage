@@ -1,4 +1,4 @@
-import { TFormEngineItem } from "../types";
+import type { TFormEngineItem } from "../types";
 
 
 /**

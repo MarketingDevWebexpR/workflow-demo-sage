@@ -1,9 +1,9 @@
 import React, { forwardRef } from "react";
-import { extractErrorMessage } from "../../../../../utils/error.utils";
+import { extractErrorMessage } from "@/utils/error.utils";
 import { AlertTriangleIcon } from "lucide-react";
 import { cn } from "../../../lib/utils";
 import styles from './error-message.module.scss';
-import { useTranslation } from "../../../../../i18n/react";
+import { useTranslation } from "../../../../i18n/react";
 
 
 type TErrorProps = {

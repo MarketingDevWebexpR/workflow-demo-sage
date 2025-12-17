@@ -1,5 +1,4 @@
-import React from "react";
-import { COLOR_SCHEME_CLASSES, TColorScheme } from "../../../../../models/misc/color.model";
+import { COLOR_SCHEME_CLASSES, type TColorScheme } from "@/models/misc/color.model";
 import { cn } from "../../../lib/utils";
 import styles from "./color-badge.module.scss";
 

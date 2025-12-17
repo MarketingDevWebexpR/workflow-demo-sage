@@ -1,6 +1,6 @@
 import React from "react";
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../../form/form";
-import { Control } from "react-hook-form";
+import { type Control } from "react-hook-form";
 import { ToggleButton } from "../../base-fields/toggle-button/toggle-button";
 import styles from './toggle-button-group-field.module.scss';
 
