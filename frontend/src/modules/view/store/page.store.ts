@@ -14,12 +14,11 @@ const Provider = ({ children }: { children: React.ReactElement }) => {
 
     useEffect(() => {
         // Chargement initial des pages
+        // Note: Pages are loaded via ViewServices when needed, not on initial load
         const fetchAllPages = async () => {
             dispatch({ type: 'FETCH_ALL_PAGE' });
-            alert('TODO: Appeler l\'API pour récupérer les pages');
-            const result = await fetch('/api/pages');
-            const data = await result.json();
-            dispatch({ type: 'FETCH_ALL_PAGE_FULFILLED', payload: data });
+            // Pages are loaded dynamically via the useViewLoader hook when viewing a workflow step
+            dispatch({ type: 'FETCH_ALL_PAGE_FULFILLED', payload: [] });
         };
 
         const initialFetch = async () => {

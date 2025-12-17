@@ -2,10 +2,10 @@ import { useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { usePageStore } from "../../store/page.store";
 import { useWorkflowAutomationStore } from "../../../workflow/store/workflow-automation.store";
-import { API_WORKFLOWS_URL } from "../../../../lib/api";
+import ViewServices from "../../../workflow/services/view.services";
 
 /**
- * Hook qui sauvegarde automatiquement les modifications de la view vers l'API
+ * Hook qui sauvegarde automatiquement les modifications de la view vers Supabase
  * Debounce de 2 secondes
  */
 const useEditedPageUpdate = (): void => {
@@ -13,18 +13,18 @@ const useEditedPageUpdate = (): void => {
     const { stepId } = useParams<{ stepId: string }>();
     const selectedWorkflow = useWorkflowAutomationStore(state => state.workflowItem.selected.item);
 
-    // Récupérer les components depuis selected.item
+    // Recuperer les components depuis selected.item
     const selectedView = usePageStore(state => state.selected.item);
     const editedPageComponents = selectedView?.Components;
     const dispatch = usePageStore(state => state.dispatch);
 
-    // Ref pour éviter les sauvegardes au premier montage
+    // Ref pour eviter les sauvegardes au premier montage
     const isFirstRender = useRef(true);
     const lastSavedComponentsRef = useRef<string | null>(null);
 
     useEffect(() => {
 
-        // Vérifications de base
+        // Verifications de base
         if (!selectedWorkflow?.Id || !stepId || !editedPageComponents) {
             return;
         }
@@ -36,7 +36,7 @@ const useEditedPageUpdate = (): void => {
             return;
         }
 
-        // Skip si identique à la dernière sauvegarde
+        // Skip si identique a la derniere sauvegarde
         if (editedPageComponents === lastSavedComponentsRef.current) {
             return;
         }
@@ -47,42 +47,28 @@ const useEditedPageUpdate = (): void => {
             dispatch({ type: 'SET_VIEW_SAVE_STATUS', payload: { status: 'saving' } });
 
             try {
-                // Sauvegarder vers l'API /views
-                const response = await fetch(`${API_WORKFLOWS_URL}/${selectedWorkflow.Id}/views/${stepId}`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        components: editedPageComponents,
-                    }),
-                });
+                // Sauvegarder vers Supabase via ViewServices
+                await ViewServices.upsert(
+                    selectedWorkflow.Id.toString(),
+                    stepId,
+                    { components: editedPageComponents }
+                );
 
-                const result = await response.json();
+                lastSavedComponentsRef.current = editedPageComponents;
+                dispatch({ type: 'SET_VIEW_SAVE_STATUS', payload: { status: 'success' } });
 
-                if (!response.ok || !result.success) {
-                    dispatch({ 
-                        type: 'SET_VIEW_SAVE_STATUS', 
-                        payload: { 
-                            status: 'error',
-                            error: result.error || 'Erreur inconnue'
-                        } 
-                    });
-                } else {
-                    lastSavedComponentsRef.current = editedPageComponents;
-                    dispatch({ type: 'SET_VIEW_SAVE_STATUS', payload: { status: 'success' } });
-                    
-                    // Réinitialiser le statut après 2 secondes
-                    setTimeout(() => {
-                        dispatch({ type: 'SET_VIEW_SAVE_STATUS', payload: { status: 'idle' } });
-                    }, 2000);
-                }
+                // Reinitialiser le statut apres 2 secondes
+                setTimeout(() => {
+                    dispatch({ type: 'SET_VIEW_SAVE_STATUS', payload: { status: 'idle' } });
+                }, 2000);
 
             } catch (error) {
-                dispatch({ 
-                    type: 'SET_VIEW_SAVE_STATUS', 
-                    payload: { 
+                dispatch({
+                    type: 'SET_VIEW_SAVE_STATUS',
+                    payload: {
                         status: 'error',
-                        error: error instanceof Error ? error.message : 'Erreur inconnue'
-                    } 
+                        error: error instanceof Error ? error.message : 'Unknown error'
+                    }
                 });
             }
         }, 2000);

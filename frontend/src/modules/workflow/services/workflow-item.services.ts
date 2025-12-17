@@ -1,209 +1,164 @@
 /**
- * Workflow Item Services - Version API REST pour automation-poc
- * 
- * Remplace l'ancien système SharePoint/PnP par des appels à notre API backend Hono
+ * Workflow Item Services - Supabase Direct Connection
+ *
+ * Replaces the old REST API calls with direct Supabase client operations
  */
 
 import Service from '../../../models/service.model';
 import { type TWorkflowItem, type TCreateWorkflowItemProps, type TUpdateWorkflowItemProps } from '../models/workflow-item.model';
 import { type IServiceFns, type TServices } from '../../../utils/context.utils';
-
-// URL de base de l'API (via le proxy Vite)
-const API_BASE_URL = '/api/workflows';
-
-/**
- * Convertit les données de l'API backend vers le format frontend
- * Le backend utilise maintenant les mêmes noms de champs que le frontend (format compatible SharePoint)
- */
-function mapBackendToFrontend(backendData: any): TWorkflowItem {
-    // Le backend renvoie déjà: Id, Title, Description, WorkflowText, Preferences, IsEnabled, FragmentId, Created, Modified
-    return {
-        Id: backendData.Id,
-        Title: backendData.Title,
-        Description: backendData.Description || null,
-        WorkflowText: backendData.WorkflowText || null,
-        Preferences: backendData.Preferences || '{}',
-        IsEnabled: backendData.IsEnabled || 0,
-        FragmentId: backendData.FragmentId || 'DEFAULT',
-        Created: backendData.Created || backendData.createdAt || new Date().toISOString(),
-        Modified: backendData.Modified || backendData.updatedAt || new Date().toISOString(),
-    };
-}
+import {
+    supabase,
+    mapDbWorkflowToFrontend,
+    mapFrontendWorkflowToDb,
+    type DbWorkflow
+} from '../../../lib/supabase';
 
 /**
- * Convertit les données du frontend vers le format API backend
- * Le backend accepte maintenant les mêmes noms de champs que le frontend
- */
-function mapFrontendToBackend(frontendData: TCreateWorkflowItemProps | TUpdateWorkflowItemProps) {
-    // Pas de conversion nécessaire, le backend utilise les mêmes noms
-    return {
-        Title: frontendData.Title,
-        Description: frontendData.Description || undefined,
-        WorkflowText: frontendData.WorkflowText,
-        Preferences: frontendData.Preferences || undefined,
-        IsEnabled: frontendData.IsEnabled,
-        FragmentId: frontendData.FragmentId || undefined,
-    };
-}
-
-/**
- * Fonctions de service CRUD pour les workflow items
+ * Service functions for workflow CRUD operations using Supabase
  */
 const serviceFns: IServiceFns<TWorkflowItem, TCreateWorkflowItemProps, TUpdateWorkflowItemProps> = {
 
     /**
-     * Récupère un nombre limité de workflows avec filtres optionnels
+     * Fetch a limited number of workflows with optional filters
      */
     async fetchLimited({
         filterQuery,
         orderBy,
         top,
     }) {
-        const params = new URLSearchParams();
-        if (top) params.append('limit', top.toString());
-        if (orderBy) params.append('sortBy', orderBy[0]);
-        if (orderBy) params.append('sortOrder', orderBy[1] ? 'desc' : 'asc');
-        if (filterQuery) params.append('filter', filterQuery);
+        let query = supabase
+            .from('workflows')
+            .select('*');
 
-        const url = `${API_BASE_URL}?${params.toString()}`;
-        const response = await fetch(url);
-
-        if (!response.ok) {
-            throw new Error(`Failed to fetch workflows: ${response.statusText}`);
+        // Apply ordering
+        if (orderBy) {
+            const [column, descending] = orderBy;
+            // Map frontend column names to database column names
+            const dbColumn = mapColumnName(column);
+            query = query.order(dbColumn, { ascending: !descending });
+        } else {
+            query = query.order('updated_at', { ascending: false });
         }
 
-        const result = await response.json();
-        
-        if (!result.success) {
-            throw new Error(result.message || 'Failed to fetch workflows');
+        // Apply limit
+        if (top) {
+            query = query.limit(top);
         }
 
-        return (result.data || []).map(mapBackendToFrontend);
+        // Apply filter (basic text search on title)
+        if (filterQuery) {
+            query = query.ilike('title', `%${filterQuery}%`);
+        }
+
+        const { data, error } = await query;
+
+        if (error) {
+            throw new Error(`Failed to fetch workflows: ${error.message}`);
+        }
+
+        return (data || []).map((item: DbWorkflow) => mapDbWorkflowToFrontend(item));
     },
 
     /**
-     * Récupère tous les workflows
+     * Fetch all workflows
      */
     async fetchAll({
         filterQuery,
         orderBy,
         top,
     }) {
-        // Pour l'instant, identique à fetchLimited
-        // À améliorer plus tard avec pagination côté backend si nécessaire
+        // Same as fetchLimited for now
         return await serviceFns.fetchLimited({ sp: null, filterQuery, orderBy, top });
     },
 
     /**
-     * Récupère un workflow par son ID
+     * Fetch a workflow by ID
      */
     async fetchById({ id }) {
-        const response = await fetch(`${API_BASE_URL}/${id}`);
+        const { data, error } = await supabase
+            .from('workflows')
+            .select('*')
+            .eq('id', id)
+            .single();
 
-        if (!response.ok) {
-            if (response.status === 404) {
+        if (error) {
+            if (error.code === 'PGRST116') {
                 throw new Error(`Workflow with ID ${id} not found`);
             }
-            throw new Error(`Failed to fetch workflow: ${response.statusText}`);
+            throw new Error(`Failed to fetch workflow: ${error.message}`);
         }
 
-        const result = await response.json();
-
-        if (!result.success) {
-            throw new Error(result.message || 'Failed to fetch workflow');
-        }
-
-        return mapBackendToFrontend(result.data);
+        return mapDbWorkflowToFrontend(data as DbWorkflow);
     },
 
     /**
-     * Crée un nouveau workflow
+     * Create a new workflow
      */
     async create({ props }) {
-        const backendData = mapFrontendToBackend(props);
+        const dbData = mapFrontendWorkflowToDb(props);
 
-        const response = await fetch(API_BASE_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(backendData),
-        });
+        const { data, error } = await supabase
+            .from('workflows')
+            .insert(dbData)
+            .select()
+            .single();
 
-        if (!response.ok) {
-            throw new Error(`Failed to create workflow: ${response.statusText}`);
+        if (error) {
+            throw new Error(`Failed to create workflow: ${error.message}`);
         }
 
-        const result = await response.json();
-
-        if (!result.success) {
-            throw new Error(result.message || 'Failed to create workflow');
-        }
-
-        return mapBackendToFrontend(result.data);
+        return mapDbWorkflowToFrontend(data as DbWorkflow);
     },
 
     /**
-     * Met à jour un workflow existant
+     * Update an existing workflow
      */
     async update({ id, props }) {
+        console.log('Updating workflow', id, props);
+        const dbData = mapFrontendWorkflowToDb(props);
+        console.log('Converted to DB format', dbData);
 
-        console.log('Réception des données du front end', id, props );
-        const backendData = mapFrontendToBackend(props);
-        console.log('Conversion des données du front end vers le format API backend', { backendData });
+        const { data, error } = await supabase
+            .from('workflows')
+            .update(dbData)
+            .eq('id', id)
+            .select()
+            .single();
 
-        const response = await fetch(`${API_BASE_URL}/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(backendData),
-        });
+        console.log('Supabase response', { data, error });
 
-        console.log('Réponse de l\'API backend', response );
-
-        if (!response.ok) {
-            if (response.status === 404) {
+        if (error) {
+            if (error.code === 'PGRST116') {
                 throw new Error(`Workflow with ID ${id} not found`);
             }
-            throw new Error(`Failed to update workflow: ${response.statusText}`);
+            throw new Error(`Failed to update workflow: ${error.message}`);
         }
 
-        const result = await response.json();
-
-        if (!result.success) {
-            throw new Error(result.message || 'Failed to update workflow');
-        }
-
-        return mapBackendToFrontend(result.data);
+        return mapDbWorkflowToFrontend(data as DbWorkflow);
     },
 
     /**
-     * Supprime un workflow
+     * Delete a workflow
      */
     async delete({ id }) {
-        const response = await fetch(`${API_BASE_URL}/${id}`, {
-            method: 'DELETE',
-        });
+        const { error } = await supabase
+            .from('workflows')
+            .delete()
+            .eq('id', id);
 
-        if (!response.ok) {
-            if (response.status === 404) {
+        if (error) {
+            if (error.code === 'PGRST116') {
                 throw new Error(`Workflow with ID ${id} not found`);
             }
-            throw new Error(`Failed to delete workflow: ${response.statusText}`);
-        }
-
-        const result = await response.json();
-
-        if (!result.success) {
-            throw new Error(result.message || 'Failed to delete workflow');
+            throw new Error(`Failed to delete workflow: ${error.message}`);
         }
 
         return id;
     },
 
     /**
-     * Supprime plusieurs workflows en bulk
+     * Delete multiple workflows in bulk
      */
     async deleteBulk({ ids }) {
         const results = await Promise.allSettled(
@@ -230,7 +185,25 @@ const serviceFns: IServiceFns<TWorkflowItem, TCreateWorkflowItemProps, TUpdateWo
 };
 
 /**
- * Services wrappés avec la classe Service pour le typage et les événements
+ * Map frontend column names to database column names (snake_case)
+ */
+function mapColumnName(frontendColumn: string): string {
+    const columnMap: Record<string, string> = {
+        'Title': 'title',
+        'Description': 'description',
+        'WorkflowText': 'workflow_text',
+        'Preferences': 'preferences',
+        'IsEnabled': 'is_enabled',
+        'FragmentId': 'fragment_id',
+        'Created': 'created_at',
+        'Modified': 'updated_at',
+        'Id': 'id',
+    };
+    return columnMap[frontendColumn] || frontendColumn.toLowerCase();
+}
+
+/**
+ * Services wrapped with the Service class for typing and events
  */
 const WorkflowItemServices: TServices<TWorkflowItem, TCreateWorkflowItemProps, TUpdateWorkflowItemProps> = {
     fetchLimited: new Service(serviceFns.fetchLimited),
@@ -243,4 +216,3 @@ const WorkflowItemServices: TServices<TWorkflowItem, TCreateWorkflowItemProps, T
 };
 
 export default WorkflowItemServices;
-

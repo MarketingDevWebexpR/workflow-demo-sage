@@ -2,18 +2,15 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Edit3, Power, Download, Upload, Trash2, Copy, History, Share2, ArrowLeft, PaintBucket, MenuIcon, Play } from "lucide-react";
 import { AutomationIndex } from "../../components/ui/automation-index/automation-index";
-// import { isPolygon } from "../../../../utils/sharepoint.utils"; // ❌ SharePoint - Supprimé
 import { WorkflowRoot } from "./components/workflow-root/WorkflowRoot";
 import { createWorkflowFromText } from "./engine/create-workflow-from-text";
 import { useWorkflowAutomationStore } from "./store/workflow-automation.store";
 import { Button } from "../../components/ui/button/button";
 import styles from "./automation.page.module.scss";
-// import workflowItemServices from "../../modules/workflow-automation/services/workflow-item.services"; // ❌ SharePoint services - À remplacer par API
-import { type TCreateWorkflowItemProps, DEFAULT_WORKFLOW_PREFERENCES, type TWorkflowPreferences } from "./models/workflow-item.model";
+import workflowItemServices from "./services/workflow-item.services";
+import { type TCreateWorkflowItemProps, type TUpdateWorkflowItemProps, DEFAULT_WORKFLOW_PREFERENCES, type TWorkflowPreferences } from "./models/workflow-item.model";
 import { toast } from "sonner";
 import { extractErrorMessage } from "../../utils/error.utils";
-// import { PnPContext } from "../../contexts/pnp.context"; // ❌ PnP - Supprimé
-// import { CurrentUserContext } from "../../contexts/current-user.context"; // ❌ SharePoint context - Supprimé
 import { TimerBarToast } from "../../components/ui/sonner/timer-bar-toast/timer-bar-toast";
 import {
     DropdownMenu,
@@ -82,37 +79,31 @@ const AutomationPage = (): React.ReactElement => {
     // const { sp } = useContext(PnPContext); // ❌ PnP - Supprimé
 
     // Fonction de sauvegarde effective des préférences (debounced)
-    const savePreferencesToSharePoint = useCallback(async (workflowId: number, preferences: TWorkflowPreferences) => {
-        console.log('🔧 TODO: savePreferencesToSharePoint - Appeler API PUT /api/workflows/:id', { workflowId, preferences });
+    const savePreferencesToSupabase = useCallback(async (workflowId: number, preferences: TWorkflowPreferences) => {
+        console.log('Saving preferences to Supabase', { workflowId, preferences });
 
         dispatch({ type: 'UPDATE_WORKFLOW_ITEM' });
 
-        // ❌ ANCIEN CODE SharePoint (commenté)
-        // const result = await workflowItemServices.update.execute({ sp, id: workflowId, props: {...} });
-
-        // ✅ Appel API pour mettre à jour les préférences
         try {
-            const response = await fetch(`/api/workflows/${workflowId}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
+            const result = await workflowItemServices.update.execute({
+                sp: null,
+                id: workflowId,
+                props: {
                     Preferences: JSON.stringify(preferences),
-                }),
+                } as TUpdateWorkflowItemProps,
             });
 
-            const result = await response.json();
-
-            if (!response.ok) {
-                throw new Error(result.error || 'Erreur API');
+            if (result instanceof Error) {
+                throw result;
             }
 
             toast.success(TEXTS.preferencesUpdated);
             dispatch({
                 type: 'UPDATE_WORKFLOW_ITEM_FULFILLED',
-                payload: result.data,
+                payload: result,
             });
         } catch (error) {
-            console.error('❌ Erreur savePreferences:', error);
+            console.error('Error saving preferences:', error);
             toast.error(TEXTS.errorUpdatingPreferences, {
                 description: extractErrorMessage(error as Error),
             });
@@ -153,7 +144,7 @@ const AutomationPage = (): React.ReactElement => {
         // Créer un nouveau timeout (debounce de 800ms)
         savePreferencesTimeoutRef.current = setTimeout(() => {
             if (pendingPreferencesRef.current) {
-                void savePreferencesToSharePoint(selectedWorkflow.Id, pendingPreferencesRef.current);
+                void savePreferencesToSupabase(selectedWorkflow.Id, pendingPreferencesRef.current);
                 pendingPreferencesRef.current = null;
             }
         }, 800);
@@ -225,25 +216,22 @@ const AutomationPage = (): React.ReactElement => {
                 // Mettre à jour le workflow
                 dispatch({ type: 'UPDATE_WORKFLOW_ITEM' });
 
-                const response = await fetch(`/api/workflows/${selectedWorkflow.Id}`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
+                const result = await workflowItemServices.update.execute({
+                    sp: null,
+                    id: selectedWorkflow.Id,
+                    props: {
                         WorkflowText: workflowData.workflowText,
-                    }),
+                    } as TUpdateWorkflowItemProps,
                 });
 
-                const resultData = await response.json();
-
-                if (!response.ok || resultData instanceof Error) {
-                    const error = resultData instanceof Error ? resultData : new Error(resultData.message || 'Import failed');
+                if (result instanceof Error) {
                     toast.error('Import error', {
-                        description: extractErrorMessage(error),
+                        description: extractErrorMessage(result),
                         duration: Number.POSITIVE_INFINITY,
                     });
                     dispatch({
                         type: 'UPDATE_WORKFLOW_ITEM_FULFILLED',
-                        payload: error,
+                        payload: result,
                     });
                 } else {
                     const toastId = toast.success('Import success', {
@@ -254,7 +242,7 @@ const AutomationPage = (): React.ReactElement => {
                     });
                     dispatch({
                         type: 'UPDATE_WORKFLOW_ITEM_FULFILLED',
-                        payload: resultData.data,
+                        payload: result,
                     });
                 }
             } catch (error) {
@@ -339,30 +327,26 @@ const AutomationPage = (): React.ReactElement => {
                     },
                 });
 
-                const result = await fetch('/api/workflows', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data),
+                const result = await workflowItemServices.create.execute({
+                    sp: null,
+                    props: data,
                 });
 
-                console.log('result', result);
+                console.log('Workflow creation result', result);
 
-                const resultData = await result.json();
+                dispatch({ type: 'CREATE_WORKFLOW_ITEM_FULFILLED', payload: result });
 
-                dispatch({ type: 'CREATE_WORKFLOW_ITEM_FULFILLED', payload: resultData.data });
-
-                if (!result.ok || resultData instanceof Error) {
-                    const error = resultData instanceof Error ? resultData : new Error(resultData.message || 'Creation failed');
+                if (result instanceof Error) {
                     toast.error('Error creating workflow', {
-                        description: extractErrorMessage(error),
+                        description: extractErrorMessage(result),
                     });
                     navigate('/');
                 } else {
                     // Le workflow est déjà sélectionné et mis à jour dans le reducer
-                    dispatch({ type: 'SELECT_WORKFLOW_ITEM', payload: resultData.data });
+                    dispatch({ type: 'SELECT_WORKFLOW_ITEM', payload: result });
 
                     // Naviguer vers le workflow avec son vrai ID ET passer le message initial pour le chat AI
-                    navigate('/workflow/' + resultData.data?.Id, {
+                    navigate('/workflow/' + result?.Id, {
                         replace: true,
                         state: {
                             initialMessage: workflowName, // Le message initial que l'utilisateur a tapé

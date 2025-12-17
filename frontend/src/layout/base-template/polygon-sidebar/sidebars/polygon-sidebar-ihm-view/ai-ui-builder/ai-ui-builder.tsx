@@ -13,7 +13,7 @@ import type { IMessage } from '../../../../../../models/chat.model';
 import { createMessage, formatHistoryForApi } from '../../../../../../models/chat.model';
 import { uiConversationService } from '../../../../../../services/ui-conversation.service';
 import { LoadingMessage } from '../../shared/loading-message/loading-message';
-import { API_AI_URL } from '../../../../../../lib/api';
+import { AI_UI_CHAT_URL, AI_UI_CODE_URL } from '../../../../../../lib/api';
 import styles from './ai-ui-builder.module.scss';
 
 
@@ -151,12 +151,12 @@ const AiUiBuilder = (): React.ReactElement => {
                 currentComponentsCount: currentComponents.length,
             });
 
-            // Appel fetch en mode streaming
+            // Appel fetch en mode streaming (Supabase Edge Functions)
             // Switch entre les 2 endpoints selon le mode
             const endpoint = USE_TSX_MODE
-                ? `${API_AI_URL}/ui-code`  // Mode TSX (Sandpack)
-                : `${API_AI_URL}/ui-chat`; // Mode JSON (Composants)
-            
+                ? AI_UI_CODE_URL  // Mode TSX (Sandpack)
+                : AI_UI_CHAT_URL; // Mode JSON (Composants)
+
             const response = await fetch(endpoint, {
                 method: 'POST',
                 headers: {

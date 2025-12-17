@@ -1,185 +1,168 @@
 // ========================================
-// Service de Gestion des Conversations UI Builder (API Backend)
+// Service de Gestion des Conversations UI Builder (Supabase Direct)
 // ========================================
 
 import { type IMessage } from '../models/chat.model';
-import { API_WORKFLOWS_URL } from '../lib/api';
-
-const API_BASE_URL = API_WORKFLOWS_URL;
+import {
+    supabase,
+    mapDbMessageToFrontend,
+    type DbMessage
+} from '../lib/supabase';
 
 /**
- * Service pour gérer les conversations de l'UI Builder via API backend
- * Réutilise le système de messages mais avec une clé basée sur stepId
+ * Service for managing UI Builder conversations via Supabase
+ * Reuses the messages system but with a stepId-based key
  */
 class UiConversationService {
     /**
-     * Récupérer tous les messages d'une view (stepId)
+     * Generate a conversation ID from a stepId
      */
-    async getMessagesByStepId(workflowId: number, stepId: string): Promise<IMessage[]> {
+    private getConversationId(stepId: string): string {
+        return `ui-${stepId}`;
+    }
+
+    /**
+     * Get all messages for a view (stepId)
+     */
+    async getMessagesByStepId(_workflowId: number, stepId: string): Promise<IMessage[]> {
         try {
-            // On utilise le stepId comme identifiant de conversation
-            const conversationId = `ui-${stepId}`;
-            const response = await fetch(`${API_BASE_URL}/${conversationId}/messages`);
-            const data = await response.json();
-            
-            if (data.success) {
-                // Convertir le format API vers IMessage
-                return (data.data || []).map((apiMessage: any) => ({
-                    id: apiMessage.Id,
-                    role: apiMessage.Role,
-                    content: apiMessage.Content,
-                    timestamp: new Date(apiMessage.createdAt).getTime(),
-                    status: apiMessage.Status,
-                    metadata: {
-                        workflowData: apiMessage.WorkflowData ? JSON.parse(apiMessage.WorkflowData) : undefined,
-                        error: apiMessage.ErrorMessage,
-                        usage: apiMessage.TokensUsed ? { total_tokens: apiMessage.TokensUsed } : undefined,
-                    },
-                } as IMessage));
+            const conversationId = this.getConversationId(stepId);
+
+            const { data, error } = await supabase
+                .from('messages')
+                .select('*')
+                .eq('workflow_id', conversationId)
+                .order('created_at', { ascending: true });
+
+            if (error) {
+                console.error('Error fetching UI messages:', error);
+                return [];
             }
-            
-            console.error('Erreur récupération messages UI:', data.error);
-            return [];
+
+            return (data || []).map((msg: DbMessage) => mapDbMessageToFrontend(msg));
         } catch (error) {
-            console.error('Erreur fetch messages UI:', error);
+            console.error('Error fetch UI messages:', error);
             return [];
         }
     }
 
     /**
-     * Créer un nouveau message
+     * Create a new message
      */
     async addMessage(stepId: string, message: Omit<IMessage, 'Id' | 'createdAt' | 'updatedAt'>): Promise<IMessage | null> {
         try {
-            const conversationId = `ui-${stepId}`;
-            const response = await fetch(`${API_BASE_URL}/${conversationId}/messages`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    Role: message.role,
-                    Content: message.content,
-                    Status: message.status,
-                    WorkflowData: message.metadata?.workflowData ? JSON.stringify(message.metadata.workflowData) : undefined,
-                    ErrorMessage: message.metadata?.error,
-                    TokensUsed: message.metadata?.usage?.total_tokens,
-                }),
-            });
-            
-            const data = await response.json();
-            
-            if (data.success) {
-                const apiMessage = data.data;
-                return {
-                    id: apiMessage.Id,
-                    role: apiMessage.Role,
-                    content: apiMessage.Content,
-                    timestamp: new Date(apiMessage.createdAt).getTime(),
-                    status: apiMessage.Status,
-                    metadata: {
-                        workflowData: apiMessage.WorkflowData ? JSON.parse(apiMessage.WorkflowData) : undefined,
-                        error: apiMessage.ErrorMessage,
-                        usage: apiMessage.TokensUsed ? { total_tokens: apiMessage.TokensUsed } : undefined,
-                    },
-                } as IMessage;
+            const conversationId = this.getConversationId(stepId);
+
+            const dbData = {
+                id: message.id,
+                workflow_id: conversationId,
+                role: message.role,
+                content: message.content,
+                status: message.status,
+                workflow_data: message.metadata?.workflowData ? JSON.stringify(message.metadata.workflowData) : null,
+                error_message: message.metadata?.error || null,
+                tokens_used: message.metadata?.usage?.total_tokens || null,
+            };
+
+            const { data, error } = await supabase
+                .from('messages')
+                .insert(dbData)
+                .select()
+                .single();
+
+            if (error) {
+                console.error('Error creating UI message:', error);
+                throw new Error(error.message || 'Unable to create message');
             }
-            
-            console.error('❌ Erreur création message UI:', data.error);
-            throw new Error(data.error || 'Impossible de créer le message');
+
+            return mapDbMessageToFrontend(data as DbMessage);
         } catch (error) {
-            console.error('❌ Erreur add message UI:', error);
+            console.error('Error add UI message:', error);
             throw error;
         }
     }
 
     /**
-     * Mettre à jour un message existant
+     * Update an existing message
      */
     async updateMessage(stepId: string, messageId: string, updates: Partial<IMessage>): Promise<IMessage | null> {
         try {
-            const conversationId = `ui-${stepId}`;
-            const updateData: any = {};
-            
-            if (updates.content !== undefined) updateData.Content = updates.content;
-            if (updates.status !== undefined) updateData.Status = updates.status;
-            if (updates.metadata?.workflowData) updateData.WorkflowData = JSON.stringify(updates.metadata.workflowData);
-            if (updates.metadata?.error) updateData.ErrorMessage = updates.metadata.error;
-            if (updates.metadata?.usage?.total_tokens) updateData.TokensUsed = updates.metadata.usage.total_tokens;
-            
-            const response = await fetch(`${API_BASE_URL}/${conversationId}/messages/${messageId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(updateData),
-            });
-            
-            const data = await response.json();
-            
-            if (data.success) {
-                const apiMessage = data.data;
-                return {
-                    id: apiMessage.Id,
-                    role: apiMessage.Role,
-                    content: apiMessage.Content,
-                    timestamp: new Date(apiMessage.createdAt).getTime(),
-                    status: apiMessage.Status,
-                    metadata: {
-                        workflowData: apiMessage.WorkflowData ? JSON.parse(apiMessage.WorkflowData) : undefined,
-                        error: apiMessage.ErrorMessage,
-                        usage: apiMessage.TokensUsed ? { total_tokens: apiMessage.TokensUsed } : undefined,
-                    },
-                } as IMessage;
+            const conversationId = this.getConversationId(stepId);
+
+            const updateData: Partial<DbMessage> = {};
+
+            if (updates.content !== undefined) updateData.content = updates.content;
+            if (updates.status !== undefined) updateData.status = updates.status;
+            if (updates.metadata?.workflowData) updateData.workflow_data = JSON.stringify(updates.metadata.workflowData);
+            if (updates.metadata?.error) updateData.error_message = updates.metadata.error;
+            if (updates.metadata?.usage?.total_tokens) updateData.tokens_used = updates.metadata.usage.total_tokens;
+
+            const { data, error } = await supabase
+                .from('messages')
+                .update(updateData)
+                .eq('id', messageId)
+                .eq('workflow_id', conversationId)
+                .select()
+                .single();
+
+            if (error) {
+                console.error('Error updating UI message:', error);
+                throw new Error(error.message || 'Unable to update message');
             }
-            
-            console.error('❌ Erreur mise à jour message UI:', data.error);
-            throw new Error(data.error || 'Impossible de mettre à jour le message');
+
+            return mapDbMessageToFrontend(data as DbMessage);
         } catch (error) {
-            console.error('❌ Erreur update message UI:', error);
+            console.error('Error update UI message:', error);
             throw error;
         }
     }
 
     /**
-     * Supprimer tous les messages d'une view
+     * Delete all messages for a view
      */
     async deleteAllMessages(stepId: string): Promise<boolean> {
         try {
-            const conversationId = `ui-${stepId}`;
-            const response = await fetch(`${API_BASE_URL}/${conversationId}/messages`, {
-                method: 'DELETE',
-            });
-            
-            const data = await response.json();
-            
-            if (data.success) {
-                console.log(`🗑️ ${data.deletedCount} message(s) UI supprimé(s)`);
-                return true;
+            const conversationId = this.getConversationId(stepId);
+
+            const { error } = await supabase
+                .from('messages')
+                .delete()
+                .eq('workflow_id', conversationId);
+
+            if (error) {
+                console.error('Error deleting UI messages:', error);
+                return false;
             }
-            
-            console.error('Erreur suppression messages UI:', data.error);
-            return false;
+
+            console.log(`Deleted UI messages for step ${stepId}`);
+            return true;
         } catch (error) {
-            console.error('Erreur delete messages UI:', error);
+            console.error('Error delete UI messages:', error);
             return false;
         }
     }
 
     /**
-     * Supprimer un message spécifique
+     * Delete a specific message
      */
     async deleteMessage(stepId: string, messageId: string): Promise<boolean> {
         try {
-            const conversationId = `ui-${stepId}`;
-            const response = await fetch(`${API_BASE_URL}/${conversationId}/messages/${messageId}`, {
-                method: 'DELETE',
-            });
-            
-            const data = await response.json();
-            return data.success;
+            const conversationId = this.getConversationId(stepId);
+
+            const { error } = await supabase
+                .from('messages')
+                .delete()
+                .eq('id', messageId)
+                .eq('workflow_id', conversationId);
+
+            if (error) {
+                console.error('Error deleting UI message:', error);
+                return false;
+            }
+
+            return true;
         } catch (error) {
-            console.error('Erreur delete message UI:', error);
+            console.error('Error delete UI message:', error);
             return false;
         }
     }
@@ -187,5 +170,3 @@ class UiConversationService {
 
 // Export singleton
 export const uiConversationService = new UiConversationService();
-
-

@@ -1,169 +1,180 @@
+/**
+ * File Upload Test Component
+ *
+ * Tests file upload to Supabase Storage
+ */
+
 import { useState } from 'react';
-import { API_URL } from '../../../../lib/api';
+import { supabase } from '../../../../lib/supabase';
 import styles from './file-upload-test.module.scss';
 
-const API_FILES_URL = `${API_URL}/api/files`;
-
+const STORAGE_BUCKET = 'workflow-files';
 
 export const FileUploadTest = () => {
-	const [selectedFile, setSelectedFile] = useState<File | null>(null);
-	const [uploading, setUploading] = useState(false);
-	const [uploadedUrl, setUploadedUrl] = useState<string | null>(null);
-	const [error, setError] = useState<string | null>(null);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [uploading, setUploading] = useState(false);
+    const [uploadedUrl, setUploadedUrl] = useState<string | null>(null);
+    const [uploadedPath, setUploadedPath] = useState<string | null>(null);
+    const [error, setError] = useState<string | null>(null);
 
-	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		if (e.target.files && e.target.files[0]) {
-			setSelectedFile(e.target.files[0]);
-			setError(null);
-			setUploadedUrl(null);
-		}
-	};
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            setSelectedFile(e.target.files[0]);
+            setError(null);
+            setUploadedUrl(null);
+            setUploadedPath(null);
+        }
+    };
 
-	const handleUpload = async () => {
-		if (!selectedFile) {
-			setError('Veuillez sélectionner un fichier');
-			return;
-		}
+    const handleUpload = async () => {
+        if (!selectedFile) {
+            setError('Please select a file');
+            return;
+        }
 
-		setUploading(true);
-		setError(null);
+        setUploading(true);
+        setError(null);
 
-		try {
-			const formData = new FormData();
-			formData.append('file', selectedFile);
-			formData.append('folder', 'documents');
+        try {
+            // Generate a unique file path
+            const timestamp = Date.now();
+            const safeName = selectedFile.name.replace(/[^a-zA-Z0-9.-]/g, '_');
+            const filePath = `documents/${timestamp}-${safeName}`;
 
-			const response = await fetch(`${API_FILES_URL}/upload`, {
-				method: 'POST',
-				body: formData,
-			});
+            // Upload to Supabase Storage
+            const { error: uploadError } = await supabase.storage
+                .from(STORAGE_BUCKET)
+                .upload(filePath, selectedFile, {
+                    cacheControl: '3600',
+                    upsert: false,
+                });
 
-			const data = await response.json();
+            if (uploadError) {
+                throw uploadError;
+            }
 
-			if (!response.ok) {
-				throw new Error(data.error || 'Erreur lors de l\'upload');
-			}
+            // Get the public URL
+            const { data: urlData } = supabase.storage
+                .from(STORAGE_BUCKET)
+                .getPublicUrl(filePath);
 
-			setUploadedUrl(data.url);
-			console.log('✅ Fichier uploadé:', data.url);
-		} catch (err) {
-			setError(err instanceof Error ? err.message : 'Erreur inconnue');
-			console.error('❌ Erreur upload:', err);
-		} finally {
-			setUploading(false);
-		}
-	};
+            setUploadedUrl(urlData.publicUrl);
+            setUploadedPath(filePath);
+            console.log('File uploaded:', urlData.publicUrl);
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Unknown error');
+            console.error('Upload error:', err);
+        } finally {
+            setUploading(false);
+        }
+    };
 
-	const handleDelete = async () => {
-		if (!uploadedUrl) return;
+    const handleDelete = async () => {
+        if (!uploadedPath) return;
 
-		try {
-			const response = await fetch(`${API_FILES_URL}/${uploadedUrl}`, {
-				method: 'DELETE',
-			});
+        try {
+            const { error: deleteError } = await supabase.storage
+                .from(STORAGE_BUCKET)
+                .remove([uploadedPath]);
 
-			const data = await response.json();
+            if (deleteError) {
+                throw deleteError;
+            }
 
-			if (!response.ok) {
-				throw new Error(data.error || 'Erreur lors de la suppression');
-			}
+            setUploadedUrl(null);
+            setUploadedPath(null);
+            setSelectedFile(null);
+            console.log('File deleted');
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Error deleting file');
+            console.error('Delete error:', err);
+        }
+    };
 
-			setUploadedUrl(null);
-			setSelectedFile(null);
-			console.log('✅ Fichier supprimé');
-		} catch (err) {
-			setError(err instanceof Error ? err.message : 'Erreur lors de la suppression');
-			console.error('❌ Erreur suppression:', err);
-		}
-	};
+    return (
+        <div className={styles.container}>
+            <h2>Supabase Storage File Upload Test</h2>
 
-	return (
-		<div className={styles.container}>
-			<h2>Test d'Upload de Fichiers</h2>
+            <div className={styles.uploadSection}>
+                <input
+                    type="file"
+                    onChange={handleFileChange}
+                    accept=".pdf,.png,.jpg,.jpeg,.webp,.gif,.svg"
+                    disabled={uploading}
+                />
 
-			<div className={styles.uploadSection}>
-				<input
-					type="file"
-					onChange={handleFileChange}
-					accept=".pdf,.png,.jpg,.jpeg,.webp,.gif,.svg"
-					disabled={uploading}
-				/>
+                {selectedFile && (
+                    <div className={styles.fileInfo}>
+                        <p><strong>Selected file:</strong> {selectedFile.name}</p>
+                        <p><strong>Size:</strong> {(selectedFile.size / 1024).toFixed(2)} KB</p>
+                        <p><strong>Type:</strong> {selectedFile.type}</p>
+                    </div>
+                )}
 
-				{selectedFile && (
-					<div className={styles.fileInfo}>
-						<p><strong>Fichier sélectionné:</strong> {selectedFile.name}</p>
-						<p><strong>Taille:</strong> {(selectedFile.size / 1024).toFixed(2)} KB</p>
-						<p><strong>Type:</strong> {selectedFile.type}</p>
-					</div>
-				)}
+                <button
+                    onClick={handleUpload}
+                    disabled={!selectedFile || uploading}
+                >
+                    {uploading ? 'Uploading...' : 'Upload file'}
+                </button>
+            </div>
 
-				<button
-					onClick={handleUpload}
-					disabled={!selectedFile || uploading}
-				>
-					{uploading ? 'Upload en cours...' : 'Uploader le fichier'}
-				</button>
-			</div>
+            {error && (
+                <div className={styles.error}>
+                    Error: {error}
+                </div>
+            )}
 
-			{error && (
-				<div className={styles.error}>
-					❌ {error}
-				</div>
-			)}
+            {uploadedUrl && (
+                <div className={styles.success}>
+                    <p>File uploaded successfully!</p>
+                    <div className={styles.urlInfo}>
+                        <p><strong>Path:</strong> <code>{uploadedPath}</code></p>
+                        <p><strong>URL:</strong></p>
+                        <code style={{ wordBreak: 'break-all' }}>{uploadedUrl}</code>
+                    </div>
 
-			{uploadedUrl && (
-				<div className={styles.success}>
-					<p>✅ Fichier uploadé avec succès!</p>
-					<div className={styles.urlInfo}>
-						<p><strong>URL:</strong> <code>{uploadedUrl}</code></p>
-						<p><strong>URL complète:</strong></p>
-						<code>{API_FILES_URL}/{uploadedUrl}</code>
-					</div>
+                    <div className={styles.actions}>
+                        <button
+                            onClick={() => window.open(uploadedUrl, '_blank')}
+                        >
+                            View file
+                        </button>
 
-					<div className={styles.actions}>
-						<button
-							onClick={() => window.open(`${API_FILES_URL}/${uploadedUrl}`, '_blank')}
-						>
-							📥 Télécharger/Voir le fichier
-						</button>
+                        <button onClick={handleDelete}>
+                            Delete file
+                        </button>
+                    </div>
 
-						<button
-							onClick={handleDelete}
-						>
-							🗑️ Supprimer le fichier
-						</button>
-					</div>
+                    {uploadedUrl.match(/\.(png|jpg|jpeg|webp|gif)$/i) && (
+                        <div className={styles.preview}>
+                            <p><strong>Preview:</strong></p>
+                            <img
+                                src={uploadedUrl}
+                                alt="Preview"
+                                style={{ maxWidth: '100%', maxHeight: '400px', border: '1px solid #ccc' }}
+                            />
+                        </div>
+                    )}
+                </div>
+            )}
 
-					{uploadedUrl.match(/\.(png|jpg|jpeg|webp|gif)$/i) && (
-						<div className={styles.preview}>
-							<p><strong>Aperçu:</strong></p>
-							<img
-								src={`${API_FILES_URL}/${uploadedUrl}`}
-								alt="Preview"
-								style={{ maxWidth: '100%', maxHeight: '400px', border: '1px solid #ccc' }}
-							/>
-						</div>
-					)}
-				</div>
-			)}
+            <div className={styles.instructions}>
+                <h3>Instructions:</h3>
+                <ol>
+                    <li>Select a file (PDF, PNG, JPG, etc.)</li>
+                    <li>Click "Upload file"</li>
+                    <li>The file URL will appear above</li>
+                    <li>You can view or delete the file</li>
+                </ol>
 
-			<div className={styles.instructions}>
-				<h3>Instructions:</h3>
-				<ol>
-					<li>Sélectionnez un fichier (PDF, PNG, JPG, etc.)</li>
-					<li>Cliquez sur "Uploader le fichier"</li>
-					<li>L'URL du fichier apparaîtra ci-dessus</li>
-					<li>Vous pouvez télécharger ou supprimer le fichier</li>
-				</ol>
-
-				<h4>Endpoints disponibles:</h4>
-				<ul>
-					<li><code>POST /api/files/upload</code> - Upload un fichier</li>
-					<li><code>GET /api/files/:folder/:filename</code> - Télécharger un fichier</li>
-					<li><code>DELETE /api/files/:folder/:filename</code> - Supprimer un fichier</li>
-				</ul>
-			</div>
-		</div>
-	);
+                <h4>Supabase Storage Info:</h4>
+                <ul>
+                    <li><strong>Bucket:</strong> <code>{STORAGE_BUCKET}</code></li>
+                    <li>Files are stored in Supabase Storage</li>
+                    <li>Make sure the bucket exists and has proper RLS policies</li>
+                </ul>
+            </div>
+        </div>
+    );
 };
-

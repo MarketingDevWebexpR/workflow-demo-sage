@@ -20,7 +20,7 @@ import {
 } from '../../../../../models/chat.model';
 import { LoadingMessage } from '../shared/loading-message/loading-message';
 import { conversationService } from '../../../../../services/conversation.service';
-import { API_AI_URL } from '../../../../../lib/api';
+import { AI_CHAT_URL } from '../../../../../lib/api';
 
 
 type TPolygonSidebarDesignerViewProps = {
@@ -116,8 +116,8 @@ const PolygonSidebarDesignerView = ({ onNavigate }: TPolygonSidebarDesignerViewP
                 workflowTitle: workflowContext.title,
             });
 
-            // Appel fetch en mode streaming
-            const response = await fetch(`${API_AI_URL}/chat`, {
+            // Appel fetch en mode streaming (Supabase Edge Function)
+            const response = await fetch(AI_CHAT_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

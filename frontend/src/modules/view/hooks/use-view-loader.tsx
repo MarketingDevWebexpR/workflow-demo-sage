@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { usePageStore } from '../store/page.store';
-import { API_WORKFLOWS_URL } from '../../../lib/api';
+import ViewServices from '../../workflow/services/view.services';
 
 /**
- * Hook qui charge la view depuis l'API quand on change de stepId
+ * Hook qui charge la view depuis Supabase quand on change de stepId
  * et nettoie le store quand on quitte
  */
 export function useViewLoader(workflowId: string | undefined): void {
@@ -13,7 +13,7 @@ export function useViewLoader(workflowId: string | undefined): void {
     const dispatch = usePageStore(state => state.dispatch);
     const lastStepIdRef = useRef<string | null>(null);
 
-    // 🧹 Nettoyage quand on démonte le composant
+    // Nettoyage quand on demonte le composant
     useEffect(() => {
         return () => {
             dispatch({ type: 'SELECT_PAGE', payload: null });
@@ -22,13 +22,13 @@ export function useViewLoader(workflowId: string | undefined): void {
 
     useEffect(() => {
         if (!workflowId || !stepId) {
-            console.log('🔴 [useViewLoader] Pas de workflowId ou stepId');
+            console.log('[useViewLoader] No workflowId or stepId');
             return;
         }
 
-        // Ne charger que si on change d'étape
+        // Ne charger que si on change d'etape
         if (lastStepIdRef.current === stepId) {
-            console.log('🟡 [useViewLoader] Même stepId, skip');
+            console.log('[useViewLoader] Same stepId, skip');
             return;
         }
 
@@ -37,68 +37,53 @@ export function useViewLoader(workflowId: string | undefined): void {
         const loadOrCreateView = async () => {
             try {
                 // Tenter de charger la vue existante
-                const getResponse = await fetch(`${API_WORKFLOWS_URL}/${workflowId}/views/${stepId}`);
-                const getResult = await getResponse.json();
+                const existingView = await ViewServices.getByStepId(workflowId, stepId);
 
-                if (getResult.success && getResult.exists && getResult.data) {
-                    // ✅ La vue existe déjà en base de données
-                    console.log('✅ [useViewLoader] Vue existante chargée', getResult.data);
+                if (existingView) {
+                    // La vue existe deja en base de donnees
+                    console.log('[useViewLoader] Existing view loaded', existingView);
                     dispatch({
                         type: 'SELECT_PAGE',
                         payload: {
-                            Id: parseInt(getResult.data._id || getResult.data.Id || Date.now(), 10),
+                            Id: parseInt(existingView.Id, 10),
                             Title: `View ${stepId}`,
                             Path: '',
-                            Created: getResult.data.createdAt || new Date().toISOString(),
-                            Modified: getResult.data.updatedAt || new Date().toISOString(),
-                            Components: getResult.data.components || '[]',
+                            Created: existingView.createdAt,
+                            Modified: existingView.updatedAt,
+                            Components: existingView.components,
                         },
                     });
-                } else if (getResult.success && !getResult.exists) {
-                    // ⚠️ La vue n'existe pas, on doit la créer en base de données
-                    console.log('⚠️ [useViewLoader] Vue inexistante, création en cours...');
-                    
-                    const createResponse = await fetch(
-                        `${API_WORKFLOWS_URL}/${workflowId}/views/${stepId}`,
-                        {
-                            method: 'PUT',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                components: '[]',
-                            }),
-                        }
-                    );
+                } else {
+                    // La vue n'existe pas, on doit la creer en base de donnees
+                    console.log('[useViewLoader] View not found, creating...');
 
-                    const createResult = await createResponse.json();
+                    const newView = await ViewServices.upsert(workflowId, stepId, {
+                        components: '[]',
+                    });
 
-                    if (createResult.success && createResult.data) {
-                        // ✅ Vue créée avec succès
-                        console.log('✅ [useViewLoader] Vue créée avec succès', createResult.data._id || createResult.data.Id);
+                    if (newView) {
+                        // Vue creee avec succes
+                        console.log('[useViewLoader] View created successfully', newView.Id);
                         dispatch({
                             type: 'SELECT_PAGE',
                             payload: {
-                                Id: parseInt(createResult.data._id || createResult.data.Id, 10),
+                                Id: parseInt(newView.Id, 10),
                                 Title: `View ${stepId}`,
                                 Path: '',
-                                Created: createResult.data.createdAt || new Date().toISOString(),
-                                Modified: createResult.data.updatedAt || new Date().toISOString(),
-                                Components: createResult.data.components || '[]',
+                                Created: newView.createdAt,
+                                Modified: newView.updatedAt,
+                                Components: newView.components,
                             },
                         });
                     } else {
-                        console.error('❌ [useViewLoader] Échec de la création de la vue', createResult.error);
+                        console.error('[useViewLoader] Failed to create view');
                     }
-                } else {
-                    console.error('❌ [useViewLoader] Réponse inattendue du serveur', getResult);
                 }
             } catch (error) {
-                console.error('❌ [useViewLoader] Erreur lors du chargement/création de la vue', error);
+                console.error('[useViewLoader] Error loading/creating view', error);
             }
         };
 
         loadOrCreateView();
     }, [workflowId, stepId, dispatch]);
 }
-
