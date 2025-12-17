@@ -1,0 +1,38 @@
+/* ===== TABS ===== */
+
+.tabsList {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    background: #f3f4f6;
+    padding: 4px;
+    gap: 4px;
+}
+
+.tabsTrigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+    border: none;
+    background: transparent;
+    color: #5f6670;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.tabsTrigger[data-state="active"] {
+    background: white;
+    color: #2e3239;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.tabsContent {
+    margin-top: 16px;
+}
+

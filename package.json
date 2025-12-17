@@ -1,0 +1,11 @@
+{
+  "name": "automation-poc",
+  "version": "1.0.0",
+  "scripts": {
+    "generate:sandpack": "bun run scripts/generate-sandpack-components.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  }
+}
+

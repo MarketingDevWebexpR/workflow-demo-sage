@@ -1,0 +1,19 @@
+/* ===== SEPARATOR ===== */
+
+.separator {
+    flex-shrink: 0;
+    background: #e5ecf1;
+}
+
+.separatorHorizontal {
+    height: 1px;
+    width: 100%;
+    margin: 16px 0;
+}
+
+.separatorVertical {
+    width: 1px;
+    height: 100%;
+    margin: 0 16px;
+}
+

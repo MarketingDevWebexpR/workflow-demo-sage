@@ -19,6 +19,15 @@ import styles from './ai-ui-builder.module.scss';
 const AiUiBuilder = (): React.ReactElement => {
     const location = useLocation();
     
+    // ========================================
+    // 🎚️ FLAG DE SWITCH : JSON vs TSX
+    // ========================================
+    // ⚠️ Change cette valeur pour switcher entre les 2 modes :
+    // - true  : Mode TSX (génère du code pour Sandpack)
+    // - false : Mode JSON (génère des composants comme avant)
+    const USE_TSX_MODE = true; // 👈 SWITCH ICI
+    // ========================================
+    
     // Extraire le stepId depuis l'URL via ce hack car useParams ne fonctionne pas car pas imbriqué dans routeur (format: /workflow/:workflowId/:stepId/ihm)
     const stepId = useMemo(() => {
         const pathParts = location.pathname.split('/');
@@ -31,6 +40,8 @@ const AiUiBuilder = (): React.ReactElement => {
     
     console.log('🔍 AiUiBuilder - URL:', location.pathname);
     console.log('🔍 AiUiBuilder - StepId extrait:', stepId);
+    console.log('🎚️ Mode actif:', USE_TSX_MODE ? 'TSX (Sandpack)' : 'JSON (Composants)');
+    
     const [inputMessage, setInputMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [messages, setMessages] = useState<IMessage[]>([]);
@@ -140,7 +151,12 @@ const AiUiBuilder = (): React.ReactElement => {
             });
 
             // 🌊 Appel fetch en mode streaming
-            const response = await fetch('http://localhost:3000/api/ai/ui-chat', {
+            // 🎚️ Switch entre les 2 endpoints selon le mode
+            const endpoint = USE_TSX_MODE 
+                ? 'http://localhost:3000/api/ai/ui-code'  // Mode TSX (Sandpack)
+                : 'http://localhost:3000/api/ai/ui-chat'; // Mode JSON (Composants)
+            
+            const response = await fetch(endpoint, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -240,55 +256,91 @@ const AiUiBuilder = (): React.ReactElement => {
                 }
             }
 
-            // 🎯 Une fois le stream terminé, mettre à jour la view (SI un JSON a été généré)
-            if (fullJsonResponse) {
-                try {
-                    console.log('📦 JSON des composants UI reçu, mise à jour...');
+            // 🎯 Une fois le stream terminé, traiter la réponse
+            if (fullJsonResponse || accumulatedContent) {
+                
+                // ========================================
+                // MODE TSX : Injecter le code dans Sandpack
+                // ========================================
+                if (USE_TSX_MODE) {
+                    console.log('🎨 Mode TSX - Injection dans Sandpack');
                     
-                    // 🧹 Nettoyer les éventuels backticks markdown (sécurité supplémentaire)
-                    let cleanedJson = fullJsonResponse.trim();
-                    cleanedJson = cleanedJson.replace(/^```(?:json)?\s*\n?/i, '').replace(/\n?```\s*$/i, '');
-                    cleanedJson = cleanedJson.trim();
+                    // Le code TSX est dans accumulatedContent
+                    let tsxCode = accumulatedContent.trim();
                     
-                    const parsedData = JSON.parse(cleanedJson);
-                    const components = parsedData.components;
-
-                    if (!Array.isArray(components)) {
-                        throw new Error('Le JSON doit contenir un tableau "components"');
-                    }
-
-                    console.log('✅ Composants UI générés:', {
-                        count: components.length,
-                        components,
+                    // 🧹 Nettoyer les balises markdown (```tsx ou ```) si présentes
+                    tsxCode = tsxCode.replace(/^```(?:tsx|typescript|ts|jsx|javascript|js)?\s*\n?/i, '').replace(/\n?```\s*$/i, '');
+                    tsxCode = tsxCode.trim();
+                    
+                    console.log('✅ Code TSX généré:', {
+                        length: tsxCode.length,
+                        preview: tsxCode.substring(0, 200) + '...',
                     });
-
-                    // 🎨 Intégrer les composants dans le page editor
-                    dispatch({ 
-                        type: 'SET_EDITED_PAGE_COMPONENTS', 
-                        payload: JSON.stringify(components) 
+                    
+                    // 🎨 Injecter le code dans Sandpack via le store
+                    (dispatch as any)({ 
+                        type: 'SET_SANDPACK_CODE', 
+                        payload: tsxCode 
                     });
+                    
+                    toast.success('Code TSX généré !', {
+                        description: 'Visible dans le Sandpack à droite',
+                        duration: 4000,
+                    });
+                }
+                // ========================================
+                // MODE JSON : Logique existante (conservée)
+                // ========================================
+                else if (fullJsonResponse) {
+                    try {
+                        console.log('📦 JSON des composants UI reçu, mise à jour...');
+                        
+                        // 🧹 Nettoyer les éventuels backticks markdown (sécurité supplémentaire)
+                        let cleanedJson = fullJsonResponse.trim();
+                        cleanedJson = cleanedJson.replace(/^```(?:json)?\s*\n?/i, '').replace(/\n?```\s*$/i, '');
+                        cleanedJson = cleanedJson.trim();
+                        
+                        console.log({cleanedJson, fullJsonResponse});
+                        const parsedData = JSON.parse(cleanedJson);
+                        const components = parsedData.components;
 
-                    // Marquer qu'il y a des changements non sauvegardés
-                    dispatch({ 
+                        if (!Array.isArray(components)) {
+                            throw new Error('Le JSON doit contenir un tableau "components"');
+                        }
+
+                        console.log('✅ Composants UI générés:', {
+                            count: components.length,
+                            components,
+                        });
+
+                        // 🎨 Intégrer les composants dans le page editor
+                        dispatch({ 
+                            type: 'SET_EDITED_PAGE_COMPONENTS', 
+                            payload: JSON.stringify(components) 
+                        });
+
+                        // Marquer qu'il y a des changements non sauvegardés
+                        dispatch({ 
                         type: 'SET_HAS_UNSAVED_CHANGES', 
                         payload: true 
                     });
 
                     // Toast de succès
-                    toast.success('Interface générée avec succès !', {
-                        description: `${components.length} composant(s) créé(s) par l'IA`,
-                        duration: 4000,
-                    });
+                        toast.success('Interface générée avec succès !', {
+                            description: `${components.length} composant(s) créé(s) par l'IA`,
+                            duration: 4000,
+                        });
 
-                } catch (parseError) {
-                    console.error('Erreur parsing UI JSON:', parseError);
-                    toast.error('Erreur de parsing', {
-                        description: 'Le JSON généré n\'est pas valide',
-                        duration: 5000,
-                    });
+                    } catch (parseError) {
+                        console.error('Erreur parsing UI JSON:', parseError);
+                        toast.error('Erreur de parsing', {
+                            description: 'Le JSON généré n\'est pas valide',
+                            duration: 5000,
+                        });
+                    }
+                } else {
+                    console.log('💬 Réponse conversationnelle (pas de composants générés)');
                 }
-            } else {
-                console.log('💬 Réponse conversationnelle (pas de composants générés)');
             }
 
         } catch (error) {

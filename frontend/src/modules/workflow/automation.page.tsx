@@ -396,6 +396,12 @@ const AutomationPage = (): React.ReactElement => {
     const isEditMode = usePageStore(state => state.isEditMode);
     const dispatchPage = usePageStore(state => state.dispatch);
 
+    const handleExecutionClick = () => {
+        alert('Exécuter le workflow');
+
+        // Si aucun élément "Exécution" n'existe avec ce workflow, 
+    };
+
     // Si on est en mode IHM, afficher la vue IHM
     if (isIhm && workflowId) {
 
@@ -735,10 +741,7 @@ const AutomationPage = (): React.ReactElement => {
                                             variant="default"
                                             size="sm"
                                             rounded="full"
-                                            onClick={() => {
-                                                // TODO: Implémenter l'exécution
-                                                console.log('Exécuter le workflow');
-                                            }}
+                                            onClick={handleExecutionClick}
                                         >
                                             <Play size={16} style={{ marginRight: 'var(--spacing-2)' }} />
                                             <span>Exécuter</span>

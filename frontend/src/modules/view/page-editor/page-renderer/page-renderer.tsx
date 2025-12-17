@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, } from "react";
+import React, { useEffect, useRef } from "react";
 import { cn } from "../../../../lib/utils";
 import EditableComponent from "./editable-component";
 import { type TPageComponent } from "../../models/page.model";
@@ -7,6 +7,9 @@ import { usePageStore } from "../../store/page.store";
 import styles from "./page-renderer.module.scss";
 import { useWorkflowAutomationStore } from "../../../workflow/store/workflow-automation.store";
 import { config } from "../../../misc/module.config";
+import { Sandpack } from '@codesandbox/sandpack-react';
+import { SANDPACK_COMPONENTS, getSandpackDependencies, getCombinedStyles } from "./components-code";
+import { useVanillaCSSInjection } from "../../../../hooks/use-vanilla-css-injection";
 
 
 type TPageRendererProps = {
@@ -27,6 +30,7 @@ const PageRenderer = React.forwardRef<
         const isEditMode = usePageStore(state => state.isEditMode);
         const builder = isEditMode; // Mode édition activé via le toggle
         const moduleConfigs = [config];
+        const sandpackCode = usePageStore(state => state.sandpackCode);
         
         const selectedWorkflow = useWorkflowAutomationStore(state => state.workflowItem.selected.item);
         const selectedView = usePageStore(state => state.selected.item);
@@ -49,6 +53,8 @@ const PageRenderer = React.forwardRef<
         const components = renderedPageComponents.filter(component => {
             return component.context?.toString() === layerId?.toString();
         });
+
+        console.log('renderedPageComponents', renderedPageComponents);
 
         const allModuleComponents = moduleConfigs
             .map(moduleConfig => moduleConfig.components)
@@ -120,6 +126,14 @@ const PageRenderer = React.forwardRef<
             };
         }, [editedComponentId]);
 
+        console.log('components', components);
+
+        useVanillaCSSInjection({
+            css: `.sp-preview-actions {
+        display: none!important;
+        }`,
+        id: 'sp-preview-actions-css',
+        })
         return <div
             ref={ref}
             className={cn(
@@ -131,17 +145,82 @@ const PageRenderer = React.forwardRef<
             data-layer-id={layerId}
             data-layer-title={layerTitle}
         >
+            {/* ici */}
+            <Sandpack
+                template="react-ts"
+                theme="light"
+                files={{
+                    // App.tsx : soit du code généré par l'IA, soit l'exemple par défaut
+                    '/App.tsx': sandpackCode || `import React from 'react';
+import { Button } from './components/Button';
+import { 
+  Dialog, 
+  DialogTrigger, 
+  DialogContent, 
+  DialogHeader, 
+  DialogTitle,
+  DialogDescription,
+  DialogFooter 
+} from './components/Dialog';
+import { Input } from './components/Input';
+import { Label } from './components/Label';
+import { Badge } from './components/Badge';
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from './components/Card';
+import './styles.css';
+
+export default function App() {
+  const [name, setName] = React.useState('');
+  
+  return (
+  <div>Discutez avec l'IA dans le panel de gauche pour générer votre IHM.</div>
+    
+  );
+}`,
+                    '/components/Button.tsx': SANDPACK_COMPONENTS.button,
+                    '/components/Dialog.tsx': SANDPACK_COMPONENTS.dialog,
+                    '/components/Input.tsx': SANDPACK_COMPONENTS.input,
+                    '/components/Textarea.tsx': SANDPACK_COMPONENTS.textarea,
+                    '/components/Label.tsx': SANDPACK_COMPONENTS.label,
+                    '/components/Badge.tsx': SANDPACK_COMPONENTS.badge,
+                    '/components/Card.tsx': SANDPACK_COMPONENTS.card,
+                    '/components/Switch.tsx': SANDPACK_COMPONENTS.switch,
+                    '/components/Separator.tsx': SANDPACK_COMPONENTS.separator,
+                    '/components/Tabs.tsx': SANDPACK_COMPONENTS.tabs,
+                    '/styles.css': getCombinedStyles(),
+                }}
+                customSetup={{
+                    dependencies: getSandpackDependencies([
+                        'button', 
+                        'dialog', 
+                        'input',
+                        'textarea',
+                        'label', 
+                        'badge',
+                        'card',
+                        'switch',
+                        'separator',
+                        'tabs'
+                    ])
+                }}
+                options={{
+                    showTabs: true,
+                    showLineNumbers: true,
+                    editorHeight: 778,
+                    editorWidthPercentage: 0,
+                }}
+            />
             {
                 builder && components.length === 0
-                    ? <div
-                        className={styles.emptyBox}
-                        data-builder-empty-component
-                        data-keep-pointer-events
-                    >
-                        <div className={styles.emptyBoxContent}>
-                            Drag and drop a component here.
-                        </div>
-                    </div>
+                    ? <></>
+                    // <div
+                    //     className={styles.emptyBox}
+                    //     data-builder-empty-component
+                    //     data-keep-pointer-events
+                    // >
+                    //     <div className={styles.emptyBoxContent}>
+                    //         Drag and drop a component here.
+                    //     </div>
+                    // </div>
                     : components.map(component => {
 
                         const Component = allModuleComponents.find(moduleComponent => {
@@ -153,7 +232,7 @@ const PageRenderer = React.forwardRef<
                                 })
                             }
 
-                            return moduleComponent.displayName === component.displayName;
+                            return moduleComponent.displayName?.toLowerCase() === component.displayName?.toLowerCase();
                         });
 
                         if (!Component) {

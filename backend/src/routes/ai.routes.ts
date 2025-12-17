@@ -2918,5 +2918,324 @@ ${viewContext.currentComponents && viewContext.currentComponents.length > 0
     }
 });
 
+// ========================================
+// 🎨 Route pour générer du CODE TSX directement (approche Sandpack)
+// ========================================
+ai.post('/ui-code', async (c) => {
+    try {
+        const { message, history = [], viewContext } = await c.req.json();
+
+        if (!message) {
+            return c.json({ error: 'Message requis' }, 400);
+        }
+
+        const MAX_MESSAGE_LENGTH = 10000;
+        if (message.length > MAX_MESSAGE_LENGTH) {
+            return c.json({ 
+                error: 'Message trop long', 
+                details: `Le message ne doit pas dépasser ${MAX_MESSAGE_LENGTH} caractères`,
+            }, 400);
+        }
+
+        console.log('📨 Requête AI UI Code Builder:', {
+            message: message.substring(0, 100) + (message.length > 100 ? '...' : ''),
+            messageLength: message.length,
+            historyLength: history.length,
+        });
+
+        const apiKey = process.env.OPENAI_API_KEY;
+
+        if (!apiKey) {
+            return c.json({
+                error: 'OPENAI_API_KEY non configurée',
+                hint: 'Ajoute OPENAI_API_KEY=sk-... dans ton .env'
+            }, 500);
+        }
+
+        // ========================================
+        // 🎨 SYSTEM PROMPT - GÉNÉRATION CODE TSX
+        // ========================================
+        const systemPrompt = `# 🎯 MISSION
+Tu es un expert React/TypeScript qui génère du code TSX de haute qualité pour Sandpack.
+
+# 📦 COMPOSANTS DISPONIBLES
+Tu as accès à ces composants **DÉJÀ IMPORTÉS** dans l'environnement Sandpack :
+
+## Composants de base :
+- **Button** : \`variant\` (default, outline, destructive, ghost, link), \`size\` (default, sm, lg)
+- **Input** : champ texte standard
+- **Textarea** : champ multi-lignes
+- **Label** : label pour formulaires
+- **Badge** : badge/étiquette
+- **Card, CardHeader, CardTitle, CardContent, CardFooter** : composants de carte
+
+## Composants avancés :
+- **Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter** : modale
+- **Switch** : toggle on/off
+- **Separator** : ligne de séparation
+- **Tabs, TabsList, TabsTrigger, TabsContent** : onglets
+
+# ✅ FORMAT DE RÉPONSE
+Tu dois UNIQUEMENT retourner le code TSX qui sera placé dans \`/App.tsx\`.
+
+**RÈGLES CRITIQUES** :
+1. ✅ Commence TOUJOURS par les imports React + composants nécessaires
+2. ✅ Export une fonction \`export default function App()\`
+3. ✅ Utilise React.useState pour l'état
+4. ✅ Code TSX propre, typé, fonctionnel
+5. ✅ Utilise les composants disponibles (pas de HTML brut sauf pour layout)
+6. ✅ Ajoute des styles inline quand nécessaire
+7. ❌ PAS de markdown, PAS d'explication, UNIQUEMENT le code
+8. ❌ PAS de \`\`\`tsx au début/fin
+
+# 📐 TEMPLATE DE BASE
+\`\`\`tsx
+import React from 'react';
+import { Button } from './components/Button';
+import { Card, CardHeader, CardTitle, CardContent } from './components/Card';
+import './styles.css';
+
+export default function App() {
+  const [count, setCount] = React.useState(0);
+  
+  return (
+    <div style={{ padding: '20px', maxWidth: '800px', margin: '0 auto' }}>
+      <Card>
+        <CardHeader>
+          <CardTitle>Mon Titre</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p>Compteur: {count}</p>
+          <Button onClick={() => setCount(count + 1)}>
+            Incrémenter
+          </Button>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+\`\`\`
+
+# 🎨 BONNES PRATIQUES
+- Utilise \`React.useState\` pour l'état local
+- Wrap le contenu principal dans une \`<div style={{ padding: '20px', maxWidth: '800px', margin: '0 auto' }}>\`
+- Utilise Card pour structurer visuellement
+- Utilise Dialog pour les interactions modales
+- Ajoute des styles inline pour le spacing (\`marginBottom\`, \`gap\`, etc.)
+- Code clean, bien indenté, facile à lire
+
+# 💡 EXEMPLES D'UTILISATION
+
+**Formulaire simple :**
+\`\`\`tsx
+import React from 'react';
+import { Button } from './components/Button';
+import { Input } from './components/Input';
+import { Label } from './components/Label';
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from './components/Card';
+import './styles.css';
+
+export default function App() {
+  const [name, setName] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  
+  return (
+    <div style={{ padding: '20px', maxWidth: '500px', margin: '0 auto' }}>
+      <Card>
+        <CardHeader>
+          <CardTitle>Inscription</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div style={{ marginBottom: '15px' }}>
+            <Label>Nom</Label>
+            <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="Votre nom" />
+          </div>
+          <div style={{ marginBottom: '15px' }}>
+            <Label>Email</Label>
+            <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="email@exemple.com" />
+          </div>
+        </CardContent>
+        <CardFooter>
+          <Button variant="default">S'inscrire</Button>
+        </CardFooter>
+      </Card>
+    </div>
+  );
+}
+\`\`\`
+
+**Dialog interactif :**
+\`\`\`tsx
+import React from 'react';
+import { Button } from './components/Button';
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from './components/Dialog';
+import './styles.css';
+
+export default function App() {
+  return (
+    <div style={{ padding: '40px', textAlign: 'center' }}>
+      <h1>Confirmation</h1>
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="destructive">Supprimer</Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Êtes-vous sûr ?</DialogTitle>
+            <DialogDescription>
+              Cette action est irréversible.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline">Annuler</Button>
+            <Button variant="destructive">Confirmer</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+}
+\`\`\`
+
+# ⚡ INSTRUCTIONS FINALES
+- Analyse la demande de l'utilisateur
+- Choisis les composants appropriés
+- Génère du code TSX propre et fonctionnel
+- RETOURNE UNIQUEMENT LE CODE, sans markdown ni explication
+- Le code doit être prêt à être copié-collé dans App.tsx`;
+
+        // Construction des messages pour l'API
+        const messages: { role: 'system' | 'user' | 'assistant', content: string }[] = [
+            { role: 'system', content: systemPrompt },
+        ];
+
+        // Ajouter l'historique
+        if (history && history.length > 0) {
+            for (const msg of history) {
+                if (msg.role === 'user' || msg.role === 'assistant') {
+                    messages.push({
+                        role: msg.role,
+                        content: msg.content,
+                    });
+                }
+            }
+        }
+
+        // Ajouter le message actuel
+        messages.push({ role: 'user', content: message });
+
+        // Appel à OpenAI en streaming
+        const openaiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${apiKey}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                model: 'gpt-4o',
+                messages,
+                max_tokens: 4000,
+                temperature: 0.7,
+                stream: true,
+            }),
+        });
+
+        if (!openaiResponse.ok) {
+            const error = await openaiResponse.json();
+            console.error('Erreur OpenAI:', error);
+            return c.json({
+                error: 'Erreur lors de l\'appel à OpenAI',
+                details: error,
+            }, 500);
+        }
+
+        // Stream SSE vers le frontend
+        const { readable, writable } = new TransformStream();
+        const writer = writable.getWriter();
+        const encoder = new TextEncoder();
+
+        let accumulatedContent = '';
+
+        (async () => {
+            try {
+                if (!openaiResponse.body) {
+                    throw new Error('Pas de body dans la réponse OpenAI');
+                }
+
+                const reader = openaiResponse.body.getReader();
+                const decoder = new TextDecoder();
+
+                while (true) {
+                    const { done, value } = await reader.read();
+
+                    if (done) {
+                        // Envoyer le message final
+                        await writer.write(encoder.encode(`data: ${JSON.stringify({
+                            type: 'done',
+                            fullContent: accumulatedContent,
+                        })}\n\n`));
+                        break;
+                    }
+
+                    const chunk = decoder.decode(value);
+                    const lines = chunk.split('\n').filter(line => line.trim() !== '');
+
+                    for (const line of lines) {
+                        if (line.startsWith('data: ')) {
+                            const data = line.slice(6);
+
+                            if (data === '[DONE]') {
+                                continue;
+                            }
+
+                            try {
+                                const parsed = JSON.parse(data);
+                                const content = parsed.choices?.[0]?.delta?.content;
+
+                                if (content) {
+                                    accumulatedContent += content;
+                                    
+                                    await writer.write(encoder.encode(`data: ${JSON.stringify({
+                                        type: 'chunk',
+                                        content: content,
+                                    })}\n\n`));
+                                }
+                            } catch (e) {
+                                // Ignorer erreurs de parsing
+                            }
+                        }
+                    }
+                }
+
+                await writer.close();
+            } catch (error) {
+                console.error('❌ Erreur streaming:', error);
+                
+                await writer.write(encoder.encode(`data: ${JSON.stringify({
+                    type: 'error',
+                    error: error instanceof Error ? error.message : 'Erreur inconnue',
+                })}\n\n`));
+                
+                await writer.close();
+            }
+        })();
+
+        return new Response(readable, {
+            headers: {
+                'Content-Type': 'text/event-stream',
+                'Cache-Control': 'no-cache',
+                'Connection': 'keep-alive',
+            },
+        });
+
+    } catch (error) {
+        console.error('Erreur serveur UI code:', error);
+        return c.json({
+            error: 'Erreur serveur',
+            details: error instanceof Error ? error.message : 'Erreur inconnue'
+        }, 500);
+    }
+});
+
 export default ai;
 

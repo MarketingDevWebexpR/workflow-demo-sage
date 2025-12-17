@@ -89,6 +89,7 @@ const PageEditor = (): React.ReactElement => {
     const editorScrollTop = usePageStore(state => state.editorScrollTop);
     const isEditMode = usePageStore(state => state.isEditMode);
 
+    console.log('selectedView', selectedView);
     const editedPage = useWorkflowAutomationStore(state => state.workflowItem.selected.item);
 
     const moduleConfigs = [] as IModuleConfig[];
@@ -109,10 +110,6 @@ const PageEditor = (): React.ReactElement => {
             return [];
         }
     }, [selectedView?.Components]);
-    console.log('Chimpenfeu: PageEditor',{
-        selectedView,
-        pageComponents,
-    });
 
     const editedComponent = useMemo(() =>
         pageComponents.find(component => component.id === editedComponentId),

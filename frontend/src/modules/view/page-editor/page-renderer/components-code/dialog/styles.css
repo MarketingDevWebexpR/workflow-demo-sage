@@ -1,0 +1,177 @@
+/* ===== DIALOG - Converti depuis dialog.module.scss ===== */
+
+.dialogOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.dialogOverlay[data-state="open"] {
+    animation: fadeIn 0.2s;
+}
+
+.dialogOverlay[data-state="closed"] {
+    animation: fadeOut 0.2s;
+}
+
+.dialogContent {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 100;
+    display: grid;
+    width: 100%;
+    background: #ffffff; /* var(--surface) */
+    transform: translate(-50%, -50%);
+    gap: 1rem; /* var(--spacing-4) */
+    padding: 1.5rem; /* var(--spacing-6) */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+@media (min-width: 640px) {
+    .dialogContent {
+        border-radius: 0.5rem; /* var(--radius-lg) */
+        max-width: 48rem;
+    }
+}
+
+.dialogContent[data-state="open"] {
+    animation: dialogIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dialogContent[data-state="closed"] {
+    animation: dialogOut 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dialogHeader {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* var(--spacing-4) */
+    text-align: center;
+}
+
+@media (min-width: 640px) {
+    .dialogHeader {
+        text-align: left;
+    }
+}
+
+.dialogFooter {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+@media (min-width: 640px) {
+    .dialogFooter {
+        flex-direction: row;
+        justify-content: flex-end;
+        gap: 1rem; /* var(--spacing-4) */
+    }
+}
+
+.dialogTitle {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    font-weight: 500;
+    color: #2e3239; /* var(--text) */
+    letter-spacing: -0.01em;
+}
+
+.dialogDescription {
+    font-size: 0.875rem; /* var(--text-sm) */
+    line-height: calc(1.25 / 0.875); /* var(--text-sm--line-height) */
+    color: #5f6670; /* var(--text-2) */
+}
+
+.dialogCloseButton {
+    position: absolute;
+    right: 1rem; /* var(--spacing-4) */
+    top: 1rem; /* var(--spacing-4) */
+    border-radius: 0.125rem;
+    opacity: 0.7;
+    transition: opacity 0.2s ease-in-out;
+    background-color: transparent;
+    cursor: pointer;
+    height: 2rem;
+    width: 2rem;
+    padding: 0;
+    border-radius: 9999px; /* var(--radius-full) */
+    border: none;
+}
+
+.dialogCloseButton:hover {
+    background-color: #fcfcfd; /* var(--surface-1) */
+    opacity: 1;
+}
+
+.dialogCloseButton:focus-visible {
+    outline: 2px solid #4969c6; /* var(--border-primary) */
+    outline-offset: 2px;
+}
+
+.dialogCloseButton:disabled {
+    pointer-events: none;
+}
+
+.dialogCloseIcon {
+    height: 1rem;
+    width: 1rem;
+    stroke: #5f6670; /* var(--text-2) */
+}
+
+.srOnly {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes dialogIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -48%) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes dialogOut {
+    from {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translate(-50%, -48%) scale(0.95);
+    }
+}
+

@@ -1,0 +1,43 @@
+/* ===== STYLES GLOBAUX pour Sandpack ===== */
+/* Version simplifiée et adaptée de index.css */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0 solid transparent;
+}
+
+body {
+  font-family: 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #2e3239;
+  background-color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: #4969c6;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #3a53a3;
+}
+
+h1, h2, h3, h4, h5, h6, p, blockquote, dl, dd, fieldset, figure, hr, pre {
+  margin: 0;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+button:focus-visible {
+  outline: 2px solid #4969c6;
+  outline-offset: 2px;
+}
+

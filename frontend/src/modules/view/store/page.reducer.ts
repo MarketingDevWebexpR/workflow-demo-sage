@@ -29,6 +29,7 @@ type TPageStoreState = {
     editorScrollTop: number | null,
     treeViewScrollTop: number | null,
     isEditMode: boolean,
+    sandpackCode: string | null,
 }
 
 const initialState: TPageStoreState = {
@@ -54,6 +55,7 @@ const initialState: TPageStoreState = {
     editorScrollTop: null,
     treeViewScrollTop: null,
     isEditMode: true,
+    sandpackCode: null,
 };
 
 const reducer = (
@@ -131,6 +133,11 @@ const reducer = (
             return {
                 ...state,
                 isEditMode: action.payload,
+            };
+        case 'SET_SANDPACK_CODE':
+            return {
+                ...state,
+                sandpackCode: action.payload,
             };
         default:
             return state;

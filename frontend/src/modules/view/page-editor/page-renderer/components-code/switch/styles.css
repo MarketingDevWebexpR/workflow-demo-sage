@@ -1,0 +1,30 @@
+/* ===== SWITCH ===== */
+
+.switch {
+    width: 44px;
+    height: 24px;
+    background: #f3f4f6;
+    border-radius: 9999px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.switch[data-state="checked"] {
+    background: #4969c6;
+}
+
+.switchThumb {
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 9999px;
+    transition: transform 0.2s;
+    transform: translateX(2px);
+}
+
+.switch[data-state="checked"] .switchThumb {
+    transform: translateX(22px);
+}
+
