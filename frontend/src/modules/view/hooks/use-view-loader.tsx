@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { usePageStore } from '../store/page.store';
+import { API_WORKFLOWS_URL } from '../../../lib/api';
 
 /**
  * Hook qui charge la view depuis l'API quand on change de stepId
@@ -36,7 +37,7 @@ export function useViewLoader(workflowId: string | undefined): void {
         const loadOrCreateView = async () => {
             try {
                 // Tenter de charger la vue existante
-                const getResponse = await fetch(`http://localhost:3000/api/workflows/${workflowId}/views/${stepId}`);
+                const getResponse = await fetch(`${API_WORKFLOWS_URL}/${workflowId}/views/${stepId}`);
                 const getResult = await getResponse.json();
 
                 if (getResult.success && getResult.exists && getResult.data) {
@@ -58,7 +59,7 @@ export function useViewLoader(workflowId: string | undefined): void {
                     console.log('⚠️ [useViewLoader] Vue inexistante, création en cours...');
                     
                     const createResponse = await fetch(
-                        `http://localhost:3000/api/workflows/${workflowId}/views/${stepId}`,
+                        `${API_WORKFLOWS_URL}/${workflowId}/views/${stepId}`,
                         {
                             method: 'PUT',
                             headers: {

@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { usePageStore } from "../../store/page.store";
 import { useWorkflowAutomationStore } from "../../../workflow/store/workflow-automation.store";
+import { API_WORKFLOWS_URL } from "../../../../lib/api";
 
 /**
  * Hook qui sauvegarde automatiquement les modifications de la view vers l'API
@@ -47,7 +48,7 @@ const useEditedPageUpdate = (): void => {
 
             try {
                 // Sauvegarder vers l'API /views
-                const response = await fetch(`http://localhost:3000/api/workflows/${selectedWorkflow.Id}/views/${stepId}`, {
+                const response = await fetch(`${API_WORKFLOWS_URL}/${selectedWorkflow.Id}/views/${stepId}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({

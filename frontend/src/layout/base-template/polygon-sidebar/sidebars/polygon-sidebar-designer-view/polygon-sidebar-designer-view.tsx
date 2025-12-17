@@ -10,16 +10,17 @@ import { Textarea } from '../../../../../components/ui/form/base-fields/textarea
 import { Empty } from '../../../../../components/ui/empty/empty';
 import { useWorkflowAutomationStore } from '../../../../../modules/workflow/store/workflow-automation.store';
 import workflowItemServices from '../../../../../modules/workflow/services/workflow-item.services';
-import type { 
+import type {
     IMessage,
     IWorkflowContext,
 } from '../../../../../models/chat.model';
-import { 
+import {
     createMessage,
-    formatHistoryForApi 
+    formatHistoryForApi
 } from '../../../../../models/chat.model';
 import { LoadingMessage } from '../shared/loading-message/loading-message';
 import { conversationService } from '../../../../../services/conversation.service';
+import { API_AI_URL } from '../../../../../lib/api';
 
 
 type TPolygonSidebarDesignerViewProps = {
@@ -115,8 +116,8 @@ const PolygonSidebarDesignerView = ({ onNavigate }: TPolygonSidebarDesignerViewP
                 workflowTitle: workflowContext.title,
             });
 
-            // 🌊 Appel fetch en mode streaming
-            const response = await fetch('http://localhost:3000/api/ai/chat', {
+            // Appel fetch en mode streaming
+            const response = await fetch(`${API_AI_URL}/chat`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -1,6 +1,7 @@
+import 'dotenv/config'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
-import mongoose from 'mongoose'
+import { checkSupabaseConnection } from './lib/supabase'
 import workflowsRoutes from './routes/workflows.routes'
 import viewsRoutes from './routes/views.routes'
 import aiRoutes from './routes/ai.routes'
@@ -10,24 +11,31 @@ import emailsRoutes from './modules/emails/routes/actions.routes'
 
 const app = new Hono()
 
-// Middleware CORS - Permet les requêtes depuis le frontend
+const PORT = process.env.PORT || 3002
+
+// Middleware CORS - Permet les requetes depuis le frontend
 app.use('*', cors({
-  origin: ['http://localhost:3001', 'http://localhost:5173'], // Ports du frontend
+  origin: ['http://localhost:3001', 'http://localhost:3003', 'http://localhost:5173'],
   credentials: true,
 }))
 
-// Connexion MongoDB
-main().catch(err => console.log('❌ Erreur MongoDB:', err));
-
-async function main() {
-  await mongoose.connect('mongodb://root:root@localhost:27017/automation_poc?authSource=admin');
-  console.log('✅ MongoDB connecté (état:', mongoose.connection.readyState, ')');
+// Verification de la connexion Supabase au demarrage
+async function initSupabase() {
+  const isConnected = await checkSupabaseConnection()
+  if (isConnected) {
+    console.log('Supabase connected successfully')
+  } else {
+    console.error('Failed to connect to Supabase. Check your environment variables.')
+  }
 }
 
+initSupabase().catch(err => console.error('Supabase init error:', err))
+
 // Routes
-app.get('/', (c) => c.json({ 
-  message: 'API Workflow Automation', 
+app.get('/', (c) => c.json({
+  message: 'API Workflow Automation',
   version: '1.0.0',
+  database: 'Supabase',
   endpoints: {
     workflows: '/api/workflows',
     views: '/api/workflows/:workflowId/views',
@@ -45,5 +53,11 @@ app.route('/api/files', filesRoutes)
 
 // Modules
 app.route('/api/actions', emailsRoutes)
+
+// Start server
+import { serve } from '@hono/node-server'
+serve({ fetch: app.fetch, port: Number(PORT) }, () => {
+  console.log(`Server running on http://localhost:${PORT}`)
+})
 
 export default app

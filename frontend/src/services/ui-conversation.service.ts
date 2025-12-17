@@ -1,10 +1,11 @@
 // ========================================
-// 💾 Service de Gestion des Conversations UI Builder (API Backend)
+// Service de Gestion des Conversations UI Builder (API Backend)
 // ========================================
 
 import { type IMessage } from '../models/chat.model';
+import { API_WORKFLOWS_URL } from '../lib/api';
 
-const API_BASE_URL = 'http://localhost:3000/api/workflows';
+const API_BASE_URL = API_WORKFLOWS_URL;
 
 /**
  * Service pour gérer les conversations de l'UI Builder via API backend

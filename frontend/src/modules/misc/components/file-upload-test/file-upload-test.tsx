@@ -1,5 +1,8 @@
 import { useState } from 'react';
+import { API_URL } from '../../../../lib/api';
 import styles from './file-upload-test.module.scss';
+
+const API_FILES_URL = `${API_URL}/api/files`;
 
 
 export const FileUploadTest = () => {
@@ -30,7 +33,7 @@ export const FileUploadTest = () => {
 			formData.append('file', selectedFile);
 			formData.append('folder', 'documents');
 
-			const response = await fetch('http://localhost:3000/api/files/upload', {
+			const response = await fetch(`${API_FILES_URL}/upload`, {
 				method: 'POST',
 				body: formData,
 			});
@@ -55,7 +58,7 @@ export const FileUploadTest = () => {
 		if (!uploadedUrl) return;
 
 		try {
-			const response = await fetch(`http://localhost:3000/api/files/${uploadedUrl}`, {
+			const response = await fetch(`${API_FILES_URL}/${uploadedUrl}`, {
 				method: 'DELETE',
 			});
 
@@ -114,12 +117,12 @@ export const FileUploadTest = () => {
 					<div className={styles.urlInfo}>
 						<p><strong>URL:</strong> <code>{uploadedUrl}</code></p>
 						<p><strong>URL complète:</strong></p>
-						<code>http://localhost:3000/api/files/{uploadedUrl}</code>
+						<code>{API_FILES_URL}/{uploadedUrl}</code>
 					</div>
 
 					<div className={styles.actions}>
 						<button
-							onClick={() => window.open(`http://localhost:3000/api/files/${uploadedUrl}`, '_blank')}
+							onClick={() => window.open(`${API_FILES_URL}/${uploadedUrl}`, '_blank')}
 						>
 							📥 Télécharger/Voir le fichier
 						</button>
@@ -135,7 +138,7 @@ export const FileUploadTest = () => {
 						<div className={styles.preview}>
 							<p><strong>Aperçu:</strong></p>
 							<img
-								src={`http://localhost:3000/api/files/${uploadedUrl}`}
+								src={`${API_FILES_URL}/${uploadedUrl}`}
 								alt="Preview"
 								style={{ maxWidth: '100%', maxHeight: '400px', border: '1px solid #ccc' }}
 							/>

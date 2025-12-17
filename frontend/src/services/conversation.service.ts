@@ -1,10 +1,11 @@
 // ========================================
-// 💾 Service de Gestion des Conversations (API Backend)
+// Service de Gestion des Conversations (API Backend)
 // ========================================
 
 import { type IMessage } from '../models/chat.model';
+import { API_WORKFLOWS_URL } from '../lib/api';
 
-const API_BASE_URL = 'http://localhost:3000/api/workflows';
+const API_BASE_URL = API_WORKFLOWS_URL;
 
 /**
  * Service pour gérer les conversations via API backend

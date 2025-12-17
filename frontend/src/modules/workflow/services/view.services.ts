@@ -1,6 +1,7 @@
 import type { TView, TViewUpdate } from '../models/view.model';
+import { API_WORKFLOWS_URL } from '../../../lib/api';
 
-const API_BASE_URL = 'http://localhost:3000/api/workflows';
+const API_BASE_URL = API_WORKFLOWS_URL;
 
 /**
  * Service pour gérer les vues IHM des étapes de workflow
