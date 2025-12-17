@@ -2,49 +2,46 @@ import { useState, useEffect } from 'react'
 import styles from './style/App.module.scss'
 import { Providers } from './providers'
 import { Router } from './layout/router'
+import { supabase, type FrontendWorkflow, mapDbWorkflowToFrontend } from './lib/supabase'
 
-
-interface Workflow {
-	_id: string
-	title: string
-	description?: string
-	isEnabled: boolean
-	workflowXML: string
-	createdAt: string
-	updatedAt: string
-}
 
 function App() {
-	const [workflows, setWorkflows] = useState<Workflow[]>([])
+	const [workflows, setWorkflows] = useState<FrontendWorkflow[]>([])
 	const [loading, setLoading] = useState(true)
 	const [error, setError] = useState<string | null>(null)
 
 	useEffect(() => {
-		// Appel à l'API backend via le proxy
-		fetch('/api/workflows')
-			.then(res => {
-				if (!res.ok) {
-					throw new Error(`HTTP error! status: ${res.status}`)
+		// Appel direct à Supabase
+		const fetchWorkflows = async () => {
+			try {
+				const { data, error: supabaseError, count } = await supabase
+					.from('workflows')
+					.select('*', { count: 'exact' })
+					.order('created_at', { ascending: false });
+
+				if (supabaseError) {
+					throw new Error(supabaseError.message);
 				}
-				return res.json()
-			})
-			.then(data => {
-				console.log('✅ Workflows récupérés:', data)
-				setWorkflows(data.data || [])
-				setLoading(false)
-			})
-			.catch(err => {
-				console.error('❌ Erreur lors du fetch:', err)
-				setError(err.message)
-				setLoading(false)
-			})
+
+				const mappedWorkflows = (data || []).map(mapDbWorkflowToFrontend);
+				console.log('✅ Workflows récupérés:', { success: true, data: mappedWorkflows, count });
+				setWorkflows(mappedWorkflows);
+				setLoading(false);
+			} catch (err) {
+				console.error('❌ Erreur lors du fetch:', err);
+				setError(err instanceof Error ? err.message : 'Erreur inconnue');
+				setLoading(false);
+			}
+		};
+
+		fetchWorkflows();
 	}, [])
 
 
 	if (loading) {
 		return (
 			<div className={styles.app}>
-				<h1>⏳ Chargement des workflows...</h1>
+				<h1>Chargement des workflows...</h1>
 			</div>
 		)
 	}
@@ -52,9 +49,9 @@ function App() {
 	if (error) {
 		return (
 			<div className={styles.app}>
-				<h1>❌ Erreur</h1>
+				<h1>Erreur</h1>
 				<p>{error}</p>
-				<p>Assure-toi que le backend est démarré sur http://localhost:3000</p>
+				<p>Verifie ta connexion Supabase</p>
 			</div>
 		)
 	}
